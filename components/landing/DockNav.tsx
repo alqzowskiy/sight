@@ -56,7 +56,7 @@ export function DockNav() {
         >
           <a
             href="#top"
-            className="flex items-center gap-1 rounded-full px-3 py-1 text-[15px] font-medium tracking-tight text-foreground"
+            className="flex items-center gap-0.5 rounded-full px-3 py-1 text-[15px] font-medium tracking-tight text-foreground"
           >
             <Image
               src="/sight-logo.svg"
