@@ -29,7 +29,11 @@ export function LiveGlimpseSection() {
         </FadeIn>
 
         <FadeIn className="mt-10 md:mt-14">
-          <ProductMockup />
+          <div className="-mx-6 overflow-x-auto md:mx-0">
+            <div className="min-w-[760px] px-6 md:min-w-0 md:px-0">
+              <ProductMockup />
+            </div>
+          </div>
         </FadeIn>
 
         <FadeIn className="mt-8">
