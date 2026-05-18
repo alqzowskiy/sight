@@ -12,8 +12,19 @@ import {
   YAxis,
 } from "recharts";
 import type { Account } from "@/types";
-import { getAccountTrajectory } from "@/lib/utils/forecast";
+import { getAccountTrajectory, getCrisisDelta } from "@/lib/utils/forecast";
+import { useAccountsStore } from "@/lib/store/accounts-store";
+import { useCrisisStore } from "@/lib/store/crisis-store";
 import { formatCompact } from "@/lib/utils/format";
+
+interface RawPoint {
+  dayOffset: number;
+  date: string;
+  balance: number;
+  p10: number;
+  p90: number;
+  isHistorical: boolean;
+}
 
 interface ChartPoint {
   dayOffset: number;
@@ -44,9 +55,9 @@ function mulberry32(seed: number) {
   };
 }
 
-function syntheticTrajectory(account: Account): ChartPoint[] {
+function syntheticRawTrajectory(account: Account): RawPoint[] {
   const rand = mulberry32(seedFromId(account.id));
-  const points: ChartPoint[] = [];
+  const points: RawPoint[] = [];
   const base = account.balance || account.minBalance || 100_000;
   const today = new Date();
   for (let offset = -30; offset <= 14; offset++) {
@@ -67,15 +78,56 @@ function syntheticTrajectory(account: Account): ChartPoint[] {
       dayOffset: offset,
       date: d.toISOString(),
       balance,
-      historical: isHistorical ? balance : null,
-      predicted: !isHistorical ? balance : null,
       p10,
       p90,
-      band: [p10, p90],
       isHistorical,
     });
   }
   return points;
+}
+
+function buildChartData(
+  base: RawPoint[],
+  account: Account,
+  liveBalance: number,
+): ChartPoint[] {
+  let lastHistIdx = -1;
+  for (let k = 0; k < base.length; k++) {
+    if (base[k].isHistorical) lastHistIdx = k;
+  }
+  const todayPoint = base.find((p) => p.dayOffset === 0);
+  const forecastToday = todayPoint?.balance ?? liveBalance;
+  const boost = liveBalance - forecastToday;
+
+  return base.map((p, i) => {
+    const isBridge = i === lastHistIdx;
+    let pointBalance = p.balance;
+    let p10 = p.p10;
+    let p90 = p.p90;
+    let predicted: number | null = null;
+
+    if (!p.isHistorical) {
+      const crisis = getCrisisDelta(account.id, p.dayOffset, p.balance);
+      pointBalance = p.balance + boost + crisis;
+      p10 = p.p10 + boost + crisis;
+      p90 = p.p90 + boost + crisis;
+      predicted = pointBalance;
+    } else if (isBridge) {
+      predicted = liveBalance;
+    }
+
+    return {
+      dayOffset: p.dayOffset,
+      date: p.date,
+      balance: pointBalance,
+      historical: p.isHistorical ? p.balance : null,
+      predicted,
+      p10,
+      p90,
+      band: [p10, p90] as [number, number],
+      isHistorical: p.isHistorical,
+    };
+  });
 }
 
 interface AccountForecastChartProps {
@@ -87,31 +139,30 @@ export function AccountForecastChart({
   account,
   height = 240,
 }: AccountForecastChartProps) {
+  const liveAccount = useAccountsStore((s) =>
+    s.accounts.find((a) => a.id === account.id),
+  );
+  const activeScenarios = useCrisisStore((s) => s.activeScenarios);
+  const liveBalance = liveAccount?.balance ?? account.balance;
+  const scenariosKey = activeScenarios.join(",");
+
   const data: ChartPoint[] = useMemo(() => {
-    const trajectory = getAccountTrajectory(account.id, -30, 14);
-    if (trajectory.length === 0) return syntheticTrajectory(account);
-    const lastHistIdx = (() => {
-      let i = -1;
-      for (let k = 0; k < trajectory.length; k++) {
-        if (trajectory[k].isHistorical) i = k;
-      }
-      return i;
-    })();
-    return trajectory.map((p, i) => {
-      const isBridge = i === lastHistIdx;
-      return {
-        dayOffset: p.dayOffset,
-        date: p.date,
-        balance: p.balance,
-        historical: p.isHistorical ? p.balance : null,
-        predicted: !p.isHistorical || isBridge ? p.balance : null,
-        p10: p.p10,
-        p90: p.p90,
-        band: [p.p10, p.p90] as [number, number],
-        isHistorical: p.isHistorical,
-      };
-    });
-  }, [account]);
+    const fetched = getAccountTrajectory(account.id, -30, 14);
+    const baseRaw: RawPoint[] =
+      fetched.length === 0
+        ? syntheticRawTrajectory(account)
+        : fetched.map((p) => ({
+            dayOffset: p.dayOffset,
+            date: p.date,
+            balance: p.balance,
+            p10: p.p10,
+            p90: p.p90,
+            isHistorical: p.isHistorical,
+          }));
+    return buildChartData(baseRaw, account, liveBalance);
+    // scenariosKey is read inside getCrisisDelta via store; declare as dep so memo recomputes
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [account, liveBalance, scenariosKey]);
 
   const allValues = data.flatMap((d) => [d.balance, d.p10, d.p90]);
   const yMin = Math.min(...allValues, account.minBalance) * 0.95;
