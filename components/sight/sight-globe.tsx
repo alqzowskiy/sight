@@ -1,8 +1,10 @@
 "use client";
 
 import {
+  forwardRef,
   useCallback,
   useEffect,
+  useImperativeHandle,
   useMemo,
   useRef,
   useState,
@@ -16,7 +18,10 @@ import {
 import { feature } from "topojson-client";
 import type { Feature, FeatureCollection, GeoJsonProperties, Geometry } from "geojson";
 import type { Topology } from "topojson-specification";
-import { Plus, Minus, Locate } from "lucide-react";
+import { MoneyFlowOverlay } from "@/components/globe/money-flow-overlay";
+import { GlobeHoverCard } from "@/components/globe/globe-hover-card";
+import { isVisible, type Projector } from "@/lib/globe/projection";
+import { useTimeStore } from "@/lib/store/time-store";
 
 export interface AccountMarker {
   id: string;
@@ -43,6 +48,15 @@ interface SightGlobeProps {
   arcs: TransferArc[];
   className?: string;
   speed?: number;
+  onMarkerClick?: (info: { clusterId: string; location: [number, number] }) => void;
+}
+
+export interface SightGlobeHandle {
+  focusOnLocation: (
+    location: [number, number],
+    options?: { zoom?: boolean },
+  ) => void;
+  triggerPulse: (location: [number, number], kind?: "alert" | "compass") => void;
 }
 
 const STATUS_COLOR: Record<AccountMarker["status"], string> = {
@@ -135,32 +149,29 @@ function loadLand(): Promise<Feature<Geometry, GeoJsonProperties>> {
   return landPromise;
 }
 
-function lngLatVisible(
-  lng: number,
-  lat: number,
-  rotLambda: number,
-  rotPhi: number,
-): boolean {
-  const lambda = (lng + rotLambda) * (Math.PI / 180);
-  const phi = lat * (Math.PI / 180);
-  const phi0 = -rotPhi * (Math.PI / 180);
-  const cosC =
-    Math.sin(phi0) * Math.sin(phi) +
-    Math.cos(phi0) * Math.cos(phi) * Math.cos(lambda);
-  return cosC > 0.02;
+interface HoverState {
+  clusterId: string;
+  x: number;
+  y: number;
 }
 
-export function SightGlobe({
+export const SightGlobe = forwardRef<SightGlobeHandle, SightGlobeProps>(function SightGlobe({
   markers,
   arcs,
   className = "",
   speed = 0.16,
-}: SightGlobeProps) {
+  onMarkerClick,
+}, ref) {
   const clusters = useMemo(() => clusterMarkers(markers), [markers]);
   const dedupedArcs = useMemo(() => dedupeArcs(arcs), [arcs]);
 
   const [landReady, setLandReady] = useState(!!cachedLand);
-  const [zoomDisplay, setZoomDisplay] = useState(100);
+  const [hover, setHover] = useState<HoverState | null>(null);
+  const [isInteracting, setIsInteracting] = useState(false);
+  const [containerSize, setContainerSize] = useState({ width: 0, height: 0 });
+  const [eventPulses, setEventPulses] = useState<
+    Array<{ id: string; lat: number; lng: number; startedAt: number; kind: "alert" | "compass" }>
+  >([]);
 
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const wrapRef = useRef<HTMLDivElement>(null);
@@ -168,6 +179,11 @@ export function SightGlobe({
   const markerElsRef = useRef<Map<string, HTMLDivElement>>(new Map());
   const clusterStatusRef = useRef<Map<string, AccountMarker["status"]>>(new Map());
   const arcSeenAtRef = useRef<Map<string, number>>(new Map());
+  const projectorRef = useRef<Projector | null>(null);
+  const arrivalPulseRef = useRef<Map<string, number>>(new Map());
+  const hoverRef = useRef<HoverState | null>(null);
+
+  const offset = useTimeStore((s) => s.currentOffset);
 
   const sizeRef = useRef({ width: 0, height: 0, dpr: 1 });
 
@@ -185,6 +201,7 @@ export function SightGlobe({
     moved: boolean;
   } | null>(null);
   const lastInteractRef = useRef(0);
+  const fpsRef = useRef({ ema: 60, last: 0, frames: 0, since: 0 });
 
   useEffect(() => {
     if (!cachedLand) loadLand().then(() => setLandReady(true));
@@ -224,6 +241,7 @@ export function SightGlobe({
       canvas!.style.width = `${w}px`;
       canvas!.style.height = `${h}px`;
       sizeRef.current = { width: w, height: h, dpr };
+      setContainerSize({ width: w, height: h });
     }
     resize();
     const ro = new ResizeObserver(resize);
@@ -238,7 +256,7 @@ export function SightGlobe({
     if (!ctx) return;
 
     let raf = 0;
-    let lastDisplayedZoom = 100;
+    let lastFpsUpdate = 0;
 
     function render() {
       const { width, height, dpr } = sizeRef.current;
@@ -248,6 +266,18 @@ export function SightGlobe({
       }
 
       const now = Date.now();
+      const nowPerf = performance.now();
+      const fps = fpsRef.current;
+      if (fps.last > 0) {
+        const dt = nowPerf - fps.last;
+        const inst = dt > 0 ? 1000 / dt : 60;
+        fps.ema = fps.ema * 0.92 + inst * 0.08;
+      }
+      fps.last = nowPerf;
+      if (nowPerf - lastFpsUpdate > 500) {
+        lastFpsUpdate = nowPerf;
+      }
+
       const sinceInteract = now - lastInteractRef.current;
       const idle = !isInteractingRef.current && sinceInteract > IDLE_RESUME_MS;
 
@@ -256,12 +286,6 @@ export function SightGlobe({
         scaleRef.current += ds * 0.2;
       } else if (scaleRef.current !== targetScaleRef.current) {
         scaleRef.current = targetScaleRef.current;
-      }
-
-      const newDisplayZoom = Math.round(scaleRef.current * 100);
-      if (newDisplayZoom !== lastDisplayedZoom) {
-        lastDisplayedZoom = newDisplayZoom;
-        setZoomDisplay(newDisplayZoom);
       }
 
       if (targetRotRef.current) {
@@ -406,13 +430,37 @@ export function SightGlobe({
         .rotate([rotRef.current[0], rotRef.current[1], 0])
         .clipAngle(90);
 
+      projectorRef.current = {
+        state: {
+          rotation: [rotRef.current[0], rotRef.current[1]],
+          scale: scaleRef.current,
+          width,
+          height,
+        },
+        projection: proj,
+        project: (lat: number, lng: number) => {
+          const visible = isVisible(
+            lng,
+            lat,
+            rotRef.current[0],
+            rotRef.current[1],
+          );
+          const pt = proj([lng, lat]);
+          if (!pt) return null;
+          return { x: pt[0], y: pt[1], visible };
+        },
+      };
+
       const pulse = 0.5 + 0.5 * Math.sin((Date.now() / 800) * Math.PI * 2);
+      const nowMs = Date.now();
+      const arrivalMap = arrivalPulseRef.current;
+      const hoveredId = hoverRef.current?.clusterId ?? null;
 
       for (const cluster of clusters) {
         const el = markerElsRef.current.get(cluster.id);
         if (!el) continue;
         const [lng, lat] = [cluster.location[1], cluster.location[0]];
-        const visible = lngLatVisible(
+        const visible = isVisible(
           lng,
           lat,
           rotRef.current[0],
@@ -433,27 +481,54 @@ export function SightGlobe({
           el.style.pointerEvents = "auto";
         }
 
+        if (hoveredId === cluster.id && hoverRef.current) {
+          hoverRef.current.x = pt[0];
+          hoverRef.current.y = pt[1];
+        }
+
+        const arrivalAt = arrivalMap.get(cluster.id);
+        let arrivalBoost = 0;
+        if (arrivalAt) {
+          const age = nowMs - arrivalAt;
+          if (age >= 0 && age <= 400) {
+            arrivalBoost = 1 - age / 400;
+          } else if (age > 400) {
+            arrivalMap.delete(cluster.id);
+          }
+        }
+
         const status = clusterStatusRef.current.get(cluster.id) ?? cluster.status;
         const btn = el.querySelector("button") as HTMLButtonElement | null;
+        const ring = el.querySelector("[data-arrival-ring]") as HTMLElement | null;
         if (btn) {
           if (status === "critical") {
             const haloAlpha = 0.22 + pulse * 0.32;
-            const haloSize = 4 + pulse * 10;
-            const dotScale = 1 + pulse * 0.5;
+            const haloSize = 4 + pulse * 10 + arrivalBoost * 6;
+            const dotScale = 1 + pulse * 0.5 + arrivalBoost * 0.3;
             btn.style.boxShadow = `0 0 0 ${haloSize}px rgba(220,38,38,${haloAlpha}), 0 1px 3px rgba(0,0,0,0.25)`;
             btn.style.background = "#DC2626";
             btn.style.transform = `scale(${dotScale})`;
           } else if (status === "warning") {
-            btn.style.boxShadow = "0 0 0 4px rgba(245,158,11,0.18), 0 1px 3px rgba(0,0,0,0.18)";
+            const haloSize = 4 + arrivalBoost * 5;
+            btn.style.boxShadow = `0 0 0 ${haloSize}px rgba(245,158,11,${0.18 + arrivalBoost * 0.3}), 0 1px 3px rgba(0,0,0,0.18)`;
             btn.style.background = "#F59E0B";
-            btn.style.transform = "scale(1)";
+            btn.style.transform = `scale(${1 + arrivalBoost * 0.25})`;
           } else {
-            btn.style.boxShadow = "0 0 0 3px rgba(10,10,10,0.10), 0 1px 3px rgba(0,0,0,0.15)";
+            const haloSize = 3 + arrivalBoost * 6;
+            btn.style.boxShadow = `0 0 0 ${haloSize}px rgba(37,99,235,${0.1 + arrivalBoost * 0.32}), 0 1px 3px rgba(0,0,0,0.15)`;
             btn.style.background = "#0A0A0A";
-            btn.style.transform = "scale(1)";
+            btn.style.transform = `scale(${1 + arrivalBoost * 0.2})`;
           }
         }
+        if (ring) {
+          ring.style.opacity = arrivalBoost > 0 ? String(arrivalBoost * 0.7) : "0";
+          const size = 14 + (1 - arrivalBoost) * 30;
+          ring.style.width = `${size}px`;
+          ring.style.height = `${size}px`;
+          ring.style.transform = `translate(-50%, -50%)`;
+        }
       }
+
     }
 
     raf = requestAnimationFrame(render);
@@ -480,15 +555,76 @@ export function SightGlobe({
     lastInteractRef.current = 0;
   }, []);
 
-  const focusOn = useCallback((lng: number, lat: number) => {
-    targetRotRef.current = [-lng, -lat];
-    targetScaleRef.current = Math.max(targetScaleRef.current, 1.7);
-    markInteraction();
-  }, [markInteraction]);
+  useImperativeHandle(
+    ref,
+    () => ({
+      focusOnLocation: (location, options) => {
+        const zoom = options?.zoom ?? true;
+        targetRotRef.current = [-location[1], -location[0]];
+        if (zoom) {
+          targetScaleRef.current = Math.max(targetScaleRef.current, 1.7);
+        }
+        markInteraction();
+      },
+      triggerPulse: (location, kind = "alert") => {
+        const pulse = {
+          id: `pulse-${Date.now()}-${Math.random().toString(36).slice(2, 6)}`,
+          lat: location[0],
+          lng: location[1],
+          startedAt: Date.now(),
+          kind,
+        };
+        setEventPulses((prev) => [...prev, pulse]);
+        window.setTimeout(() => {
+          setEventPulses((prev) => prev.filter((p) => p.id !== pulse.id));
+        }, 1500);
+      },
+    }),
+    [markInteraction],
+  );
+
+  const hoverEnterTimerRef = useRef<number | null>(null);
+  const hoverLeaveTimerRef = useRef<number | null>(null);
+
+  useEffect(() => {
+    hoverRef.current = hover;
+  }, [hover]);
+
+  const handleMarkerEnter = useCallback((clusterId: string, location: [number, number]) => {
+    if (hoverLeaveTimerRef.current !== null) {
+      clearTimeout(hoverLeaveTimerRef.current);
+      hoverLeaveTimerRef.current = null;
+    }
+    if (hoverEnterTimerRef.current !== null) clearTimeout(hoverEnterTimerRef.current);
+    hoverEnterTimerRef.current = window.setTimeout(() => {
+      const proj = projectorRef.current;
+      if (!proj) return;
+      const projected = proj.project(location[0], location[1]);
+      if (!projected || !projected.visible) return;
+      setHover({ clusterId, x: projected.x, y: projected.y });
+    }, 200);
+  }, []);
+
+  const handleMarkerLeave = useCallback(() => {
+    if (hoverEnterTimerRef.current !== null) {
+      clearTimeout(hoverEnterTimerRef.current);
+      hoverEnterTimerRef.current = null;
+    }
+    if (hoverLeaveTimerRef.current !== null) clearTimeout(hoverLeaveTimerRef.current);
+    hoverLeaveTimerRef.current = window.setTimeout(() => {
+      setHover(null);
+    }, 100);
+  }, []);
 
   const handlePointerDown = useCallback(
     (e: React.PointerEvent) => {
+      const target = e.target as HTMLElement;
+      if (target.closest("button")) {
+        // Let the marker button handle its own click.
+        return;
+      }
       isInteractingRef.current = true;
+      setIsInteracting(true);
       markInteraction();
       targetRotRef.current = null;
       pointerRef.current = {
@@ -509,7 +645,7 @@ export function SightGlobe({
       if (!p) return;
       const dx = e.clientX - p.x;
       const dy = e.clientY - p.y;
-      if (Math.abs(dx) + Math.abs(dy) > 3) p.moved = true;
+      if (Math.abs(dx) + Math.abs(dy) > 6) p.moved = true;
       const sensitivity = 0.35 / scaleRef.current;
       const nextLambda = p.lambda + dx * sensitivity;
       const nextPhi = clamp(p.phi + dy * sensitivity, -75, 75);
@@ -522,6 +658,7 @@ export function SightGlobe({
   const handlePointerUp = useCallback((e: React.PointerEvent) => {
     pointerRef.current = null;
     isInteractingRef.current = false;
+    setIsInteracting(false);
     lastInteractRef.current = Date.now();
     const el = e.currentTarget as HTMLElement;
     if (el.hasPointerCapture?.(e.pointerId)) {
@@ -595,14 +732,33 @@ export function SightGlobe({
                 willChange: "transform",
               }}
             >
+              <div
+                data-arrival-ring
+                style={{
+                  position: "absolute",
+                  left: 0,
+                  top: 0,
+                  width: 14,
+                  height: 14,
+                  borderRadius: "50%",
+                  border: "1.5px solid rgba(37,99,235,0.8)",
+                  opacity: 0,
+                  pointerEvents: "none",
+                  transition: "opacity 120ms ease",
+                  transform: "translate(-50%, -50%)",
+                  willChange: "width, height, opacity",
+                }}
+              />
               <button
                 type="button"
+                onMouseEnter={() => handleMarkerEnter(c.id, c.location)}
+                onMouseLeave={handleMarkerLeave}
                 onClick={(e) => {
                   if (pointerRef.current?.moved) return;
                   e.stopPropagation();
-                  focusOn(c.location[1], c.location[0]);
+                  onMarkerClick?.({ clusterId: c.id, location: c.location });
                 }}
-                aria-label={`Focus on ${c.city}`}
+                aria-label={`Open ${c.city} account`}
                 style={{
                   position: "absolute",
                   left: -7,
@@ -670,52 +826,139 @@ export function SightGlobe({
             </div>
           ))}
         </div>
+
+        <MoneyFlowOverlay
+          projectorRef={projectorRef}
+          enabled={true}
+          paused={isInteracting}
+          fade={offset > 0 ? 0.6 : offset < 0 ? 0.5 : 1}
+          onArrival={(accountId) => {
+            const acc = markers.find((m) => m.id === accountId);
+            if (!acc) return;
+            const target = clusters.find(
+              (c) =>
+                Math.abs(c.location[0] - acc.location[0]) < 0.05 &&
+                Math.abs(c.location[1] - acc.location[1]) < 0.05,
+            );
+            if (target) arrivalPulseRef.current.set(target.id, Date.now());
+          }}
+        />
+
+        <EventPulseLayer pulses={eventPulses} projectorRef={projectorRef} />
+
+        {hover && (() => {
+          const cluster = clusters.find((c) => c.id === hover.clusterId);
+          if (!cluster) return null;
+          return (
+            <GlobeHoverCard
+              location={cluster.location}
+              x={hover.x}
+              y={hover.y}
+              containerWidth={containerSize.width}
+              containerHeight={containerSize.height}
+            />
+          );
+        })()}
       </div>
 
-      <div className="pointer-events-auto absolute right-3 top-3 z-20 flex flex-col items-stretch overflow-hidden rounded-lg border border-zinc-200 bg-white/95 shadow-sm backdrop-blur-sm">
-        <ZoomButton aria-label="Zoom in" onClick={zoomIn} disabled={zoomDisplay >= MAX_SCALE * 100}>
-          <Plus className="h-3.5 w-3.5" strokeWidth={1.6} />
-        </ZoomButton>
-        <div className="border-t border-zinc-200/80 px-2 py-1.5 text-center font-mono text-[10px] tabular-nums text-zinc-700">
-          {zoomDisplay}%
+      {offset !== 0 && (
+        <div className="pointer-events-auto absolute left-3 top-3 z-20 rounded-md border border-zinc-200 bg-white/95 px-2 py-1 font-mono text-[9.5px] uppercase tracking-[0.1em] text-zinc-700 backdrop-blur-sm">
+          <span
+            className="mr-1.5 inline-block h-1.5 w-1.5 rotate-45 align-middle"
+            style={{
+              background: offset > 0 ? "#2563EB" : "#71717A",
+              boxShadow: offset > 0 ? "0 0 4px rgba(37,99,235,0.5)" : "none",
+            }}
+          />
+          {offset > 0 ? "Forecast" : "History"}
+          <span className="ml-1 text-zinc-400">
+            {offset > 0 ? "+" : "-"}
+            {Math.abs(offset)}d
+          </span>
         </div>
-        <ZoomButton aria-label="Zoom out" onClick={zoomOut} disabled={zoomDisplay <= MIN_SCALE * 100} border>
-          <Minus className="h-3.5 w-3.5" strokeWidth={1.6} />
-        </ZoomButton>
-        <ZoomButton aria-label="Reset view" onClick={resetView} border>
-          <Locate className="h-3.5 w-3.5" strokeWidth={1.6} />
-        </ZoomButton>
-      </div>
+      )}
     </div>
   );
+});
+
+interface EventPulseLayerProps {
+  pulses: Array<{
+    id: string;
+    lat: number;
+    lng: number;
+    startedAt: number;
+    kind: "alert" | "compass";
+  }>;
+  projectorRef: React.RefObject<Projector | null>;
 }
 
-interface ZoomButtonProps {
-  children: React.ReactNode;
-  onClick: () => void;
-  "aria-label": string;
-  disabled?: boolean;
-  border?: boolean;
-}
-
-function ZoomButton({
-  children,
-  onClick,
-  "aria-label": ariaLabel,
-  disabled,
-  border,
-}: ZoomButtonProps) {
+function EventPulseLayer({ pulses, projectorRef }: EventPulseLayerProps) {
   return (
-    <button
-      type="button"
-      onClick={onClick}
-      aria-label={ariaLabel}
-      disabled={disabled}
-      className={`flex h-7 w-9 items-center justify-center text-zinc-600 transition-colors hover:bg-zinc-100 hover:text-zinc-900 disabled:cursor-not-allowed disabled:text-zinc-300 disabled:hover:bg-transparent ${
-        border ? "border-t border-zinc-200/80" : ""
-      }`}
-    >
-      {children}
-    </button>
+    <svg className="pointer-events-none absolute inset-0">
+      {pulses.map((p) => (
+        <EventPulseRing key={p.id} pulse={p} projectorRef={projectorRef} />
+      ))}
+    </svg>
   );
 }
+
+interface EventPulseRingProps {
+  pulse: {
+    id: string;
+    lat: number;
+    lng: number;
+    startedAt: number;
+    kind: "alert" | "compass";
+  };
+  projectorRef: React.RefObject<Projector | null>;
+}
+
+function EventPulseRing({ pulse, projectorRef }: EventPulseRingProps) {
+  const outerRef = useRef<SVGCircleElement>(null);
+  const innerRef = useRef<SVGCircleElement>(null);
+
+  useEffect(() => {
+    let raf = 0;
+    function frame() {
+      const projector = projectorRef.current;
+      const outer = outerRef.current;
+      const inner = innerRef.current;
+      if (!projector || !outer || !inner) {
+        raf = requestAnimationFrame(frame);
+        return;
+      }
+      const pt = projector.project(pulse.lat, pulse.lng);
+      const now = Date.now();
+      const age = now - pulse.startedAt;
+      const t = Math.min(1.4, age / 1400);
+      if (!pt || !pt.visible || age < 0) {
+        outer.setAttribute("opacity", "0");
+        inner.setAttribute("opacity", "0");
+        raf = requestAnimationFrame(frame);
+        return;
+      }
+      const r = 4 + t * 60;
+      const alpha = Math.max(0, 1 - t);
+      outer.setAttribute("cx", pt.x.toFixed(1));
+      outer.setAttribute("cy", pt.y.toFixed(1));
+      outer.setAttribute("r", r.toFixed(1));
+      outer.setAttribute("opacity", (alpha * 0.7).toFixed(3));
+      inner.setAttribute("cx", pt.x.toFixed(1));
+      inner.setAttribute("cy", pt.y.toFixed(1));
+      inner.setAttribute("r", (r * 0.55).toFixed(1));
+      inner.setAttribute("opacity", (alpha * 0.45).toFixed(3));
+      raf = requestAnimationFrame(frame);
+    }
+    raf = requestAnimationFrame(frame);
+    return () => cancelAnimationFrame(raf);
+  }, [pulse, projectorRef]);
+
+  const color = pulse.kind === "alert" ? "rgb(220,38,38)" : "rgb(37,99,235)";
+  return (
+    <g>
+      <circle ref={outerRef} fill="none" stroke={color} strokeWidth={1.4} opacity="0" />
+      <circle ref={innerRef} fill="none" stroke={color} strokeWidth={1} opacity="0" />
+    </g>
+  );
+}
+

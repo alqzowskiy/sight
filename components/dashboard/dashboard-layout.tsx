@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useAccountsStore } from "@/lib/store/accounts-store";
 import { useTimeStore } from "@/lib/store/time-store";
 import { useUiStore } from "@/lib/store/ui-store";
@@ -9,7 +9,11 @@ import {
   getEffectiveStatusAt,
 } from "@/lib/utils/forecast";
 import { SightGlobe } from "@/components/sight/sight-globe";
-import type { AccountMarker, TransferArc } from "@/components/sight/sight-globe";
+import type {
+  AccountMarker,
+  SightGlobeHandle,
+  TransferArc,
+} from "@/components/sight/sight-globe";
 import { AccountDetailPanel } from "./account-detail-panel";
 import { AccountCard } from "./account-card";
 import { AlertsPanel } from "./alerts-panel";
@@ -64,6 +68,12 @@ export function DashboardLayout() {
   const alerts = useAlertsAt(offset);
 
   const [newTransferOpen, setNewTransferOpen] = useState(false);
+  const globeRef = useRef<SightGlobeHandle>(null);
+  const seenAlertIdsRef = useRef<Set<string>>(new Set());
+  const seenExecutedRef = useRef<string | null>(null);
+  const hoveredAccountId = useUiStore((s) => s.hoveredAccountId);
+  const setSelectedAccount = useUiStore((s) => s.setSelectedAccount);
+  const openDetailPanel = useUiStore((s) => s.openDetailPanel);
 
   function handleResetDemo() {
     resetAccounts();
@@ -105,6 +115,46 @@ export function DashboardLayout() {
       }),
     [accounts, offset, activeScenarios],
   );
+
+  // Seed seen alerts on mount so initial alerts don't all trigger pulses at once.
+  useEffect(() => {
+    for (const a of alerts) seenAlertIdsRef.current.add(a.id);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  // New alert appears → focus + alert pulse on the affected account.
+  useEffect(() => {
+    for (const a of alerts) {
+      if (seenAlertIdsRef.current.has(a.id)) continue;
+      seenAlertIdsRef.current.add(a.id);
+      if (a.severity !== "critical" && a.severity !== "warning") continue;
+      const acc = accounts.find((x) => x.id === a.accountId);
+      if (!acc) return;
+      globeRef.current?.focusOnLocation(acc.location, { zoom: true });
+      if (a.severity === "critical") {
+        globeRef.current?.triggerPulse(acc.location, "alert");
+      }
+    }
+  }, [alerts, accounts]);
+
+  // Compass / transfer execution → pulse at destination.
+  useEffect(() => {
+    if (!lastExecutedTransferId) return;
+    if (seenExecutedRef.current === lastExecutedTransferId) return;
+    seenExecutedRef.current = lastExecutedTransferId;
+    const t = transfers.find((x) => x.id === lastExecutedTransferId);
+    if (!t) return;
+    globeRef.current?.triggerPulse(t.toLocation, "compass");
+    globeRef.current?.focusOnLocation(t.toLocation, { zoom: false });
+  }, [lastExecutedTransferId, transfers]);
+
+  // Hovering an account card on sidebar gently rotates the globe to it.
+  useEffect(() => {
+    if (!hoveredAccountId) return;
+    const acc = accounts.find((x) => x.id === hoveredAccountId);
+    if (!acc) return;
+    globeRef.current?.focusOnLocation(acc.location, { zoom: false });
+  }, [hoveredAccountId, accounts]);
 
   const arcs: TransferArc[] = useMemo(() => {
     const baseArcs: TransferArc[] = transfers
@@ -264,7 +314,25 @@ export function DashboardLayout() {
               </span>
             </div>
             <div className="aspect-square h-full max-h-full w-auto max-w-full">
-              <SightGlobe markers={markers} arcs={arcs} />
+              <SightGlobe
+                ref={globeRef}
+                markers={markers}
+                arcs={arcs}
+                onMarkerClick={({ location }) => {
+                  const [lat, lng] = location;
+                  const matches = accounts.filter(
+                    (a) =>
+                      Math.abs(a.location[0] - lat) < 0.2 &&
+                      Math.abs(a.location[1] - lng) < 0.2,
+                  );
+                  if (matches.length === 0) return;
+                  // Prefer the operational account if a cluster has many.
+                  const target =
+                    matches.find((a) => a.type === "operational") ?? matches[0];
+                  setSelectedAccount(target.id);
+                  openDetailPanel(target.id);
+                }}
+              />
             </div>
             <div className="absolute bottom-4 left-4 z-10 font-mono text-[10px] uppercase tracking-[0.12em] text-zinc-400">
               {markers.length} accounts · {arcs.length} active flows

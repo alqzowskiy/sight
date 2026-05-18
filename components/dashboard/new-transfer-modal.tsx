@@ -55,26 +55,35 @@ export function NewTransferModal({ open, onClose }: NewTransferModalProps) {
     [accounts, to],
   );
 
+  const parsedAmount = parseFloat(amount);
+  const hasValidAmount = Number.isFinite(parsedAmount) && parsedAmount > 0;
+  const exceedsBalance =
+    !!fromAccount && hasValidAmount && parsedAmount > fromAccount.balance;
   const canSubmit =
     !!fromAccount &&
     !!toAccount &&
     from !== to &&
-    parseFloat(amount) > 0 &&
+    hasValidAmount &&
+    !exceedsBalance &&
     !submitting;
 
   function handleSubmit() {
     if (!canSubmit || !fromAccount || !toAccount) return;
     setSubmitting(true);
     try {
-      addAndExecuteTransfer({
+      const result = addAndExecuteTransfer({
         from: fromAccount.id,
         to: toAccount.id,
         fromLocation: fromAccount.location,
         toLocation: toAccount.location,
         channel,
-        amount: parseFloat(amount),
+        amount: parsedAmount,
         currency: fromAccount.currency,
       });
+      if (!result) {
+        toast.error("Insufficient funds in source account.");
+        return;
+      }
       toast.success("Transfer initiated.");
       handleClose();
     } catch (err) {
@@ -174,12 +183,23 @@ export function NewTransferModal({ open, onClose }: NewTransferModalProps) {
                     value={amount}
                     onChange={(e) => setAmount(e.target.value)}
                     placeholder="100000"
-                    className="mt-1 w-full rounded-md border border-zinc-200 bg-white px-3 py-2 font-mono text-[13px] tabular-nums focus:border-zinc-900 focus:outline-none"
+                    className={`mt-1 w-full rounded-md border bg-white px-3 py-2 font-mono text-[13px] tabular-nums focus:outline-none ${
+                      exceedsBalance
+                        ? "border-red-300 text-red-700 focus:border-red-500"
+                        : "border-zinc-200 focus:border-zinc-900"
+                    }`}
                   />
                   {fromAccount && (
-                    <div className="mt-1 font-mono text-[10px] text-zinc-400">
-                      Available {fromAccount.currency}{" "}
-                      {fromAccount.balance.toLocaleString("en-US")}
+                    <div className="mt-1 flex items-center justify-between gap-2 font-mono text-[10px]">
+                      <span className="text-zinc-400">
+                        Available {fromAccount.currency}{" "}
+                        {fromAccount.balance.toLocaleString("en-US")}
+                      </span>
+                      {exceedsBalance && (
+                        <span className="text-red-600">
+                          Insufficient funds
+                        </span>
+                      )}
                     </div>
                   )}
                 </div>

@@ -16,6 +16,7 @@ import { useState } from "react";
 import { NumberTicker } from "./number-ticker";
 import { AccountForecastChart } from "./account-forecast-chart";
 import { AiInsightPanel } from "./ai-insight-panel";
+import { buildInsightContext } from "@/lib/utils/insight-context";
 import type { Alert } from "@/types";
 import { useAlertsAt } from "@/lib/data/alerts";
 import { Sparkles } from "lucide-react";
@@ -297,6 +298,8 @@ function InsightSection({
   );
   const clearPendingInsight = useUiStore((s) => s.clearPendingInsight);
   const activeScenarios = useCrisisStore((s) => s.activeScenarios);
+  const accounts = useAccountsStore((s) => s.accounts);
+  const transfers = useAccountsStore((s) => s.transfers);
 
   useEffect(() => {
     if (pendingInsightAccountId === accountId) {
@@ -305,9 +308,16 @@ function InsightSection({
     }
   }, [pendingInsightAccountId, accountId, clearPendingInsight]);
 
-  const context = activeScenarios.length
-    ? `Active crisis scenarios: ${activeScenarios.join(", ")}.`
-    : undefined;
+  const liveAccount = accounts.find((a) => a.id === accountId);
+  const recentTransfers = transfers.filter(
+    (t) => t.to === accountId || t.from === accountId,
+  );
+  const context = buildInsightContext({
+    accountId,
+    liveBalance: liveAccount?.balance,
+    transfers: recentTransfers,
+    crisisScenarios: activeScenarios,
+  });
 
   return (
     <section className="border-t border-zinc-200/80 px-6 py-5">

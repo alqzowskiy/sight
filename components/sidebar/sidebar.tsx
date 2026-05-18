@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { LayoutDashboard, FlaskConical, Siren } from "lucide-react";
+import { LayoutDashboard, FlaskConical, Siren, Brain } from "lucide-react";
 import { SightLogo } from "@/components/sight/sight-logo";
 
 interface NavItem {
@@ -16,6 +16,7 @@ export function Sidebar() {
 
   const items: NavItem[] = [
     { label: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
+    { label: "Brain", href: "/dashboard/brain", icon: Brain },
     { label: "Lab", href: "/dashboard/lab", icon: FlaskConical },
     { label: "Crisis", href: "/dashboard/crisis", icon: Siren },
   ];

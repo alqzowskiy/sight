@@ -40,3 +40,7 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+sight-business-case.docx
+.gitignore
+sight-costs.docx
+.gitignore

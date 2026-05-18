@@ -9,6 +9,7 @@ import { useUiStore } from "@/lib/store/ui-store";
 import { useTimeStore } from "@/lib/store/time-store";
 import { useCrisisStore } from "@/lib/store/crisis-store";
 import { formatPercent, formatDateTime, formatCompact } from "@/lib/utils/format";
+import { buildInsightContext } from "@/lib/utils/insight-context";
 import { AiInsightPanel } from "./ai-insight-panel";
 
 const SEVERITY: Record<
@@ -23,6 +24,8 @@ const SEVERITY: Record<
 export function AlertCard({ alert }: { alert: Alert }) {
   const dismissAlert = useAccountsStore((s) => s.dismissAlert);
   const executeTransfer = useAccountsStore((s) => s.executeTransfer);
+  const accounts = useAccountsStore((s) => s.accounts);
+  const transfers = useAccountsStore((s) => s.transfers);
   const setHoveredTransfer = useUiStore((s) => s.setHoveredTransfer);
   const offset = useTimeStore((s) => s.currentOffset);
   const activeScenarios = useCrisisStore((s) => s.activeScenarios);
@@ -33,15 +36,28 @@ export function AlertCard({ alert }: { alert: Alert }) {
 
   function handleExecute() {
     if (!recommended) return;
-    executeTransfer(recommended);
+    const ok = executeTransfer(recommended);
+    if (!ok) {
+      toast.error("Insufficient funds in source account.");
+      return;
+    }
     toast.success("Resolved. Account back in the green.", {
       description: `${recommended.channel} transfer of ${formatCompact(recommended.amount, recommended.currency)} executed.`,
     });
   }
 
-  const insightContext = activeScenarios.length
-    ? `Active crisis scenarios: ${activeScenarios.join(", ")}.`
-    : undefined;
+  const liveAccount = accounts.find((a) => a.id === alert.accountId);
+  const recentTransfers = transfers
+    .filter(
+      (t) => t.to === alert.accountId || t.from === alert.accountId,
+    )
+    .slice(-3);
+  const insightContext = buildInsightContext({
+    accountId: alert.accountId,
+    liveBalance: liveAccount?.balance,
+    transfers: recentTransfers,
+    crisisScenarios: activeScenarios,
+  });
 
   return (
     <article

@@ -481,7 +481,37 @@ function AvpChart({
     );
   }
   return (
-    <div style={{ width: "100%", height: 320 }}>
+    <div className="relative" style={{ width: "100%", height: 320 }}>
+      <div className="pointer-events-none absolute right-2 top-1 z-10 flex items-center gap-3 rounded-md border border-zinc-200/80 bg-white/90 px-2 py-1 font-mono text-[9px] uppercase tracking-[0.12em] text-zinc-500 backdrop-blur-sm">
+        <span className="flex items-center gap-1.5">
+          <span className="block h-[2px] w-3.5 bg-zinc-900" />
+          Actual
+        </span>
+        <span className="flex items-center gap-1.5">
+          <svg width="14" height="2" viewBox="0 0 14 2" aria-hidden>
+            <line
+              x1="0"
+              y1="1"
+              x2="14"
+              y2="1"
+              stroke="#2563EB"
+              strokeWidth="2"
+              strokeDasharray="3 2"
+            />
+          </svg>
+          Predicted
+        </span>
+        <span className="flex items-center gap-1.5">
+          <span
+            className="block h-2 w-3.5 rounded-[2px] border border-zinc-200"
+            style={{
+              background:
+                "linear-gradient(180deg, rgba(10,10,10,0.10) 0%, rgba(10,10,10,0.02) 100%)",
+            }}
+          />
+          P10–P90
+        </span>
+      </div>
       <ResponsiveContainer width="100%" height="100%">
         <ComposedChart
           data={data}
@@ -584,23 +614,6 @@ function AvpChart({
           />
         </ComposedChart>
       </ResponsiveContainer>
-      <div className="mt-3 flex items-center gap-5 font-mono text-[10px] uppercase tracking-[0.12em] text-zinc-500">
-        <span className="flex items-center gap-1.5">
-          <span className="h-[2px] w-5 bg-zinc-900" />
-          Actual
-        </span>
-        <span className="flex items-center gap-1.5">
-          <span
-            className="h-[2px] w-5 border-t border-dashed"
-            style={{ borderColor: "#2563EB" }}
-          />
-          Predicted
-        </span>
-        <span className="flex items-center gap-1.5">
-          <span className="h-2 w-3 rounded-sm bg-zinc-900/15" />
-          P10–P90
-        </span>
-      </div>
     </div>
   );
 }

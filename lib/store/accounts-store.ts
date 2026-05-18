@@ -6,6 +6,14 @@ import type {
   TransferChannel,
 } from "@/types";
 import { buildAccountsFromMeta } from "@/lib/data/accounts";
+import { useInsightsStore } from "@/lib/store/insights-store";
+
+function invalidateInsights(accountIds: string[]) {
+  const store = useInsightsStore.getState();
+  for (const id of accountIds) {
+    store.clear(id);
+  }
+}
 
 export interface AdHocTransferSpec {
   from: string;
@@ -22,8 +30,8 @@ interface AccountsStore {
   transfers: Transfer[];
   dismissedAccountIds: Record<string, true>;
   lastExecutedTransferId: string | null;
-  executeTransfer: (transfer: Transfer) => void;
-  addAndExecuteTransfer: (spec: AdHocTransferSpec) => string;
+  executeTransfer: (transfer: Transfer) => boolean;
+  addAndExecuteTransfer: (spec: AdHocTransferSpec) => string | null;
   dismissAlert: (alertId: string) => void;
   reset: () => void;
 }
@@ -45,10 +53,20 @@ function applyTransferToAccounts(
       };
     }
     if (a.id === from) {
-      return { ...a, balance: Math.max(0, a.balance - amount) };
+      return { ...a, balance: a.balance - amount };
     }
     return a;
   });
+}
+
+function hasSufficientFunds(
+  accounts: Account[],
+  from: string,
+  amount: number,
+): boolean {
+  const source = accounts.find((a) => a.id === from);
+  if (!source) return false;
+  return source.balance >= amount;
 }
 
 function scheduleFreshClear(
@@ -77,6 +95,10 @@ export const useAccountsStore = create<AccountsStore>((set) => ({
   dismissedAccountIds: {},
   lastExecutedTransferId: null,
   executeTransfer: (transfer) => {
+    const current = useAccountsStore.getState().accounts;
+    if (!hasSufficientFunds(current, transfer.from, transfer.amount)) {
+      return false;
+    }
     set((state) => {
       const accounts = applyTransferToAccounts(
         state.accounts,
@@ -96,8 +118,14 @@ export const useAccountsStore = create<AccountsStore>((set) => ({
         lastExecutedTransferId: completed.id,
       };
     });
+    invalidateInsights([transfer.from, transfer.to]);
+    return true;
   },
   addAndExecuteTransfer: (spec) => {
+    const current = useAccountsStore.getState().accounts;
+    if (!hasSufficientFunds(current, spec.from, spec.amount)) {
+      return null;
+    }
     const localId = `compass-${Date.now().toString(36)}-${Math.random()
       .toString(36)
       .slice(2, 7)}`;
@@ -131,6 +159,7 @@ export const useAccountsStore = create<AccountsStore>((set) => ({
         lastExecutedTransferId: localId,
       };
     });
+    invalidateInsights([spec.from, spec.to]);
     return localId;
   },
   dismissAlert: (alertId) => {
@@ -144,6 +173,7 @@ export const useAccountsStore = create<AccountsStore>((set) => ({
     }));
   },
   reset: () => {
+    useInsightsStore.setState({ byKey: {}, inflight: {} });
     set({
       accounts: buildAccountsFromMeta(),
       transfers: [],
