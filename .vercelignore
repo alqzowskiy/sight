@@ -1,0 +1,6 @@
+ml/
+*.pdf
+newplan.md
+.env
+.env.local
+.env.example

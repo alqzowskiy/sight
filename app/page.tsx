@@ -1,13 +1,12 @@
-import { ArchitectureSection } from "@/components/landing/ArchitectureSection";
-import { CtaSection } from "@/components/landing/CtaSection";
 import { DockNav } from "@/components/landing/DockNav";
-import { EnginesSection } from "@/components/landing/EnginesSection";
-import { Footer } from "@/components/landing/Footer";
 import { Hero } from "@/components/landing/Hero";
-import { LiveGlimpseSection } from "@/components/landing/LiveGlimpseSection";
-import { NumbersSection } from "@/components/landing/NumbersSection";
-import { ProblemSection } from "@/components/landing/ProblemSection";
-import { VoicesSection } from "@/components/landing/VoicesSection";
+import { EssenceSection } from "@/components/landing/EssenceSection";
+import { HowItWorksSection } from "@/components/landing/HowItWorksSection";
+import { ModelsSection } from "@/components/landing/ModelsSection";
+import { MetricsSection } from "@/components/landing/MetricsSection";
+import { AiSection } from "@/components/landing/AiSection";
+import { StackSection } from "@/components/landing/StackSection";
+import { Footer } from "@/components/landing/Footer";
 
 export default function Home() {
   return (
@@ -15,13 +14,12 @@ export default function Home() {
       <DockNav />
       <main>
         <Hero />
-        <LiveGlimpseSection />
-        <ProblemSection />
-        <EnginesSection />
-        <NumbersSection />
-        <VoicesSection />
-        <ArchitectureSection />
-        <CtaSection />
+        <EssenceSection />
+        <HowItWorksSection />
+        <ModelsSection />
+        <MetricsSection />
+        <AiSection />
+        <StackSection />
       </main>
       <Footer />
     </>

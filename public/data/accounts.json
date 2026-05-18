@@ -1,0 +1,112 @@
+[
+  {
+    "id": "eur-frankfurt",
+    "name": "NovaPay EUR · Frankfurt",
+    "bank": "Deutsche Bank",
+    "currency": "EUR",
+    "country": "DE",
+    "location": [50.11, 8.68],
+    "minBalance": 500000,
+    "type": "operational"
+  },
+  {
+    "id": "eur-paris",
+    "name": "NovaPay EUR · Paris",
+    "bank": "BNP Paribas",
+    "currency": "EUR",
+    "country": "FR",
+    "location": [48.85, 2.35],
+    "minBalance": 400000,
+    "type": "operational"
+  },
+  {
+    "id": "usd-nyc",
+    "name": "NovaPay USD · NYC",
+    "bank": "JPMorgan",
+    "currency": "USD",
+    "country": "US",
+    "location": [40.71, -74.0],
+    "minBalance": 800000,
+    "type": "operational"
+  },
+  {
+    "id": "usd-sf",
+    "name": "NovaPay USD · SF",
+    "bank": "Bank of America",
+    "currency": "USD",
+    "country": "US",
+    "location": [37.77, -122.41],
+    "minBalance": 400000,
+    "type": "operational"
+  },
+  {
+    "id": "gbp-london",
+    "name": "NovaPay GBP · London",
+    "bank": "Barclays",
+    "currency": "GBP",
+    "country": "GB",
+    "location": [51.5, -0.12],
+    "minBalance": 300000,
+    "type": "operational"
+  },
+  {
+    "id": "sgd-singapore",
+    "name": "NovaPay SGD · Singapore",
+    "bank": "DBS",
+    "currency": "SGD",
+    "country": "SG",
+    "location": [1.36, 103.99],
+    "minBalance": 600000,
+    "type": "operational"
+  },
+  {
+    "id": "chf-zurich",
+    "name": "NovaPay CHF · Zurich",
+    "bank": "UBS",
+    "currency": "CHF",
+    "country": "CH",
+    "location": [47.37, 8.54],
+    "minBalance": 200000,
+    "type": "operational"
+  },
+  {
+    "id": "visa-eur",
+    "name": "Visa Settlement · EUR",
+    "bank": "Visa",
+    "currency": "EUR",
+    "country": "DE",
+    "location": [50.11, 8.68],
+    "minBalance": 0,
+    "type": "settlement"
+  },
+  {
+    "id": "mc-usd",
+    "name": "Mastercard Settlement · USD",
+    "bank": "Mastercard",
+    "currency": "USD",
+    "country": "US",
+    "location": [40.71, -74.0],
+    "minBalance": 0,
+    "type": "settlement"
+  },
+  {
+    "id": "regulatory-reserve",
+    "name": "Regulatory Reserve",
+    "bank": "Deutsche Bank",
+    "currency": "EUR",
+    "country": "DE",
+    "location": [50.11, 8.68],
+    "minBalance": 7000000,
+    "type": "reserve"
+  },
+  {
+    "id": "fx-hedging",
+    "name": "FX Hedging",
+    "bank": "JPMorgan",
+    "currency": "USD",
+    "country": "US",
+    "location": [40.71, -74.0],
+    "minBalance": 2000000,
+    "type": "reserve"
+  }
+]
