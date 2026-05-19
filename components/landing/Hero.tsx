@@ -76,7 +76,7 @@ export function Hero() {
             How it works
           </a>
           <a
-            href="https://github.com"
+            href="https://github.com/alqzowskiy/sight"
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-1.5 rounded-full px-3 py-3 font-mono text-[11px] uppercase tracking-[0.1em] text-zinc-500 transition-colors hover:text-zinc-900"

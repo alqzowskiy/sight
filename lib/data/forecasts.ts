@@ -80,6 +80,51 @@ function buildIndex(): {
 
 const INDEX = buildIndex();
 
+// Runtime layer for user-added accounts. The static INDEX above is built once
+// from the JSON the ML pipeline produced. Custom accounts created from the
+// Settings panel get their forecasts registered here and merged into the
+// lookup paths below.
+const runtimePointsByAccount = new Map<string, ForecastPointIndexed[]>();
+const runtimePointByKey = new Map<string, ForecastPointIndexed>();
+
+export function setRuntimeForecast(
+  accountId: string,
+  points: ForecastPointRaw[],
+): void {
+  if (points.length === 0) {
+    removeRuntimeForecast(accountId);
+    return;
+  }
+  const historicals = points.filter((p) => p.isHistorical);
+  const anchorDateStr =
+    historicals.length > 0
+      ? historicals[historicals.length - 1].date
+      : points[0].date;
+  const anchor = parseISODate(anchorDateStr);
+  const indexed: ForecastPointIndexed[] = points
+    .map((p) => ({
+      ...p,
+      dayOffset: diffDays(parseISODate(p.date), anchor),
+    }))
+    .sort((a, b) => a.dayOffset - b.dayOffset);
+
+  runtimePointsByAccount.set(accountId, indexed);
+  // Drop stale entries for this account before re-keying.
+  for (const key of Array.from(runtimePointByKey.keys())) {
+    if (key.startsWith(`${accountId}_`)) runtimePointByKey.delete(key);
+  }
+  for (const ip of indexed) {
+    runtimePointByKey.set(`${accountId}_${ip.dayOffset}`, ip);
+  }
+}
+
+export function removeRuntimeForecast(accountId: string): void {
+  runtimePointsByAccount.delete(accountId);
+  for (const key of Array.from(runtimePointByKey.keys())) {
+    if (key.startsWith(`${accountId}_`)) runtimePointByKey.delete(key);
+  }
+}
+
 export const forecastsMeta = {
   generatedAt: RAW.generated_at,
   modelVersion: RAW.model_version,
@@ -100,13 +145,20 @@ export function getForecastPointRaw(
   accountId: string,
   dayOffset: number,
 ): ForecastPointIndexed | undefined {
-  return INDEX.pointByKey.get(`${accountId}_${dayOffset}`);
+  return (
+    runtimePointByKey.get(`${accountId}_${dayOffset}`) ??
+    INDEX.pointByKey.get(`${accountId}_${dayOffset}`)
+  );
 }
 
 export function getAccountPoints(
   accountId: string,
 ): ForecastPointIndexed[] {
-  return INDEX.pointsByAccount.get(accountId) ?? [];
+  return (
+    runtimePointsByAccount.get(accountId) ??
+    INDEX.pointsByAccount.get(accountId) ??
+    []
+  );
 }
 
 export function getAccountPointsInRange(
@@ -114,7 +166,10 @@ export function getAccountPointsInRange(
   fromOffset: number,
   toOffset: number,
 ): ForecastPointIndexed[] {
-  const arr = INDEX.pointsByAccount.get(accountId) ?? [];
+  const arr =
+    runtimePointsByAccount.get(accountId) ??
+    INDEX.pointsByAccount.get(accountId) ??
+    [];
   return arr.filter(
     (p) => p.dayOffset >= fromOffset && p.dayOffset <= toOffset,
   );
@@ -124,7 +179,10 @@ export function getOffsetBounds(accountId: string): {
   min: number;
   max: number;
 } {
-  const arr = INDEX.pointsByAccount.get(accountId) ?? [];
+  const arr =
+    runtimePointsByAccount.get(accountId) ??
+    INDEX.pointsByAccount.get(accountId) ??
+    [];
   if (arr.length === 0) return { min: 0, max: 0 };
   return {
     min: arr[0].dayOffset,

@@ -1,12 +1,19 @@
 import { create } from "zustand";
 import type {
   Account,
+  AccountType,
   Transfer,
   Currency,
   TransferChannel,
 } from "@/types";
 import { buildAccountsFromMeta } from "@/lib/data/accounts";
+import {
+  getToday,
+  removeRuntimeForecast,
+  setRuntimeForecast,
+} from "@/lib/data/forecasts";
 import { useInsightsStore } from "@/lib/store/insights-store";
+import { generateForecastForAccount } from "@/lib/utils/synthetic-forecast";
 
 function invalidateInsights(accountIds: string[]) {
   const store = useInsightsStore.getState();
@@ -25,13 +32,34 @@ export interface AdHocTransferSpec {
   currency: Currency;
 }
 
+export interface NewAccountSpec {
+  id?: string;
+  name: string;
+  bank: string;
+  currency: Currency;
+  country: string;
+  location: [number, number];
+  balance: number;
+  minBalance: number;
+  type: AccountType;
+}
+
+export interface AccountMetaPatch {
+  name?: string;
+  bank?: string;
+}
+
 interface AccountsStore {
   accounts: Account[];
   transfers: Transfer[];
+  customAccountIds: Record<string, true>;
   dismissedAccountIds: Record<string, true>;
   lastExecutedTransferId: string | null;
   executeTransfer: (transfer: Transfer) => boolean;
   addAndExecuteTransfer: (spec: AdHocTransferSpec) => string | null;
+  updateAccountMeta: (id: string, patch: AccountMetaPatch) => void;
+  addAccount: (spec: NewAccountSpec) => string;
+  removeAccount: (id: string) => void;
   dismissAlert: (alertId: string) => void;
   reset: () => void;
 }
@@ -89,9 +117,28 @@ function accountIdFromAlertId(alertId: string): string | null {
 
 const initialAccounts = buildAccountsFromMeta();
 
+function makeCustomId(name: string, currency: string): string {
+  const slug = name
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "")
+    .slice(0, 24);
+  const rnd = Math.random().toString(36).slice(2, 6);
+  return `custom-${currency.toLowerCase()}-${slug || "account"}-${rnd}`;
+}
+
+function statusForBalance(balance: number, minBalance: number): Account["status"] {
+  if (minBalance === 0) return "healthy";
+  const ratio = balance / minBalance;
+  if (ratio < 0.5 || balance < 0) return "critical";
+  if (ratio < 1.0) return "warning";
+  return "healthy";
+}
+
 export const useAccountsStore = create<AccountsStore>((set) => ({
   accounts: initialAccounts,
   transfers: [],
+  customAccountIds: {},
   dismissedAccountIds: {},
   lastExecutedTransferId: null,
   executeTransfer: (transfer) => {
@@ -162,6 +209,60 @@ export const useAccountsStore = create<AccountsStore>((set) => ({
     invalidateInsights([spec.from, spec.to]);
     return localId;
   },
+  updateAccountMeta: (id, patch) => {
+    set((state) => ({
+      accounts: state.accounts.map((a) =>
+        a.id === id
+          ? {
+              ...a,
+              name: patch.name?.trim() ? patch.name.trim() : a.name,
+              bank: patch.bank?.trim() ? patch.bank.trim() : a.bank,
+            }
+          : a,
+      ),
+    }));
+    invalidateInsights([id]);
+  },
+  addAccount: (spec) => {
+    const id = spec.id ?? makeCustomId(spec.name, spec.currency);
+    const account: Account = {
+      id,
+      name: spec.name.trim(),
+      bank: spec.bank.trim(),
+      location: spec.location,
+      currency: spec.currency,
+      balance: spec.balance,
+      minBalance: spec.minBalance,
+      type: spec.type,
+      status: statusForBalance(spec.balance, spec.minBalance),
+    };
+    const forecast = generateForecastForAccount(
+      {
+        id,
+        balance: spec.balance,
+        minBalance: spec.minBalance,
+        type: spec.type,
+      },
+      getToday(),
+    );
+    setRuntimeForecast(id, forecast);
+    set((state) => ({
+      accounts: [...state.accounts, account],
+      customAccountIds: { ...state.customAccountIds, [id]: true },
+    }));
+    return id;
+  },
+  removeAccount: (id) => {
+    removeRuntimeForecast(id);
+    set((state) => {
+      const { [id]: _removed, ...remainingCustom } = state.customAccountIds;
+      return {
+        accounts: state.accounts.filter((a) => a.id !== id),
+        customAccountIds: remainingCustom,
+      };
+    });
+    invalidateInsights([id]);
+  },
   dismissAlert: (alertId) => {
     const accountId = accountIdFromAlertId(alertId);
     if (!accountId) return;
@@ -174,9 +275,13 @@ export const useAccountsStore = create<AccountsStore>((set) => ({
   },
   reset: () => {
     useInsightsStore.setState({ byKey: {}, inflight: {} });
+    // Drop any runtime forecasts registered for custom accounts.
+    const customIds = Object.keys(useAccountsStore.getState().customAccountIds);
+    for (const id of customIds) removeRuntimeForecast(id);
     set({
       accounts: buildAccountsFromMeta(),
       transfers: [],
+      customAccountIds: {},
       dismissedAccountIds: {},
       lastExecutedTransferId: null,
     });

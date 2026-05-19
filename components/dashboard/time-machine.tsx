@@ -139,7 +139,7 @@ export function TimeMachine() {
   }, [offset]);
 
   return (
-    <div className="flex h-full w-full items-center gap-4 px-6">
+    <div className="flex h-full w-full items-center gap-2 px-3 py-3 lg:gap-4 lg:px-6 lg:py-0">
       <div className="flex items-center gap-1.5">
         <IconButton
           aria-label={isPlaying ? "Pause" : "Play"}
@@ -162,7 +162,7 @@ export function TimeMachine() {
             <h3 className="font-mono text-[11px] uppercase tracking-[0.12em] text-zinc-900">
               Time Machine
             </h3>
-            <span className="font-mono text-[10px] text-zinc-400">
+            <span className="hidden font-mono text-[10px] text-zinc-400 lg:inline">
               Drag · ←/→ step · Space play
             </span>
           </div>

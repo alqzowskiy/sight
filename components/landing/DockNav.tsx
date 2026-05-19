@@ -11,6 +11,7 @@ const links = [
   { label: "What it does", href: "#essence" },
   { label: "How it works", href: "#how-it-works" },
   { label: "Models", href: "#models" },
+  { label: "Optimizer", href: "#optimizer" },
   { label: "Results", href: "#results" },
 ];
 

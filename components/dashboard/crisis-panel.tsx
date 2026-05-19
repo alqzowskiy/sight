@@ -42,7 +42,7 @@ export function CrisisPanel() {
             animate={{ x: 0 }}
             exit={{ x: "100%" }}
             transition={{ duration: 0.35, ease }}
-            className="fixed right-0 top-0 z-50 flex h-screen w-[380px] flex-col border-l border-zinc-200 bg-white shadow-xl"
+            className="fixed right-0 top-0 z-50 flex h-screen w-full max-w-[380px] flex-col border-l border-zinc-200 bg-white shadow-xl"
           >
             <header className="flex items-start justify-between border-b border-zinc-200/80 px-6 py-5">
               <div>

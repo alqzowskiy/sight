@@ -48,7 +48,7 @@ export function Footer() {
           <FooterCol
             title="Source"
             items={[
-              { label: "GitHub", href: "https://github.com", external: true },
+              { label: "GitHub", href: "https://github.com/alqzowskiy/sight", external: true },
               {
                 label: "Next.js docs",
                 href: "https://nextjs.org",
@@ -61,7 +61,7 @@ export function Footer() {
         <div className="mt-12 flex flex-col items-start justify-between gap-3 border-t border-zinc-200/80 pt-6 font-mono text-[10px] uppercase tracking-[0.12em] text-zinc-400 md:flex-row md:items-center">
           <span>© 2026 Sight · Predictive treasury for fintech</span>
           <a
-            href="https://github.com"
+            href="https://github.com/alqzowskiy/sight"
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-1.5 text-zinc-500 transition-colors hover:text-zinc-900"

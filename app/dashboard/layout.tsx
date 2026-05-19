@@ -5,9 +5,9 @@ import { SplashScreen } from "@/components/dashboard/splash-screen";
 
 export default function DashboardLayout({ children }: { children: ReactNode }) {
   return (
-    <div className="flex h-screen w-screen overflow-hidden bg-[#FAFAFA] text-zinc-900">
+    <div className="flex min-h-screen w-screen bg-[#FAFAFA] text-zinc-900 lg:h-screen lg:overflow-hidden">
       <Sidebar />
-      <main className="flex-1 overflow-hidden">{children}</main>
+      <main className="flex-1 lg:overflow-hidden">{children}</main>
       <SplashScreen />
       <Toaster
         position="bottom-right"

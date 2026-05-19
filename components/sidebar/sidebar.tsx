@@ -2,8 +2,9 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { LayoutDashboard, FlaskConical, Siren, Brain } from "lucide-react";
+import { LayoutDashboard, Settings as SettingsIcon } from "lucide-react";
 import { SightLogo } from "@/components/sight/sight-logo";
+import { useUiStore } from "@/lib/store/ui-store";
 
 interface NavItem {
   label: string;
@@ -13,16 +14,15 @@ interface NavItem {
 
 export function Sidebar() {
   const pathname = usePathname();
+  const setSettingsOpen = useUiStore((s) => s.setSettingsOpen);
+  const settingsOpen = useUiStore((s) => s.settingsOpen);
 
   const items: NavItem[] = [
     { label: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
-    { label: "Brain", href: "/dashboard/brain", icon: Brain },
-    { label: "Lab", href: "/dashboard/lab", icon: FlaskConical },
-    { label: "Crisis", href: "/dashboard/crisis", icon: Siren },
   ];
 
   return (
-    <aside className="flex h-screen w-[68px] shrink-0 flex-col items-center border-r border-zinc-200/80 bg-white py-4">
+    <aside className="hidden h-screen w-[68px] shrink-0 flex-col items-center border-r border-zinc-200/80 bg-white py-4 lg:flex">
       <Link
         href="/"
         className="mb-6 flex h-9 w-9 items-center justify-center"
@@ -54,6 +54,22 @@ export function Sidebar() {
           );
         })}
       </nav>
+
+      <button
+        type="button"
+        onClick={() => setSettingsOpen(!settingsOpen)}
+        aria-label="Open settings"
+        className={`group relative flex h-10 w-10 items-center justify-center rounded-md transition-colors ${
+          settingsOpen
+            ? "bg-zinc-100 text-zinc-900"
+            : "text-zinc-500 hover:bg-zinc-50 hover:text-zinc-900"
+        }`}
+      >
+        <SettingsIcon className="h-[18px] w-[18px]" strokeWidth={1.6} />
+        <span className="pointer-events-none absolute left-full ml-2 whitespace-nowrap rounded bg-zinc-900 px-2 py-1 font-mono text-[10px] uppercase tracking-[0.1em] text-white opacity-0 transition-opacity group-hover:opacity-100">
+          Settings
+        </span>
+      </button>
     </aside>
   );
 }
