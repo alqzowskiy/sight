@@ -196,6 +196,8 @@ export const SightGlobe = forwardRef<SightGlobeHandle, SightGlobeProps>(function
   const pointerRef = useRef<{
     x: number;
     y: number;
+    startX: number;
+    startY: number;
     lambda: number;
     phi: number;
     moved: boolean;
@@ -381,14 +383,24 @@ export const SightGlobe = forwardRef<SightGlobeHandle, SightGlobeProps>(function
         const drawCount = Math.max(2, Math.ceil((samples + 1) * progress));
         const coords = fullCoords.slice(0, drawCount);
 
+        // Halo pass — wider light stroke behind the line so the arc stays
+        // visible against the dark land mass (#18181B). Cartographic
+        // standard trick for lines that cross varied backgrounds.
+        ctx.setLineDash([]);
+        ctx.lineWidth = arc.recommended ? 3.2 : 2.6;
+        ctx.strokeStyle = "rgba(255,255,255,0.55)";
+        ctx.beginPath();
+        path({ type: "LineString", coordinates: coords });
+        ctx.stroke();
+
         if (arc.recommended) {
-          ctx.lineWidth = 1.3;
-          ctx.strokeStyle = "rgba(37,99,235,0.72)";
+          ctx.lineWidth = 1.5;
+          ctx.strokeStyle = "rgba(37,99,235,0.95)";
           ctx.setLineDash([5, 4]);
           ctx.lineDashOffset = -((nowTs / 60) % 18);
         } else {
-          ctx.lineWidth = 1.1;
-          ctx.strokeStyle = "rgba(10,10,10,0.5)";
+          ctx.lineWidth = 1.3;
+          ctx.strokeStyle = "rgba(10,10,10,0.85)";
           ctx.setLineDash([]);
         }
         ctx.beginPath();
@@ -590,20 +602,25 @@ export const SightGlobe = forwardRef<SightGlobeHandle, SightGlobeProps>(function
     hoverRef.current = hover;
   }, [hover]);
 
-  const handleMarkerEnter = useCallback((clusterId: string, location: [number, number]) => {
-    if (hoverLeaveTimerRef.current !== null) {
-      clearTimeout(hoverLeaveTimerRef.current);
-      hoverLeaveTimerRef.current = null;
-    }
-    if (hoverEnterTimerRef.current !== null) clearTimeout(hoverEnterTimerRef.current);
-    hoverEnterTimerRef.current = window.setTimeout(() => {
-      const proj = projectorRef.current;
-      if (!proj) return;
-      const projected = proj.project(location[0], location[1]);
-      if (!projected || !projected.visible) return;
-      setHover({ clusterId, x: projected.x, y: projected.y });
-    }, 200);
-  }, []);
+  const handleMarkerEnter = useCallback(
+    (clusterId: string, location: [number, number]) => {
+      markInteraction();
+      if (hoverLeaveTimerRef.current !== null) {
+        clearTimeout(hoverLeaveTimerRef.current);
+        hoverLeaveTimerRef.current = null;
+      }
+      if (hoverEnterTimerRef.current !== null)
+        clearTimeout(hoverEnterTimerRef.current);
+      hoverEnterTimerRef.current = window.setTimeout(() => {
+        const proj = projectorRef.current;
+        if (!proj) return;
+        const projected = proj.project(location[0], location[1]);
+        if (!projected || !projected.visible) return;
+        setHover({ clusterId, x: projected.x, y: projected.y });
+      }, 200);
+    },
+    [markInteraction],
+  );
 
   const handleMarkerLeave = useCallback(() => {
     if (hoverEnterTimerRef.current !== null) {
@@ -630,6 +647,8 @@ export const SightGlobe = forwardRef<SightGlobeHandle, SightGlobeProps>(function
       pointerRef.current = {
         x: e.clientX,
         y: e.clientY,
+        startX: e.clientX,
+        startY: e.clientY,
         lambda: rotRef.current[0],
         phi: rotRef.current[1],
         moved: false,
@@ -641,30 +660,68 @@ export const SightGlobe = forwardRef<SightGlobeHandle, SightGlobeProps>(function
 
   const handlePointerMove = useCallback(
     (e: React.PointerEvent) => {
+      // Any pointer activity over the globe counts as interaction —
+      // prevents auto-rotation from kicking in while the user is hovering.
+      markInteraction();
       const p = pointerRef.current;
       if (!p) return;
+      // Incremental delta from the LAST move (not from pointerdown) so the
+      // rotation behaves like a continuous wheel — no rubber-band snap when
+      // the cursor leaves the viewport and returns, no "stuck" feeling when
+      // pitch hits the ±75° clamp.
       const dx = e.clientX - p.x;
       const dy = e.clientY - p.y;
-      if (Math.abs(dx) + Math.abs(dy) > 6) p.moved = true;
+      const totalMoved =
+        Math.abs(e.clientX - p.startX) + Math.abs(e.clientY - p.startY);
+      if (totalMoved > 6) p.moved = true;
       const sensitivity = 0.35 / scaleRef.current;
-      const nextLambda = p.lambda + dx * sensitivity;
-      const nextPhi = clamp(p.phi + dy * sensitivity, -75, 75);
+      const nextLambda = rotRef.current[0] + dx * sensitivity;
+      const nextPhi = clamp(
+        rotRef.current[1] + dy * sensitivity,
+        -75,
+        75,
+      );
       rotRef.current = [nextLambda, nextPhi];
-      markInteraction();
+      p.x = e.clientX;
+      p.y = e.clientY;
     },
     [markInteraction],
   );
 
-  const handlePointerUp = useCallback((e: React.PointerEvent) => {
+  const endDrag = useCallback((pointerId?: number) => {
     pointerRef.current = null;
     isInteractingRef.current = false;
     setIsInteracting(false);
     lastInteractRef.current = Date.now();
-    const el = e.currentTarget as HTMLElement;
-    if (el.hasPointerCapture?.(e.pointerId)) {
-      el.releasePointerCapture(e.pointerId);
+    const el = wrapRef.current;
+    if (el && pointerId !== undefined && el.hasPointerCapture?.(pointerId)) {
+      el.releasePointerCapture(pointerId);
     }
   }, []);
+
+  const handlePointerUp = useCallback(
+    (e: React.PointerEvent) => {
+      endDrag(e.pointerId);
+    },
+    [endDrag],
+  );
+
+  // Safety net: if the OS swallows pointerup (window blur, tab switch, drag
+  // escaping the viewport, browser bug), a global mouseup / blur still
+  // clears the stuck "interacting" state so the cursor doesn't feel jammed.
+  useEffect(() => {
+    function release() {
+      if (pointerRef.current) endDrag();
+    }
+    window.addEventListener("pointerup", release);
+    window.addEventListener("pointercancel", release);
+    window.addEventListener("blur", release);
+    return () => {
+      window.removeEventListener("pointerup", release);
+      window.removeEventListener("pointercancel", release);
+      window.removeEventListener("blur", release);
+    };
+  }, [endDrag]);
 
   useEffect(() => {
     const el = wrapRef.current;
@@ -706,6 +763,7 @@ export const SightGlobe = forwardRef<SightGlobeHandle, SightGlobeProps>(function
         onPointerMove={handlePointerMove}
         onPointerUp={handlePointerUp}
         onPointerCancel={handlePointerUp}
+        onLostPointerCapture={handlePointerUp}
       >
         <canvas ref={canvasRef} className="absolute inset-0" />
         <div

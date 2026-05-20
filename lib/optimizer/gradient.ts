@@ -1,6 +1,7 @@
 import type { Account } from "@/types";
 import { getAccountTrajectory } from "@/lib/utils/forecast";
 import { pickChannelAndFee } from "./channels";
+import { convertAmount } from "./fx";
 import type {
   AccountPressure,
   OptimizerPlan,
@@ -139,14 +140,20 @@ export function computeLiquidityGradientPlan(
 
     const candidates = ranked
       .filter((p) => p.accountId !== receiver.accountId)
-      .filter((p) => p.currency === receiver.currency)
       .filter((p) => p.supply > MIN_TRANSFER_AMOUNT)
-      .sort((a, b) => b.supply - a.supply);
+      // Same-currency donors come first (no FX cost). Within each group: more supply wins.
+      .sort((a, b) => {
+        const aSame = a.currency === receiver.currency ? 1 : 0;
+        const bSame = b.currency === receiver.currency ? 1 : 0;
+        if (aSame !== bSame) return bSame - aSame;
+        return b.supply - a.supply;
+      });
 
     if (candidates.length === 0) break;
     const donor = candidates[0];
     const donorAcc = accountById.get(donor.accountId)!;
 
+    // Compute amount in receiver's currency first (how much receiver actually needs).
     const targetAtWorst = receiverAcc.minBalance * BUFFER_PCT;
     const worstBalNow = effectiveBalance(
       receiverAcc,
@@ -154,35 +161,59 @@ export function computeLiquidityGradientPlan(
       receiver.worstDayOffset,
       receiverShifts[receiver.worstDayOffset],
     );
-    const needed = Math.max(0, targetAtWorst - worstBalNow);
-    const safeDonation = Math.floor(donor.supply * DONOR_RETENTION_PCT);
-    const amount = Math.floor(Math.min(needed, safeDonation));
+    const neededReceiverCcy = Math.max(0, targetAtWorst - worstBalNow);
 
-    if (amount < MIN_TRANSFER_AMOUNT) break;
+    // Convert receiver's need into donor's currency to know how much to send.
+    const neededInDonorCcy = convertAmount(
+      neededReceiverCcy,
+      receiverAcc.currency,
+      donorAcc.currency,
+    );
+
+    // Donor's supply is already in its own currency.
+    const safeDonation = Math.floor(donor.supply * DONOR_RETENTION_PCT);
+    const sendAmount = Math.floor(
+      Math.min(neededInDonorCcy, safeDonation),
+    );
+
+    if (sendAmount < MIN_TRANSFER_AMOUNT) break;
 
     const channelInfo = pickChannelAndFee(
-      amount,
+      sendAmount,
       { currency: donorAcc.currency, type: donorAcc.type },
       { currency: receiverAcc.currency, type: receiverAcc.type },
     );
     if (!channelInfo) break;
 
+    const receivedAmount = Math.floor(
+      convertAmount(sendAmount, donorAcc.currency, receiverAcc.currency),
+    );
+
     const donorShifts = shiftCache.get(donor.accountId)!;
     for (let d = 0; d <= HORIZON_DAYS; d++) {
-      donorShifts[d] -= amount;
-      receiverShifts[d] += amount;
+      donorShifts[d] -= sendAmount;
+      receiverShifts[d] += receivedAmount;
     }
+
+    const receiverCity =
+      receiverAcc.name.split("·")[1]?.trim() ?? receiverAcc.id;
+    const reasonSuffix = channelInfo.fxApplied
+      ? ` (FX ${donorAcc.currency}→${receiverAcc.currency})`
+      : "";
 
     steps.push({
       from: donor.accountId,
       to: receiver.accountId,
-      amount,
+      amount: sendAmount,
       channel: channelInfo.channel,
       currency: donorAcc.currency,
       fee: channelInfo.fee,
       fromLocation: donorAcc.location,
       toLocation: receiverAcc.location,
-      reason: `Lifts ${receiverAcc.name.split("·")[1]?.trim() ?? receiverAcc.id} above min on day +${receiver.worstDayOffset}`,
+      reason: `Lifts ${receiverCity} above min on day +${receiver.worstDayOffset}${reasonSuffix}`,
+      fxApplied: channelInfo.fxApplied,
+      receivedAmount,
+      receivedCurrency: receiverAcc.currency,
     });
     totalFees += channelInfo.fee;
   }

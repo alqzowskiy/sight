@@ -292,7 +292,7 @@ def generate_account(
 
 def main() -> int:
     parser = argparse.ArgumentParser()
-    parser.add_argument("--days", type=int, default=180)
+    parser.add_argument("--days", type=int, default=365)
     parser.add_argument("--seed", type=int, default=42)
     parser.add_argument(
         "--today",

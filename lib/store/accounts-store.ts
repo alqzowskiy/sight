@@ -70,18 +70,20 @@ function applyTransferToAccounts(
   accounts: Account[],
   from: string,
   to: string,
-  amount: number,
+  sendAmount: number,
+  receivedAmount?: number,
 ): Account[] {
+  const credited = receivedAmount ?? sendAmount;
   return accounts.map((a) => {
     if (a.id === to) {
       return {
         ...a,
-        balance: a.balance + amount,
+        balance: a.balance + credited,
         status: "healthy" as const,
       };
     }
     if (a.id === from) {
-      return { ...a, balance: a.balance - amount };
+      return { ...a, balance: a.balance - sendAmount };
     }
     return a;
   });
@@ -152,6 +154,7 @@ export const useAccountsStore = create<AccountsStore>((set) => ({
         transfer.from,
         transfer.to,
         transfer.amount,
+        transfer.receivedAmount,
       );
       const completed: Transfer = { ...transfer, status: "completed" };
       scheduleFreshClear(set, completed.id);

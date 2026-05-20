@@ -233,6 +233,10 @@ function Pipeline({
     (a, b) => snapshot.mapes[a] - snapshot.mapes[b],
   );
   const bestMape = sortedByMape[0];
+  const stackerActive = snapshot.chosen === "stacker";
+  const chosenBase = BASE_MODELS.includes(snapshot.chosen as BaseModel)
+    ? (snapshot.chosen as BaseModel)
+    : null;
 
   return (
     <>
@@ -247,15 +251,25 @@ function Pipeline({
             weight={snapshot.weights[m]}
             mape={snapshot.mapes[m]}
             isBest={m === bestMape}
+            isSelected={m === chosenBase}
             hovered={hovered}
             setHovered={setHovered}
           />
         ))}
       </div>
 
-      <Connections weights={snapshot.weights} hovered={hovered} />
+      <Connections
+        weights={snapshot.weights}
+        hovered={hovered}
+        stackerActive={stackerActive}
+      />
 
-      <SectionLabel num="02" title="Stacker" />
+      <SectionLabel
+        num="02"
+        title={
+          stackerActive ? "Stacker · selected" : "Stacker · reference only"
+        }
+      />
 
       <div className="mt-3">
         <StackerCard
@@ -266,6 +280,7 @@ function Pipeline({
           currency={currency}
           hovered={hovered}
           setHovered={setHovered}
+          active={stackerActive}
         />
       </div>
 
@@ -309,6 +324,7 @@ interface ModelCardProps {
   weight: number;
   mape: number;
   isBest: boolean;
+  isSelected: boolean;
   hovered: CardId | null;
   setHovered: (id: CardId | null) => void;
 }
@@ -319,6 +335,7 @@ function ModelCard({
   weight,
   mape,
   isBest,
+  isSelected,
   hovered,
   setHovered,
 }: ModelCardProps) {
@@ -361,10 +378,24 @@ function ModelCard({
       className={`relative overflow-hidden rounded-lg border bg-white transition-colors ${
         isFocused
           ? "border-zinc-900 shadow-[0_8px_24px_rgba(0,0,0,0.06)]"
-          : "border-zinc-200/80 hover:border-zinc-300"
+          : isSelected
+            ? "border-emerald-400 shadow-[0_4px_18px_rgba(16,185,129,0.18)]"
+            : "border-zinc-200/80 hover:border-zinc-300"
       }`}
     >
-      {isBest && (
+      {isSelected ? (
+        <span
+          className="absolute right-1.5 top-1.5 z-10 inline-flex items-center gap-0.5 rounded-full border px-1 py-0.5 font-mono text-[8px] uppercase tracking-[0.14em]"
+          style={{
+            color: "#047857",
+            background: "#ECFDF5",
+            borderColor: "#A7F3D0",
+          }}
+        >
+          <Sparkles className="h-2 w-2" strokeWidth={2} />
+          Selected
+        </span>
+      ) : isBest ? (
         <span
           className="absolute right-1.5 top-1.5 z-10 inline-flex items-center gap-0.5 rounded-full border bg-white px-1 py-0.5 font-mono text-[8px] uppercase tracking-[0.14em]"
           style={{
@@ -375,7 +406,7 @@ function ModelCard({
           <Sparkles className="h-2 w-2" strokeWidth={2} />
           Best
         </span>
-      )}
+      ) : null}
 
       <div className="px-2 pt-2">
         <ModelIllustration model={model} active={isFocused} />
@@ -438,9 +469,10 @@ function ModelCard({
 interface ConnectionsProps {
   weights: Record<BaseModel, number>;
   hovered: CardId | null;
+  stackerActive: boolean;
 }
 
-function Connections({ weights, hovered }: ConnectionsProps) {
+function Connections({ weights, hovered, stackerActive }: ConnectionsProps) {
   const width = 1100;
   const height = 130;
   const numCards = BASE_MODELS.length;
@@ -498,6 +530,7 @@ function Connections({ weights, hovered }: ConnectionsProps) {
           const dimmed = hovered !== null && hovered !== m;
           const highlighted = hovered === m;
           const d = `M ${top.left} ${topY} L ${top.right} ${topY} C ${top.right} ${midY}, ${bot.right} ${midY}, ${bot.right} ${barY} L ${bot.left} ${barY} C ${bot.left} ${midY}, ${top.left} ${midY}, ${top.left} ${topY} Z`;
+          const baseOpacity = stackerActive ? 1 : 0.35;
           return (
             <motion.path
               key={`flow-${m}`}
@@ -505,7 +538,7 @@ function Connections({ weights, hovered }: ConnectionsProps) {
               fill={highlighted ? "url(#sankey-flow-hot)" : "url(#sankey-flow)"}
               initial={{ opacity: 0 }}
               animate={{
-                opacity: dimmed ? 0.07 : 1,
+                opacity: dimmed ? 0.07 : baseOpacity,
               }}
               transition={{
                 opacity: {
@@ -603,6 +636,7 @@ interface StackerCardProps {
   currency: string;
   hovered: CardId | null;
   setHovered: (id: CardId | null) => void;
+  active: boolean;
 }
 
 function StackerCard({
@@ -613,37 +647,50 @@ function StackerCard({
   currency,
   hovered,
   setHovered,
+  active,
 }: StackerCardProps) {
   const isFocused = hovered === "stacker";
   const dimmed = hovered !== null && !isFocused;
+  const restingOpacity = active ? 1 : 0.55;
 
   return (
     <motion.div
       onMouseEnter={() => setHovered("stacker")}
       onMouseLeave={() => setHovered(null)}
       animate={{
-        opacity: dimmed ? 0.45 : 1,
+        opacity: dimmed ? 0.35 : restingOpacity,
         scale: isFocused ? 1.01 : 1,
       }}
       transition={{ duration: 0.22, ease: EASE }}
       className="mx-auto max-w-[520px] rounded-xl border bg-white p-4"
       style={{
-        borderColor: `${ACCENT}55`,
+        borderColor: active ? `${ACCENT}55` : "#E4E4E7",
         boxShadow: isFocused
           ? `0 12px 30px rgba(37,99,235,0.12)`
-          : `0 0 0 1px ${ACCENT}11`,
+          : active
+            ? `0 0 0 1px ${ACCENT}11`
+            : "none",
       }}
     >
       <div className="flex items-start justify-between gap-4">
         <div>
           <div
             className="font-mono text-[10px] uppercase tracking-[0.14em]"
-            style={{ color: ACCENT }}
+            style={{ color: active ? ACCENT : "#71717A" }}
           >
             Ridge Stacker
+            {!active && (
+              <span className="ml-2 normal-case tracking-normal text-zinc-400">
+                · not selected for this account
+              </span>
+            )}
           </div>
           <div className="mt-0.5 text-[11px] text-zinc-500">
             Positive-constrained · α=1.0
+          </div>
+          <div className="mt-1 text-[10px] leading-snug text-zinc-400">
+            Display weights ≈ 1/MAPE normalized · actual ridge coefficients in{" "}
+            <code className="font-mono">ml/models/*_stacker.pkl</code>
           </div>
         </div>
         <div className="text-right">
@@ -861,29 +908,52 @@ function LeaderboardPanel({
             name={MODEL_INFO[m].name}
             weight={snapshot.weights[m]}
             mape={snapshot.mapes[m]}
+            isChosen={snapshot.chosen === m}
           />
         ))}
-        <div
-          className="mt-2 flex items-center gap-2 rounded-md border px-2 py-1.5 font-mono text-[11px]"
-          style={{
-            borderColor: `${ACCENT}33`,
-            background: `${ACCENT}0a`,
-          }}
-        >
-          <span className="font-mono text-[10px] text-zinc-400">★</span>
-          <span style={{ color: ACCENT }} className="w-16">
-            Stacker
-          </span>
-          <div className="flex-1 text-[10px] uppercase tracking-[0.12em] text-zinc-500">
-            chosen
-          </div>
-          <span className="tabular-nums" style={{ color: ACCENT }}>
-            {snapshot.stackerMape !== null
-              ? `${snapshot.stackerMape.toFixed(2)}%`
-              : "—"}
-          </span>
-        </div>
+        <StackerLeaderboardRow
+          stackerMape={snapshot.stackerMape}
+          chosen={snapshot.chosen}
+        />
       </div>
+    </div>
+  );
+}
+
+function StackerLeaderboardRow({
+  stackerMape,
+  chosen,
+}: {
+  stackerMape: number | null;
+  chosen: string;
+}) {
+  const isWinner = chosen === "stacker";
+  return (
+    <div
+      className="mt-2 flex items-center gap-2 rounded-md border px-2 py-1.5 font-mono text-[11px]"
+      style={{
+        borderColor: isWinner ? `${ACCENT}55` : "#E4E4E7",
+        background: isWinner ? `${ACCENT}0a` : "transparent",
+      }}
+    >
+      <span className="font-mono text-[10px] text-zinc-400">
+        {isWinner ? "★" : "·"}
+      </span>
+      <span
+        style={{ color: isWinner ? ACCENT : "#71717A" }}
+        className="w-16"
+      >
+        Stacker
+      </span>
+      <div className="flex-1 text-[10px] uppercase tracking-[0.12em] text-zinc-500">
+        {isWinner ? "chosen" : "meta-learner · not chosen on this account"}
+      </div>
+      <span
+        className="tabular-nums"
+        style={{ color: isWinner ? ACCENT : "#71717A" }}
+      >
+        {stackerMape !== null ? `${stackerMape.toFixed(2)}%` : "—"}
+      </span>
     </div>
   );
 }
@@ -893,9 +963,16 @@ interface LeaderboardRowProps {
   name: string;
   weight: number;
   mape: number;
+  isChosen?: boolean;
 }
 
-function LeaderboardRow({ rank, name, weight, mape }: LeaderboardRowProps) {
+function LeaderboardRow({
+  rank,
+  name,
+  weight,
+  mape,
+  isChosen,
+}: LeaderboardRowProps) {
   return (
     <motion.div
       initial={{ opacity: 0, x: -4 }}
@@ -904,7 +981,21 @@ function LeaderboardRow({ rank, name, weight, mape }: LeaderboardRowProps) {
       className="flex items-center gap-2 font-mono text-[11px]"
     >
       <span className="w-3 text-right tabular-nums text-zinc-300">{rank}</span>
-      <span className="w-16 text-zinc-800">{name}</span>
+      <span
+        className={`w-16 ${isChosen ? "font-medium" : ""}`}
+        style={{ color: isChosen ? ACCENT : "#27272A" }}
+      >
+        {name}
+        {isChosen && (
+          <span
+            className="ml-1 font-mono text-[9px]"
+            style={{ color: ACCENT }}
+            aria-label="chosen for this account"
+          >
+            ★
+          </span>
+        )}
+      </span>
       <div className="flex-1 h-[4px] overflow-hidden rounded-full bg-zinc-100">
         <motion.div
           className="h-full"

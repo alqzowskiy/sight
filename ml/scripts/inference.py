@@ -60,6 +60,12 @@ def predict_lightgbm(
     pred_mid = models[0.5].predict(X)
     pred_high = models[0.9].predict(X)
 
+    # Independent quantile regressions can produce crossing (p10 > p50 or p90 < p50).
+    # Post-hoc sort guarantees p10 <= p50 <= p90 per horizon point.
+    stacked = np.vstack([pred_low, pred_mid, pred_high])
+    stacked.sort(axis=0)
+    pred_low, pred_mid, pred_high = stacked[0], stacked[1], stacked[2]
+
     dates = [last_date + pd.Timedelta(days=int(h)) for h in horizons]
     out = pd.DataFrame(
         {

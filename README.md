@@ -4,11 +4,12 @@
 
 **Sight** — это веб-продукт для **управления ликвидностью финтех-компании**. Дашборд казначейства вымышленной платёжной компании **NovaPay**: 11 банковских счетов в 5 валютах (EUR, USD, GBP, SGD, CHF), интерактивный 3D-глобус с живыми денежными потоками, ML-прогноз каждого счёта на 14 дней вперёд и AI-инсайты через OpenAI.
 
-Проект делает три вещи:
+Проект делает четыре вещи:
 
 1. **Видит сейчас** — мультивалютные позиции и потоки между банками на анимированном глобусе в реальном времени.
 2. **Видит наперёд** — ансамбль из 5 ML-моделей прогнозирует дневной баланс каждого счёта и подсвечивает те, что упадут ниже регуляторного минимума.
 3. **Подсказывает действие** — поверх прогноза выдаёт алерты с уже рассчитанным рекомендованным переводом (откуда → куда, сумма, канал SWIFT/SEPA) и AI-инсайт от `gpt-4o-mini`.
+4. **Решает за казначея** — Liquidity Optimizer строит весь план перебалансировки 11 счетов сразу: алгоритм liquidity-gradient переливает деньги из низкого давления в высокое, дешёвым каналом и в правильной валюте, и исполняет план одной кнопкой.
 
 Это **демо-продукт / хакатон-кейс**: все данные о NovaPay синтетические, фронтенд — Next.js 16 + React 19, прогнозы готовятся офлайн Python-пайплайном и кладутся в репо как статический JSON. Полноценного бэкенда и базы нет.
 
@@ -24,6 +25,7 @@ pnpm dev                    # http://localhost:3000
 
 - `/` — лендинг
 - `/dashboard` — главный продукт
+- `/dashboard/brain` — визуализация ансамбля: 5 базовых моделей → Sankey-merger → стакер → итоговый прогноз
 - `/dashboard/lab` — метрики ML-моделей и бэктест
 
 ---
@@ -41,6 +43,7 @@ pnpm dev                    # http://localhost:3000
 ### Шапка
 - **Liquidity Score** — общий health-score (`lib/utils/scoring.ts`)
 - **⌘K Command Palette** — быстрый поиск по счетам и действиям
+- **Optimize** — открывает Liquidity Optimizer (см. отдельный раздел ниже)
 - **New Transfer** — модалка ad-hoc-перевода
 - **Crisis** — переключатель кризисных сценариев
 - **Demo** — авто-проигрывание сценария «деградация → алерт → исполнение»
@@ -75,6 +78,20 @@ pnpm dev                    # http://localhost:3000
 
 ### Sight Compass (баннер сверху)
 - `lib/utils/sight-compass.ts` ранжирует `critical` счета по дефициту, ищет доноров с buffer > 1.15× minBalance + $200K и предлагает пакет переводов. Кнопка `Apply` исполняет весь план за раз — глобус ловит cinematics: множественные арки, accent-blue свечение, sonar.
+
+### Liquidity Optimizer (`lib/optimizer/`, кнопка `Optimize` в шапке)
+- Полноценный алгоритм авто-перебалансировки всех 11 счетов за один проход. В отличие от Compass (простой ранкинг) и алертов (precomputed данные), Optimizer **считает план вживую** из прогнозов на 14 дней.
+- **Pressure model** — для каждого счёта `pressure = Σ max(0, minBalance − bal_{d}) · (15 − d)` по дням `d ∈ [0..14]`. Чем раньше дефицит — тем больше вес.
+- **Supply** = `min(balance_d − minBalance)` по всему горизонту: сколько счёт может отдать, не упав ниже минимума сам.
+- **Жадно-итеративный flow**: argmax pressure (получатель) ← argmax supply (донор, в той же валюте). До 40 итераций или пока давление не упадёт почти до нуля. Каждый шаг сдвигает балансы донора/получателя на все 14 дней и пересчитывает давления.
+- **Каналы** через `lib/optimizer/channels.ts`: EUR↔EUR → SEPA ($0.50), same-currency не-EUR → SWIFT ($25), settlement↔settlement → VISA/MASTERCARD (0.08%). Кросс-валютные — запрещены в v1.
+- **UI** (`components/dashboard/optimizer-panel.tsx`) — модал с двумя колонками: список переводов с причиной (`Lifts NYC above min on day +3`) и pressure map (красная полоска before, синяя after по каждому счёту). Кнопка `Execute` раскатывает план через `executeTransfer` со stagger 220мс.
+
+### Sight Brain (`/dashboard/brain`)
+- Визуализация ML-ансамбля. Пять карточек базовых моделей (Prophet / LightGBM / ARIMA / ETS / Chronos) с авторскими SVG-иллюстрациями (синусоида с сезонностью, дерево решений, бар-чарт автокорреляций, сглаживание, attention-grid).
+- **Sankey-merger** — потоки от каждой модели вливаются в горизонтальный input-bar над стакером, ширина потока сверху одинакова, снизу пропорциональна весу. Веса считаются как `1/MAPE`, нормированные.
+- Стакер показывает итоговый прогноз на выбранный offset, P10/P90 — реальные числа из `forecasts.json`.
+- Hover на карточку модели — поток ярчает, остальные диммятся, внизу появляется leaderboard с MAPE.
 
 ### Sight Lab (`/dashboard/lab`)
 - Метрики ML: MAPE на горизонтах 1/3/7/14, coverage P10/P90, F1 по обнаружению дефицитов, actual-vs-predicted графики.
@@ -242,21 +259,29 @@ app/
   dashboard/
     layout.tsx          сайдбар + Toaster
     page.tsx            <DashboardLayout />
+    brain/              Sight Brain (визуализация ансамбля)
     lab/                Sight Lab (метрики ML)
     crisis/             плейсхолдер
   api/insights/         AI-инсайты (AI SDK + OpenAI)
 components/
   landing/              hero, секции, dock-навигация, футер
+                          (+ OptimizerSection — раздел про liquidity-gradient на лендинге)
   dashboard/            карточки, графики, алерты, command palette, panels
+    optimizer-panel.tsx        модал Liquidity Optimizer
+    brain/                     SVG-иллюстрации моделей + Sankey-merger
   sight/                основной глобус (sight-globe.tsx)
   globe/                overlay-эффекты для глобуса
     money-flow-overlay.tsx   живые денежные потоки (Bezier-частицы)
     globe-hover-card.tsx     карточка hover на маркере
   sidebar/  ui/         общие примитивы
 lib/
-  data/                 типизированные загрузчики счетов / прогнозов / алертов / сценариев
+  data/                 типизированные загрузчики счетов / прогнозов / алертов / сценариев / ensemble
   store/                Zustand-сторы (6 шт.)
   utils/                форматтеры, scoring, compass, insight context
+  optimizer/            алгоритм Liquidity Gradient
+    gradient.ts                computeLiquidityGradientPlan(accounts) — основной solver
+    channels.ts                выбор канала и расчёт комиссии
+    types.ts                   OptimizerStep / OptimizerPlan / AccountPressure
   globe/                проекционная математика + transaction-flows
 public/data/            accounts.json, forecasts.json, backtest_results.json, selection.json
 ml/                     Python-пайплайн (см. ml/README.md)

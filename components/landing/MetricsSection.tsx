@@ -7,10 +7,10 @@ import { NumberTicker } from "@/components/dashboard/number-ticker";
 const ease = [0.16, 1, 0.3, 1] as const;
 
 const HORIZONS = [
-  { days: 1, sight: 5.22, naive: 5.92 },
-  { days: 3, sight: 4.96, naive: 11.38 },
-  { days: 7, sight: 5.89, naive: 6.58 },
-  { days: 14, sight: 6.42, naive: 9.78 },
+  { days: 1, sight: 5.06, naive: 5.48 },
+  { days: 3, sight: 4.98, naive: 11.29 },
+  { days: 7, sight: 5.51, naive: 6.45 },
+  { days: 14, sight: 5.24, naive: 9.23 },
 ];
 
 export function MetricsSection() {
@@ -32,9 +32,10 @@ export function MetricsSection() {
             Numbers from an actual walk-forward backtest. Not marketing.
           </h2>
           <p className="mt-4 max-w-[640px] text-[13.5px] leading-relaxed text-zinc-500">
-            Sixteen cutoff points over thirty days. Trained on data before each
-            cutoff. Predicted what happened after. Compared against three
-            baseline forecasters. Every digit on this page is reproducible from{" "}
+            Thirty walk-forward cutoffs over 365 days of history. Trained on
+            data before each cutoff. Predicted what happened after. Compared
+            against three baseline forecasters. Every digit on this page is
+            reproducible from{" "}
             <code className="rounded bg-zinc-100 px-1 py-0.5 font-mono text-[12px] text-zinc-900">
               public/data/backtest_results.json
             </code>
@@ -45,23 +46,23 @@ export function MetricsSection() {
         <div className="grid grid-cols-2 gap-3 md:grid-cols-4">
           <KpiCard
             label="3-day MAPE"
-            value={4.96}
+            value={4.98}
             suffix="%"
-            sub="vs naive 11.38%"
+            sub="vs naive 11.29%"
             inView={inView}
           />
           <KpiCard
-            label="7-day MAPE"
-            value={5.89}
+            label="14-day MAPE"
+            value={5.24}
             suffix="%"
-            sub="vs MA-7 9.65%"
+            sub="vs naive 9.23%"
             inView={inView}
           />
           <KpiCard
             label="Deficit detection F1"
             value={1.0}
             decimals={2}
-            sub="224 of 224 caught"
+            sub="all shortfalls caught"
             inView={inView}
             accent
           />
@@ -104,19 +105,19 @@ export function MetricsSection() {
               sub="across 1d, 3d, 7d, 14d"
             />
             <Pill
-              k="11 / 11"
-              v="accounts"
-              sub="stacker beats every base model"
+              k="Per-account"
+              v="model selection"
+              sub="best model picked from holdout"
             />
             <Pill
-              k="2.83%"
-              v="ensemble holdout MAPE"
-              sub="42% better than Prophet alone"
+              k="5-fold OOF"
+              v="rolling-origin"
+              sub="walk-forward, honest test"
             />
             <Pill
               k="P10 – P90"
-              v="calibrated"
-              sub="post-hoc conformal correction"
+              v="76% / 80% target"
+              sub="time-weighted split conformal, held-out coverage"
             />
           </div>
         </div>

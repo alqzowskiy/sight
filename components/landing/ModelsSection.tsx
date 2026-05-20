@@ -22,8 +22,8 @@ const MODELS: ModelCard[] = [
     source: "Facebook",
     year: "2017",
     catches: "Trend, weekly seasonality, country holidays",
-    mape: 4.91,
-    rank: 2,
+    mape: 5.34,
+    rank: 3,
     signature: "prophet",
   },
   {
@@ -31,7 +31,7 @@ const MODELS: ModelCard[] = [
     source: "Microsoft",
     year: "2017",
     catches: "Cross-account features, lag interactions, payday cycles",
-    mape: 9.38,
+    mape: 8.61,
     rank: 6,
     signature: "lightgbm",
   },
@@ -40,7 +40,7 @@ const MODELS: ModelCard[] = [
     source: "Classical",
     year: "1970s",
     catches: "Short-term autocorrelation",
-    mape: 7.84,
+    mape: 6.81,
     rank: 4,
     signature: "arima",
   },
@@ -49,7 +49,7 @@ const MODELS: ModelCard[] = [
     source: "Classical",
     year: "1960s",
     catches: "Exponential smoothing with trend + seasonal",
-    mape: 9.01,
+    mape: 8.06,
     rank: 5,
     signature: "ets",
   },
@@ -57,9 +57,9 @@ const MODELS: ModelCard[] = [
     name: "Chronos",
     source: "Amazon Science",
     year: "2024",
-    catches: "Patterns learned from millions of time series",
-    mape: 5.43,
-    rank: 3,
+    catches: "Foundation model, patterns from millions of time series",
+    mape: 3.35,
+    rank: 1,
     signature: "chronos",
   },
 ];
@@ -84,9 +84,9 @@ export function ModelsSection() {
             </h2>
           </div>
           <p className="hidden max-w-[320px] text-[13px] leading-relaxed text-zinc-500 md:block">
-            Each model is wrong in its own way. A Ridge regression learns the
-            optimal weighted combination per account — the stacked ensemble
-            wins on all 11.
+            Each model is wrong in its own way. Per-account selection picks
+            the best candidate from honest OOF holdout — Chronos wins 9/11,
+            Ridge stacker 1, Prophet 1.
           </p>
         </div>
 
@@ -144,28 +144,28 @@ export function ModelsSection() {
             <div className="flex-1">
               <div className="flex items-baseline gap-2">
                 <span className="rounded bg-emerald-700 px-1.5 py-0.5 font-mono text-[9px] uppercase tracking-[0.12em] text-white">
-                  Winner
+                  Per-account selection
                 </span>
                 <h3 className="text-[16px] font-medium text-zinc-900">
-                  Stacked Ensemble · Ridge meta-learner
+                  Best model picked from honest OOF holdout
                 </h3>
               </div>
               <p className="mt-2 max-w-[640px] text-[12.5px] leading-relaxed text-zinc-600">
-                The meta-learner sees the five base predictions for each day,
-                learns optimal weights per account, and outputs a single
-                combined forecast. Better than any individual model on every
-                account in the backtest.
+                Ridge stacker is trained on rolling-origin out-of-fold
+                predictions (5 windows × 7 days = 35 OOF pairs per account) and
+                evaluated on a separate held-out test window. For each account
+                we then pick the lowest-MAPE candidate — base model or stacker.
               </p>
               <div className="mt-3 font-mono text-[10px] uppercase tracking-[0.12em] text-emerald-800">
-                Wins on 11 of 11 accounts · 42% better than Prophet alone
+                Chronos 9 · Ridge stacker 1 (volatile USD-NYC) · Prophet 1
               </div>
             </div>
             <div className="w-[240px]">
               <div className="flex items-baseline justify-between font-mono text-[10px] uppercase tracking-[0.12em] text-emerald-700">
-                <span>MAPE</span>
-                <span className="tabular-nums text-emerald-900">2.83%</span>
+                <span>Sight MAPE · 7d</span>
+                <span className="tabular-nums text-emerald-900">5.51%</span>
               </div>
-              <BarFill ratio={2.83 / MAX_MAPE} tone="emerald" />
+              <BarFill ratio={5.51 / MAX_MAPE} tone="emerald" />
             </div>
           </div>
         </motion.div>

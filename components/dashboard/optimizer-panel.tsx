@@ -70,6 +70,8 @@ export function OptimizerPanel({ open, onClose }: OptimizerPanelProps) {
           currency: step.currency,
           status: "completed",
           timestamp: new Date().toISOString(),
+          receivedAmount: step.fxApplied ? step.receivedAmount : undefined,
+          receivedCurrency: step.fxApplied ? step.receivedCurrency : undefined,
         });
         if (!ok) {
           toast.error(
@@ -304,9 +306,17 @@ function PlanList({
             <div className="text-right">
               <div className="font-mono text-[13px] tabular-nums text-zinc-900">
                 {formatCompact(step.amount, currencyFor(step.from))}
+                {step.fxApplied && (
+                  <span className="ml-1 text-zinc-400">
+                    → {formatCompact(step.receivedAmount, step.receivedCurrency)}
+                  </span>
+                )}
               </div>
               <div className="font-mono text-[9px] uppercase tracking-[0.14em] text-zinc-400">
-                {step.channel} · ${Math.round(step.fee).toLocaleString("en-US")}
+                {step.channel}
+                {step.fxApplied && " + FX 0.4%"}
+                {" · $"}
+                {Math.round(step.fee).toLocaleString("en-US")}
               </div>
             </div>
           </motion.li>

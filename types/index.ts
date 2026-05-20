@@ -32,6 +32,10 @@ export interface Transfer {
   currency: Currency;
   status: TransferStatus;
   timestamp: string;
+  // Optional FX fields — when present, donor pays `amount` in `currency`
+  // and recipient receives `receivedAmount` in `receivedCurrency`.
+  receivedAmount?: number;
+  receivedCurrency?: Currency;
 }
 
 export interface Alert {

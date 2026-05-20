@@ -13,9 +13,16 @@ import {
   BarChart,
 } from "recharts";
 import { motion } from "motion/react";
+import { Info } from "lucide-react";
 import backtestJson from "@/public/data/backtest_results.json";
+import selectionJson from "@/public/data/selection.json";
 import { accountMetas } from "@/lib/data/accounts";
 import { formatCompact } from "@/lib/utils/format";
+
+const SELECTION = selectionJson as Record<
+  string,
+  { chosen: string; mape: Record<string, number | null> }
+>;
 
 interface Horizon {
   days: number;
@@ -44,7 +51,7 @@ interface AvpPoint {
 interface Backtest {
   model_version: string;
   evaluated_at: string;
-  ensemble_members: string[];
+  ensemble_members?: string[];
   horizons: Horizon[];
   per_account: PerAccount[];
   deficit_detection: {
@@ -66,11 +73,11 @@ interface Backtest {
     overdrafts_with_sight: number;
     deficit_pairs_observed: number;
   };
-  ensemble_holdout_mape: {
+  ensemble_holdout_mape?: {
     description: string;
     by_model: Record<string, number>;
   };
-  per_account_holdout: Record<
+  per_account_holdout?: Record<
     string,
     { chosen: string; mape: Record<string, number | null> }
   >;
@@ -81,7 +88,16 @@ interface Backtest {
   actual_vs_predicted_h7: Record<string, AvpPoint[]>;
 }
 
-const BT = backtestJson as Backtest;
+const BT = backtestJson as unknown as Backtest;
+
+const DEFAULT_ENSEMBLE_MEMBERS = [
+  "prophet",
+  "lightgbm",
+  "arima",
+  "ets",
+  "chronos",
+  "stacker",
+];
 
 const MODEL_LABELS: Record<string, string> = {
   prophet: "Prophet",
@@ -148,15 +164,38 @@ export function LabView() {
   }, [selectedAccount]);
 
   const ensembleBars = useMemo(() => {
-    const entries = Object.entries(BT.ensemble_holdout_mape.by_model);
-    return entries
-      .map(([id, mape]) => ({
-        id,
-        label: MODEL_LABELS[id] ?? id,
-        mape,
-        winner: id === "stacker",
-      }))
-      .sort((a, b) => a.mape - b.mape);
+    // Prefer backtest JSON if it carries the per-model holdout MAPE,
+    // otherwise derive averages from selection.json (per-account MAPE).
+    let byModel: Record<string, number>;
+    if (BT.ensemble_holdout_mape?.by_model) {
+      byModel = BT.ensemble_holdout_mape.by_model;
+    } else {
+      const sums: Record<string, number> = {};
+      const counts: Record<string, number> = {};
+      for (const entry of Object.values(SELECTION)) {
+        for (const [model, mape] of Object.entries(entry.mape)) {
+          if (mape != null && Number.isFinite(mape)) {
+            sums[model] = (sums[model] ?? 0) + mape;
+            counts[model] = (counts[model] ?? 0) + 1;
+          }
+        }
+      }
+      byModel = {};
+      for (const m of Object.keys(sums)) {
+        byModel[m] = sums[m] / counts[m];
+      }
+    }
+
+    // Winner is the model with the lowest average MAPE across accounts.
+    const sortedIds = Object.entries(byModel).sort((a, b) => a[1] - b[1]);
+    const winnerId = sortedIds[0]?.[0];
+
+    return sortedIds.map(([id, mape]) => ({
+      id,
+      label: MODEL_LABELS[id] ?? id,
+      mape,
+      winner: id === winnerId,
+    }));
   }, []);
 
   const selectedCurrency =
@@ -170,6 +209,10 @@ export function LabView() {
         accounts={BT.summary.accounts_evaluated}
         pairs={BT.summary.pairs_evaluated}
       />
+
+      <Section>
+        <MethodologyBanner />
+      </Section>
 
       <Section>
         <KpiGrid
@@ -211,7 +254,10 @@ export function LabView() {
       </Section>
 
       <Section title="Pipeline" subtitle="What's behind the numbers.">
-        <PipelineCard members={BT.ensemble_members} version={BT.model_version} />
+        <PipelineCard
+          members={BT.ensemble_members ?? DEFAULT_ENSEMBLE_MEMBERS}
+          version={BT.model_version}
+        />
       </Section>
     </div>
   );
@@ -913,17 +959,19 @@ function PipelineCard({
           </h3>
           <ul className="mt-2 space-y-1.5 text-[12px] leading-relaxed text-zinc-700">
             <li>
-              Trained on 180 days of NovaPay transaction history.
+              Trained on 365 days of NovaPay transaction history.
             </li>
             <li>
-              Walk-forward backtest: 16 cutoffs, predictions at horizons 1d / 3d / 7d / 14d.
+              Walk-forward backtest: 30 cutoffs, predictions at horizons 1d / 3d / 7d / 14d.
             </li>
             <li>
-              Per-account model selection via holdout MAPE.
-              Stacked ensemble combines base predictions via Ridge regression.
+              Per-account model selection on rolling-origin out-of-fold holdout
+              (5 windows × 7d = 35 OOF pairs). Ridge stacker is one candidate
+              alongside the five base models.
             </li>
             <li>
-              Intervals calibrated post-hoc to match observed coverage (target 80%).
+              Intervals via time-weighted split conformal with held-out
+              coverage check; mean empirical coverage ≈ 76% against 80% target.
             </li>
           </ul>
           <div className="mt-4 font-mono text-[10px] uppercase tracking-[0.12em] text-zinc-400">
@@ -931,6 +979,37 @@ function PipelineCard({
           </div>
         </div>
       </div>
+    </div>
+  );
+}
+
+function MethodologyBanner() {
+  return (
+    <div className="rounded-lg border border-amber-200 bg-amber-50/50 px-4 py-3">
+      <div className="flex items-center gap-1.5 font-mono text-[10px] uppercase tracking-[0.14em] text-amber-700">
+        <Info className="h-3 w-3" strokeWidth={1.8} />
+        Methodology notes
+      </div>
+      <ul className="mt-2 space-y-1.5 text-[12px] leading-relaxed text-zinc-700">
+        <li>
+          <span className="font-medium text-zinc-900">Synthetic data:</span>{" "}
+          NovaPay accounts are scripted with engineered behavioral profiles
+          in{" "}
+          <code className="rounded bg-zinc-100 px-1 py-px font-mono text-[11px]">
+            ml/scripts/accounts_config.py
+          </code>
+          . Real-world performance would require backtesting on live treasury
+          flows.
+        </li>
+        <li>
+          <span className="font-medium text-zinc-900">
+            Stacker eval is in-sample:
+          </span>{" "}
+          the Ridge meta-learner is currently trained and evaluated on the
+          same 30-day holdout. Reported stacker MAPE is optimistic. Honest
+          walk-forward evaluation (rolling-origin OOF) is on the roadmap.
+        </li>
+      </ul>
     </div>
   );
 }

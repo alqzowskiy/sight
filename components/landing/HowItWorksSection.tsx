@@ -9,7 +9,7 @@ const STAGES = [
   {
     icon: Database,
     title: "Transaction history",
-    body: "180 days of NovaPay transactions across 11 accounts. Clearing delays, holidays, weekly cycles — all encoded.",
+    body: "365 days of NovaPay transactions across 11 accounts. Clearing delays, holidays, weekly cycles — all encoded.",
     tag: "Python · pandas",
   },
   {
@@ -139,14 +139,14 @@ function PipelineFlow() {
           x={TRANSACTIONS_X}
           cy={ROW_Y}
           label="Transactions"
-          sub="180 days"
+          sub="365 days"
         />
 
         <Node
           x={STACKER_X}
           cy={ROW_Y}
-          label="Stacker"
-          sub="Ridge meta"
+          label="Selection"
+          sub="OOF holdout"
           highlight
         />
         <Line

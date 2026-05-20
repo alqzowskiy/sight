@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import argparse
+import os
 import subprocess
 import sys
 import time
@@ -8,12 +9,22 @@ from pathlib import Path
 
 SCRIPTS_DIR = Path(__file__).resolve().parent
 
+# Loading Chronos (PyTorch + HF) after Prophet (cmdstanpy) can segfault on macOS
+# due to thread-pool / OpenMP conflicts. Forcing single-threaded OMP and disabling
+# tokenizer parallelism keeps both libraries happy.
+SAFE_ENV = {
+    "OMP_NUM_THREADS": "1",
+    "TOKENIZERS_PARALLELISM": "false",
+    "KMP_DUPLICATE_LIB_OK": "TRUE",
+}
+
 
 def run(label: str, args: list[str]) -> None:
     start = time.time()
     print()
     print(f"==> {label}")
-    proc = subprocess.run([sys.executable, *args], cwd=SCRIPTS_DIR)
+    env = {**os.environ, **SAFE_ENV}
+    proc = subprocess.run([sys.executable, *args], cwd=SCRIPTS_DIR, env=env)
     if proc.returncode != 0:
         raise SystemExit(f"{label} failed with exit code {proc.returncode}")
     print(f"<== {label} done in {time.time() - start:.1f}s")
@@ -23,7 +34,7 @@ def main() -> int:
     parser = argparse.ArgumentParser(
         description="Run the full Sight ML pipeline: generate -> train -> export -> backtest.",
     )
-    parser.add_argument("--days", type=int, default=180, help="Days of history to generate")
+    parser.add_argument("--days", type=int, default=365, help="Days of history to generate")
     parser.add_argument("--seed", type=int, default=42, help="RNG seed")
     parser.add_argument(
         "--today",

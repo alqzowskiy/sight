@@ -1,66 +1,133 @@
 "use client";
 
+import { useMemo } from "react";
 import { motion } from "motion/react";
 import { ArrowDown, ArrowRight, Droplet, Sparkles } from "lucide-react";
 import Link from "next/link";
+import { computeLiquidityGradientPlan } from "@/lib/optimizer/gradient";
+import { accountMetas, buildAccountsFromMeta } from "@/lib/data/accounts";
+import { formatCompact } from "@/lib/utils/format";
 
 const ease = [0.16, 1, 0.3, 1] as const;
 
-const PRESSURE_INPUTS = [
-  { acc: "USD-NYC", pressure: 18420, dayHit: "+3d" },
-  { acc: "MC-USD", pressure: 9120, dayHit: "+7d" },
-  { acc: "GBP-London", pressure: 4360, dayHit: "+9d" },
-  { acc: "Visa-EUR", pressure: 1240, dayHit: "+12d" },
-];
+function shortName(fullName: string): string {
+  return fullName
+    .replace(/^NovaPay\s+/, "")
+    .replace(/^Regulatory\s+/, "Reg. ");
+}
 
-const PLAN_STEPS = [
-  {
-    from: "EUR-Frankfurt",
-    to: "USD-NYC",
-    amount: "$1.2M",
-    channel: "SWIFT",
-    reason: "Lifts NYC above min on day +3",
-  },
-  {
-    from: "Reg. Reserve",
-    to: "MC-USD",
-    amount: "$640K",
-    channel: "MASTERCARD",
-    reason: "Closes day +7 deficit",
-  },
-  {
-    from: "CHF-Zurich",
-    to: "GBP-London",
-    amount: "£280K",
-    channel: "SWIFT",
-    reason: "Buffer ahead of day +9",
-  },
-  {
-    from: "EUR-Paris",
-    to: "Visa-EUR",
-    amount: "€95K",
-    channel: "VISA",
-    reason: "Smooths card-scheme dip",
-  },
-];
+function nameFor(id: string): string {
+  const meta = accountMetas.find((a) => a.id === id);
+  return meta ? shortName(meta.name) : id;
+}
 
-const BEFORE_BARS = [
-  { id: "usd-nyc", label: "USD-NYC", value: 100 },
-  { id: "mc-usd", label: "MC-USD", value: 52 },
-  { id: "gbp-london", label: "GBP-London", value: 28 },
-  { id: "visa-eur", label: "Visa-EUR", value: 12 },
-  { id: "eur-frankfurt", label: "EUR-Frankfurt", value: 0 },
-];
+interface ComputedData {
+  topPressures: Array<{
+    accountId: string;
+    label: string;
+    pressure: number;
+    pressurePct: number;
+    dayHit: string;
+  }>;
+  planSteps: Array<{
+    from: string;
+    to: string;
+    amount: string;
+    channel: string;
+    reason: string;
+  }>;
+  pressureBars: Array<{
+    id: string;
+    label: string;
+    before: number;
+    after: number;
+  }>;
+  summary: {
+    transfers: number;
+    feesUsd: number;
+    deficits: number;
+    iterations: number;
+    runtimeMs: number;
+  };
+}
 
-const AFTER_BARS: typeof BEFORE_BARS = [
-  { id: "usd-nyc", label: "USD-NYC", value: 3 },
-  { id: "mc-usd", label: "MC-USD", value: 2 },
-  { id: "gbp-london", label: "GBP-London", value: 0 },
-  { id: "visa-eur", label: "Visa-EUR", value: 0 },
-  { id: "eur-frankfurt", label: "EUR-Frankfurt", value: 6 },
-];
+function useComputedPlan(): ComputedData {
+  return useMemo(() => {
+    const accounts = buildAccountsFromMeta();
+    const start = performance.now();
+    const plan = computeLiquidityGradientPlan(accounts);
+    const runtimeMs = Math.max(1, Math.round(performance.now() - start));
+
+    const maxPressureRaw = Math.max(
+      1,
+      ...plan.pressuresBefore.map((p) => p.pressure),
+    );
+    const topPressures = [...plan.pressuresBefore]
+      .filter((p) => p.pressure > 0)
+      .sort((a, b) => b.pressure - a.pressure)
+      .slice(0, 4)
+      .map((p) => ({
+        accountId: p.accountId,
+        label: nameFor(p.accountId),
+        pressure: Math.round(p.pressure),
+        pressurePct: Math.min(100, (p.pressure / maxPressureRaw) * 100),
+        dayHit:
+          p.worstDayOffset === 0
+            ? "today"
+            : p.worstDayOffset > 0
+              ? `+${p.worstDayOffset}d`
+              : `${p.worstDayOffset}d`,
+      }));
+
+    const planSteps = plan.steps.slice(0, 4).map((s) => {
+      const sent = formatCompact(s.amount, s.currency);
+      const amount = s.fxApplied
+        ? `${sent} → ${formatCompact(s.receivedAmount, s.receivedCurrency)}`
+        : sent;
+      const channel = s.fxApplied ? `${s.channel} + FX` : s.channel;
+      return {
+        from: nameFor(s.from),
+        to: nameFor(s.to),
+        amount,
+        channel,
+        reason: s.reason,
+      };
+    });
+
+    const rankedForBars = [...plan.pressuresBefore]
+      .sort((a, b) => b.pressure - a.pressure)
+      .slice(0, 5);
+    const pressureBars = rankedForBars.map((p) => {
+      const after = plan.pressuresAfter.find(
+        (x) => x.accountId === p.accountId,
+      );
+      return {
+        id: p.accountId,
+        label: nameFor(p.accountId),
+        before: Math.round((p.pressure / maxPressureRaw) * 100),
+        after: Math.round(((after?.pressure ?? 0) / maxPressureRaw) * 100),
+      };
+    });
+
+    return {
+      topPressures,
+      planSteps,
+      pressureBars,
+      summary: {
+        transfers: plan.steps.length,
+        feesUsd: Math.round(plan.totalFees),
+        deficits: plan.afterDeficitDays,
+        iterations: plan.iterations,
+        runtimeMs,
+      },
+    };
+  }, []);
+}
 
 export function OptimizerSection() {
+  const { topPressures, planSteps, pressureBars, summary } = useComputedPlan();
+  const summaryText = `${summary.transfers} transfers · $${summary.feesUsd.toLocaleString("en-US")} fees · ${summary.deficits} deficits`;
+
   return (
     <section
       id="optimizer"
@@ -127,28 +194,36 @@ export function OptimizerSection() {
 
             <div className="mt-4">
               <div className="mb-2 font-mono text-[10px] uppercase tracking-[0.14em] text-zinc-500">
-                Computed pressure · top 4
+                Computed pressure · top {topPressures.length}
               </div>
               <div className="space-y-2">
-                {PRESSURE_INPUTS.map((p, i) => (
+                {topPressures.map((p, i) => (
                   <PressureRow
-                    key={p.acc}
-                    label={p.acc}
+                    key={p.accountId}
+                    label={p.label}
                     pressure={p.pressure}
+                    pressurePct={p.pressurePct}
                     hit={p.dayHit}
                     delay={0.15 + i * 0.08}
                   />
                 ))}
+                {topPressures.length === 0 && (
+                  <div className="font-mono text-[11px] text-emerald-300">
+                    no accounts under pressure · system in equilibrium
+                  </div>
+                )}
               </div>
             </div>
 
             <div className="mt-auto pt-5">
               <div className="rounded-lg bg-zinc-900/60 p-3 font-mono text-[10px] leading-relaxed text-zinc-300">
-                <span className="text-zinc-500">iter:</span> 12 / 40
+                <span className="text-zinc-500">iter:</span> {summary.iterations} / 40
                 <br />
-                <span className="text-zinc-500">converged at:</span> 9 transfers
+                <span className="text-zinc-500">converged at:</span>{" "}
+                {summary.transfers} transfers
                 <br />
-                <span className="text-zinc-500">runtime:</span> 4ms
+                <span className="text-zinc-500">runtime:</span>{" "}
+                {summary.runtimeMs}ms
               </div>
               <div className="mt-4 flex items-center justify-center text-zinc-700">
                 <ArrowDown className="h-4 w-4" />
@@ -170,7 +245,7 @@ export function OptimizerSection() {
                 Optimizer
               </span>
               <span className="font-mono text-[9px] uppercase tracking-[0.12em] text-zinc-400">
-                4 transfers · $2.3K fees · 0 deficits
+                {summaryText}
               </span>
             </div>
 
@@ -180,12 +255,12 @@ export function OptimizerSection() {
                 <span className="text-zinc-400">before · after</span>
               </div>
               <div className="space-y-2">
-                {BEFORE_BARS.map((b, i) => (
+                {pressureBars.map((b, i) => (
                   <PressureBar
                     key={b.id}
                     label={b.label}
-                    before={b.value}
-                    after={AFTER_BARS[i].value}
+                    before={b.before}
+                    after={b.after}
                     delay={0.25 + i * 0.07}
                   />
                 ))}
@@ -196,20 +271,27 @@ export function OptimizerSection() {
               <div className="mb-2 font-mono text-[10px] uppercase tracking-[0.14em] text-zinc-500">
                 Computed plan · execute top-down
               </div>
-              <ol className="space-y-1.5">
-                {PLAN_STEPS.map((s, i) => (
-                  <PlanRow
-                    key={i}
-                    idx={i + 1}
-                    from={s.from}
-                    to={s.to}
-                    amount={s.amount}
-                    channel={s.channel}
-                    reason={s.reason}
-                    delay={0.5 + i * 0.08}
-                  />
-                ))}
-              </ol>
+              {planSteps.length === 0 ? (
+                <div className="rounded-lg border border-emerald-200 bg-emerald-50/40 px-3 py-2 text-[12px] text-emerald-700">
+                  No rebalancing needed — all accounts above minimum for the
+                  next 14 days.
+                </div>
+              ) : (
+                <ol className="space-y-1.5">
+                  {planSteps.map((s, i) => (
+                    <PlanRow
+                      key={i}
+                      idx={i + 1}
+                      from={s.from}
+                      to={s.to}
+                      amount={s.amount}
+                      channel={s.channel}
+                      reason={s.reason}
+                      delay={0.5 + i * 0.08}
+                    />
+                  ))}
+                </ol>
+              )}
             </div>
 
             <div className="mt-5 flex items-center justify-between gap-3 border-t border-zinc-100 pt-4">
@@ -235,11 +317,13 @@ export function OptimizerSection() {
 function PressureRow({
   label,
   pressure,
+  pressurePct,
   hit,
   delay,
 }: {
   label: string;
   pressure: number;
+  pressurePct: number;
   hit: string;
   delay: number;
 }) {
@@ -251,11 +335,11 @@ function PressureRow({
       transition={{ duration: 0.4, delay, ease }}
       className="grid grid-cols-[110px_1fr_auto] items-center gap-3 font-mono text-[11px]"
     >
-      <span className="text-zinc-300">{label}</span>
+      <span className="truncate text-zinc-300">{label}</span>
       <div className="relative h-1.5 overflow-hidden rounded-full bg-zinc-800">
         <motion.div
           initial={{ width: 0 }}
-          whileInView={{ width: `${Math.min(100, pressure / 200)}%` }}
+          whileInView={{ width: `${pressurePct}%` }}
           viewport={{ once: true }}
           transition={{ duration: 0.7, delay: delay + 0.05, ease }}
           className="absolute inset-y-0 left-0 rounded-full bg-rose-400"
