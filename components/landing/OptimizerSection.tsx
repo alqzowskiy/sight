@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo } from "react";
+import { useEffect, useState } from "react";
 import { motion } from "motion/react";
 import { ArrowDown, ArrowRight, Droplet, Sparkles } from "lucide-react";
 import Link from "next/link";
@@ -51,9 +51,27 @@ interface ComputedData {
   };
 }
 
+// Placeholder shown during SSR. The real plan depends on `new Date()` via
+// forecast indexing, so it has to be computed on the client to avoid a
+// hydration mismatch (server's "today" ≠ client's "today" when iterations
+// land on a different forecast window).
+const PLACEHOLDER: ComputedData = {
+  topPressures: [],
+  planSteps: [],
+  pressureBars: [],
+  summary: { transfers: 0, feesUsd: 0, deficits: 0, iterations: 0, runtimeMs: 0 },
+};
+
 function useComputedPlan(): ComputedData {
-  return useMemo(() => {
-    const accounts = buildAccountsFromMeta();
+  const [data, setData] = useState<ComputedData>(PLACEHOLDER);
+  useEffect(() => {
+    setData(computePlan());
+  }, []);
+  return data;
+}
+
+function computePlan(): ComputedData {
+  const accounts = buildAccountsFromMeta();
     const start = performance.now();
     const plan = computeLiquidityGradientPlan(accounts);
     const runtimeMs = Math.max(1, Math.round(performance.now() - start));
@@ -121,7 +139,6 @@ function useComputedPlan(): ComputedData {
         runtimeMs,
       },
     };
-  }, []);
 }
 
 export function OptimizerSection() {

@@ -10,9 +10,8 @@ import {
   getEffectiveBalanceAt,
   getEffectiveStatusAt,
 } from "@/lib/utils/forecast";
-import { getAnomaliesForAccount } from "@/lib/data/forecasts";
 import { formatCurrency } from "@/lib/utils/format";
-import { AlertTriangle } from "lucide-react";
+import { AlertTriangle, Sparkles } from "lucide-react";
 
 const DOT: Record<Account["status"], string> = {
   healthy: "bg-zinc-900",
@@ -49,8 +48,9 @@ export function AccountCard({ account }: { account: Account }) {
   const isLow = currentBalance < account.minBalance;
   const city = account.name.split("·")[1]?.trim() ?? account.name;
   const symbol = CURRENCY_SYMBOL[account.currency] ?? `${account.currency} `;
-  const anomalies = getAnomaliesForAccount(account.id);
-  const anomalyCount = anomalies.length;
+  const anomalyCount = useAccountsStore(
+    (s) => s.anomaliesByAccount[account.id]?.length ?? 0,
+  );
 
   return (
     <button
@@ -90,15 +90,26 @@ export function AccountCard({ account }: { account: Account }) {
         </div>
         <div className="mt-0.5 flex items-center justify-between gap-2 font-mono text-[10px] tabular-nums text-zinc-500">
           <span>Min · {formatCurrency(account.minBalance, account.currency)}</span>
-          {anomalyCount > 0 && (
-            <span
-              className="inline-flex items-center gap-1 rounded border border-amber-200 bg-amber-50/60 px-1.5 py-px text-amber-700"
-              title={`${anomalyCount} anomalous transactions detected by IsolationForest in the last 90 days`}
-            >
-              <AlertTriangle className="h-2.5 w-2.5" strokeWidth={2} />
-              {anomalyCount}
-            </span>
-          )}
+          <div className="flex items-center gap-1">
+            {account.isBaseline && (
+              <span
+                className="inline-flex items-center gap-1 rounded border border-purple-200 bg-purple-50/60 px-1.5 py-px text-purple-700"
+                title="ML warming up — using a naive baseline forecast until 30+ days of real history accumulates"
+              >
+                <Sparkles className="h-2.5 w-2.5" strokeWidth={2} />
+                BASELINE
+              </span>
+            )}
+            {anomalyCount > 0 && (
+              <span
+                className="inline-flex items-center gap-1 rounded border border-amber-200 bg-amber-50/60 px-1.5 py-px text-amber-700"
+                title={`${anomalyCount} anomalous transactions detected by IsolationForest in the last 90 days`}
+              >
+                <AlertTriangle className="h-2.5 w-2.5" strokeWidth={2} />
+                {anomalyCount}
+              </span>
+            )}
+          </div>
         </div>
       </div>
     </button>

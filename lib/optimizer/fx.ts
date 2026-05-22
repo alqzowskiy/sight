@@ -8,6 +8,9 @@ const RATES_TO_USD: Record<Currency, number> = {
   GBP: 1.27,
   CHF: 1.13,
   SGD: 0.74,
+  KZT: 0.0019, // ~530 KZT per USD
+  AED: 0.272,
+  JPY: 0.0067,
 };
 
 // Spread charged on conversion. Typical wholesale FX spread is 20-50 bps.

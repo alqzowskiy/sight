@@ -2,8 +2,7 @@ import { NextResponse } from "next/server";
 import { z } from "zod";
 import { generateText } from "ai";
 import { createOpenAI } from "@ai-sdk/openai";
-import accountsJson from "@/public/data/accounts.json";
-import forecastsJson from "@/public/data/forecasts.json";
+import { db, resolveTenantId } from "@/lib/db/client";
 
 const InsightRequest = z.object({
   accountId: z.string().min(1),
@@ -29,12 +28,6 @@ interface ForecastPoint {
   p90: number;
   isHistorical: boolean;
 }
-
-const ACCOUNTS: AccountMeta[] = accountsJson as AccountMeta[];
-const FORECASTS = forecastsJson as {
-  accounts: Record<string, ForecastPoint[]>;
-  model_version: string;
-};
 
 const SYSTEM_PROMPT = `You are Sight, an AI assistant for treasury teams managing fintech liquidity.
 
@@ -125,11 +118,7 @@ function rateLimited(ip: string): boolean {
   return false;
 }
 
-function pickPoints(
-  accountId: string,
-  dayOffset: number,
-): ForecastPoint[] {
-  const points = FORECASTS.accounts[accountId] ?? [];
+function pickPoints(points: ForecastPoint[], dayOffset: number): ForecastPoint[] {
   if (points.length === 0) return [];
   const todayIdx = points.findIndex((p) => !p.isHistorical) - 1;
   if (todayIdx < 0) return points.slice(-7);
@@ -137,6 +126,43 @@ function pickPoints(
   const start = Math.max(0, centre - 6);
   const end = Math.min(points.length, centre + 8);
   return points.slice(start, end);
+}
+
+/**
+ * Load the live tenant's account + a forecast window in one go. Both
+ * cloned-demo and user-created accounts pass through here, so this can never
+ * read from the static NovaPay JSON.
+ */
+async function loadFromDb(
+  tenantId: string,
+  accountId: string,
+): Promise<{ account: AccountMeta; points: ForecastPoint[] } | null> {
+  const acc = await db.account.findFirst({
+    where: { id: accountId, tenantId, isActive: true },
+  });
+  if (!acc) return null;
+  const forecasts = await db.forecast.findMany({
+    where: { tenantId, accountId },
+    orderBy: { date: "asc" },
+  });
+  const account: AccountMeta = {
+    id: acc.id,
+    name: acc.name,
+    bank: acc.bank,
+    currency: acc.currency,
+    country: acc.country,
+    location: [acc.latitude, acc.longitude],
+    minBalance: acc.minBalance,
+    type: acc.type,
+  };
+  const points: ForecastPoint[] = forecasts.map((f) => ({
+    date: f.date.toISOString().slice(0, 10),
+    balance: f.balance,
+    p10: f.p10,
+    p90: f.p90,
+    isHistorical: f.isHistorical,
+  }));
+  return { account, points };
 }
 
 export async function POST(req: Request) {
@@ -167,14 +193,23 @@ export async function POST(req: Request) {
   }
   const { accountId, dayOffset, context } = parsed.data;
 
-  const account = ACCOUNTS.find((a) => a.id === accountId);
-  if (!account) {
+  const tenantId = await resolveTenantId();
+  if (!tenantId) {
     return NextResponse.json(
-      { error: "not_found", message: "Unknown accountId." },
+      { error: "no_tenant", message: "Sign in required." },
+      { status: 401 },
+    );
+  }
+
+  const loaded = await loadFromDb(tenantId, accountId);
+  if (!loaded) {
+    return NextResponse.json(
+      { error: "not_found", message: "Unknown accountId for this tenant." },
       { status: 404 },
     );
   }
-  const points = pickPoints(accountId, dayOffset);
+  const { account } = loaded;
+  const points = pickPoints(loaded.points, dayOffset);
   if (points.length === 0) {
     return NextResponse.json(
       { error: "no_forecast", message: "No forecast data for this account." },

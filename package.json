@@ -20,6 +20,7 @@
   "dependencies": {
     "@ai-sdk/openai": "^3.0.64",
     "@ai-sdk/react": "^3.0.192",
+    "@clerk/nextjs": "^7.4.0",
     "@prisma/client": "^6.19.3",
     "ai": "^6.0.184",
     "class-variance-authority": "^0.7.1",

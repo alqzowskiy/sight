@@ -38,10 +38,19 @@ interface ForecastPointRaw {
   shap?: unknown[];
 }
 
+interface AnomalyEntry {
+  date: string;
+  timestamp: string;
+  channel: string;
+  amount: number;
+  score: number;
+}
+
 interface ForecastsPayload {
   model_version: string;
   model_per_account: Record<string, string>;
   accounts: Record<string, ForecastPointRaw[]>;
+  anomalies?: Record<string, AnomalyEntry[]>;
 }
 
 const TENANT_SLUG = "novapay";
@@ -55,11 +64,18 @@ async function main() {
   console.log(`Seeding tenant "${TENANT_SLUG}"...`);
   const tenant = await db.tenant.upsert({
     where: { slug: TENANT_SLUG },
-    update: { name: TENANT_NAME, region: TENANT_REGION },
+    update: {
+      name: TENANT_NAME,
+      region: TENANT_REGION,
+      isDemo: true,
+      onboarded: true,
+    },
     create: {
       slug: TENANT_SLUG,
       name: TENANT_NAME,
       region: TENANT_REGION,
+      isDemo: true,
+      onboarded: true,
     },
   });
   console.log(`  tenant id: ${tenant.id}`);
@@ -124,6 +140,47 @@ async function main() {
   }
   console.log(`  ${totalForecasts} forecast points inserted`);
 
+  // Seed anomalous transactions from the static ML pipeline output.
+  // These power the AccountCard anomaly pills and the dashboard footer.
+  // Re-seeding clears prior anomaly transactions for this tenant so we
+  // don't pile up duplicates.
+  await db.transaction.deleteMany({
+    where: { tenantId: tenant.id, isAnomaly: true },
+  });
+
+  let totalAnomalies = 0;
+  if (forecasts.anomalies) {
+    const validAccountIds = new Set(accounts.map((a) => a.id));
+    const rows: {
+      tenantId: string;
+      accountId: string;
+      amount: number;
+      channel: string;
+      timestamp: Date;
+      anomalyScore: number;
+      isAnomaly: boolean;
+    }[] = [];
+    for (const [accountId, entries] of Object.entries(forecasts.anomalies)) {
+      if (!validAccountIds.has(accountId)) continue;
+      for (const e of entries) {
+        rows.push({
+          tenantId: tenant.id,
+          accountId,
+          amount: e.amount,
+          channel: e.channel,
+          timestamp: new Date(e.timestamp),
+          anomalyScore: e.score,
+          isAnomaly: true,
+        });
+      }
+    }
+    if (rows.length > 0) {
+      await db.transaction.createMany({ data: rows });
+      totalAnomalies = rows.length;
+    }
+  }
+  console.log(`  ${totalAnomalies} anomalous transactions inserted`);
+
   await db.auditEvent.create({
     data: {
       tenantId: tenant.id,
@@ -132,6 +189,7 @@ async function main() {
       payload: JSON.stringify({
         accounts: accounts.length,
         forecasts: totalForecasts,
+        anomalies: totalAnomalies,
         modelVersion: forecasts.model_version,
       }),
     },

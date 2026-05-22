@@ -51,6 +51,26 @@ export function ConcentrationCard() {
   );
 
   const topBuckets = result.breakdown.slice(0, 5);
+  const isEmpty = accounts.length === 0 || result.totalUsd === 0;
+
+  if (isEmpty) {
+    return (
+      <div className="rounded-lg border border-zinc-200/80 bg-white p-3">
+        <div className="flex items-baseline justify-between pb-2">
+          <h2 className="font-mono text-[11px] uppercase tracking-[0.12em] text-zinc-900">
+            Concentration · HHI
+          </h2>
+          <span className="rounded bg-zinc-100 px-1.5 py-0.5 font-mono text-[9px] uppercase tracking-[0.1em] text-zinc-500">
+            No data
+          </span>
+        </div>
+        <p className="text-[12px] leading-relaxed text-zinc-500">
+          Add accounts to see concentration risk by bank, currency, or country.
+          HHI flags single-counterparty exposure (the SVB-2023 problem).
+        </p>
+      </div>
+    );
+  }
 
   return (
     <div className="rounded-lg border border-zinc-200/80 bg-white p-3">

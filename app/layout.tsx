@@ -1,3 +1,4 @@
+import {ClerkProvider} from "@clerk/nextjs";
 import type { Metadata } from "next";
 import { GeistSans } from "geist/font/sans";
 import { GeistMono } from "geist/font/mono";
@@ -26,9 +27,11 @@ export default function RootLayout({
       className={`${GeistSans.variable} ${GeistMono.variable}`}
     >
       <body className="min-h-screen bg-background text-foreground">
-        <PageBackdrop />
-        <ScrollProgress />
-        {children}
+        <ClerkProvider>
+          <PageBackdrop />
+          <ScrollProgress />
+          {children}
+        </ClerkProvider>
       </body>
     </html>
   );

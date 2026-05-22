@@ -3,7 +3,8 @@
 import Link from "next/link";
 import Image from "next/image";
 import { motion } from "motion/react";
-import { ArrowRight, Code2, ShieldCheck } from "lucide-react";
+import { ArrowRight, ShieldCheck } from "lucide-react";
+import { Show } from "@clerk/nextjs";
 
 const EASE = [0.16, 1, 0.3, 1] as const;
 
@@ -68,30 +69,37 @@ export function Hero() {
 
         <motion.div
           {...fade(3)}
-          className="mt-8 flex flex-wrap items-center justify-center gap-2.5"
+          className="mt-8 flex flex-col items-center gap-3"
         >
-          <Link
-            href="/dashboard"
-            className="group inline-flex items-center gap-2 rounded-full bg-zinc-950 px-6 py-3 text-[14px] font-medium text-white transition-colors hover:bg-zinc-800"
-          >
-            Open the live demo
-            <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
-          </Link>
-          <a
-            href="#how-it-works"
-            className="inline-flex items-center gap-2 rounded-full border border-zinc-300 bg-white/80 px-5 py-3 font-mono text-[11px] uppercase tracking-[0.1em] text-zinc-900 backdrop-blur-md transition-colors hover:border-zinc-900"
-          >
-            How it works
-          </a>
-          <a
-            href="https://github.com/alqzowskiy/sight"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-1.5 rounded-full px-3 py-3 font-mono text-[11px] uppercase tracking-[0.1em] text-zinc-500 transition-colors hover:text-zinc-900"
-          >
-            <Code2 className="h-3.5 w-3.5" />
-            Source
-          </a>
+          <div className="flex flex-wrap items-center justify-center gap-2.5">
+            <Show when="signed-in">
+              <Link
+                href="/dashboard"
+                className="group inline-flex items-center gap-2 rounded-full bg-zinc-950 px-6 py-3 text-[14px] font-medium text-white transition-colors hover:bg-zinc-800"
+              >
+                Open your dashboard
+                <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
+              </Link>
+            </Show>
+            <Show when="signed-out">
+              <Link
+                href="/sign-up"
+                className="group inline-flex items-center gap-2 rounded-full bg-zinc-950 px-6 py-3 text-[14px] font-medium text-white transition-colors hover:bg-zinc-800"
+              >
+                Sign up free
+                <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
+              </Link>
+              <Link
+                href="/demo/dashboard"
+                className="inline-flex items-center gap-2 rounded-full border border-zinc-300 bg-white/80 px-5 py-3 font-mono text-[11px] uppercase tracking-[0.1em] text-zinc-900 backdrop-blur-md transition-colors hover:border-zinc-900"
+              >
+                Try public demo
+              </Link>
+            </Show>
+          </div>
+          <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-zinc-500">
+            No credit card · 30s to first forecast · Cancel anytime
+          </p>
         </motion.div>
       </div>
 
@@ -175,32 +183,30 @@ function WindowChrome() {
   );
 }
 
+/**
+ * Hero background — just the dot grid.
+ *
+ * We tried animated colour orbs + scanning flow lines and they read as
+ * SaaS-bro noise on top of a fintech product. Reverted to a single static
+ * dot grid masked to the top of the section: gives the page texture without
+ * fighting the headline for attention.
+ */
 function Aura() {
   return (
-    <>
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-x-0 top-0 -z-10 hidden h-[80rem] opacity-50 lg:block"
-      >
-        <div className="absolute left-[8%] top-0 h-[60rem] w-[30rem] -translate-y-[40%] -rotate-45 rounded-full bg-[radial-gradient(68.54%_68.72%_at_55.02%_31.46%,rgba(220,38,38,0.08)_0,rgba(0,0,0,0.02)_50%,rgba(0,0,0,0)_80%)]" />
-        <div className="absolute left-[12%] top-0 h-[60rem] w-44 -rotate-45 rounded-full bg-[radial-gradient(50%_50%_at_50%_50%,rgba(251,191,36,0.06)_0,rgba(0,0,0,0.02)_80%,transparent_100%)]" />
-        <div className="absolute right-[8%] top-0 h-[60rem] w-[30rem] -translate-y-[40%] rotate-45 rounded-full bg-[radial-gradient(68.54%_68.72%_at_55.02%_31.46%,rgba(37,99,235,0.06)_0,rgba(0,0,0,0.02)_50%,rgba(0,0,0,0)_80%)]" />
-      </div>
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-0 -z-20"
-        style={{
-          backgroundImage:
-            "radial-gradient(circle, hsl(var(--border)) 1px, transparent 1px)",
-          backgroundSize: "26px 26px",
-          maskImage:
-            "radial-gradient(ellipse 50% 45% at 50% 25%, black, transparent 75%)",
-          WebkitMaskImage:
-            "radial-gradient(ellipse 50% 45% at 50% 25%, black, transparent 75%)",
-          opacity: 0.35,
-        }}
-      />
-    </>
+    <div
+      aria-hidden
+      className="pointer-events-none absolute inset-0 -z-10"
+      style={{
+        backgroundImage:
+          "radial-gradient(circle, hsl(var(--border)) 1px, transparent 1px)",
+        backgroundSize: "26px 26px",
+        maskImage:
+          "radial-gradient(ellipse 55% 50% at 50% 25%, black, transparent 80%)",
+        WebkitMaskImage:
+          "radial-gradient(ellipse 55% 50% at 50% 25%, black, transparent 80%)",
+        opacity: 0.35,
+      }}
+    />
   );
 }
 

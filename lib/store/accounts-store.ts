@@ -6,7 +6,6 @@ import type {
   Currency,
   TransferChannel,
 } from "@/types";
-import { buildAccountsFromMeta } from "@/lib/data/accounts";
 import {
   getToday,
   removeRuntimeForecast,
@@ -49,6 +48,22 @@ export interface AccountMetaPatch {
   bank?: string;
 }
 
+interface AnomalyEntry {
+  date: string;
+  timestamp: string;
+  channel: string;
+  amount: number;
+  score: number;
+}
+
+export interface TenantInfo {
+  id: string;
+  slug: string;
+  name: string;
+  isDemo: boolean;
+  onboarded: boolean;
+}
+
 interface AccountsStore {
   accounts: Account[];
   transfers: Transfer[];
@@ -61,6 +76,10 @@ interface AccountsStore {
   lastSyncedAt: number | null;
   /** True while a hydrate is in flight. */
   syncing: boolean;
+  /** Anomalies per account from the live tenant — populated by hydrate. */
+  anomaliesByAccount: Record<string, AnomalyEntry[]>;
+  /** Current tenant — used by UI to brand and to gate demo-only controls. */
+  tenant: TenantInfo | null;
   /** Sync local state from the API. Call on mount and after server-side changes. */
   fetchFromApi: () => Promise<void>;
   executeTransfer: (transfer: Transfer) => boolean;
@@ -125,7 +144,10 @@ function accountIdFromAlertId(alertId: string): string | null {
   return alertId.slice(prefix.length);
 }
 
-const initialAccounts = buildAccountsFromMeta();
+// Initial state is an empty portfolio. The dashboard hydrates from /api/v1/*
+// on mount, so the user sees their actual tenant data — not a flash of the
+// public demo. The `hydrated` flag is the signal for skeleton placeholders.
+const initialAccounts: Account[] = [];
 
 interface ApiAccount {
   id: string;
@@ -133,11 +155,13 @@ interface ApiAccount {
   bank: string;
   currency: Currency;
   country: string;
+  city?: string;
   location: [number, number];
   balance: number;
   minBalance: number;
   type: AccountType;
   status: Account["status"];
+  isBaseline?: boolean;
 }
 
 interface ApiTransfer {
@@ -167,6 +191,8 @@ function apiToLocalAccount(a: ApiAccount): Account {
     minBalance: a.minBalance,
     type: a.type,
     status: a.status,
+    city: a.city,
+    isBaseline: a.isBaseline,
   };
 }
 
@@ -225,25 +251,38 @@ export const useAccountsStore = create<AccountsStore>((set) => ({
   hydrated: false,
   lastSyncedAt: null,
   syncing: false,
+  anomaliesByAccount: {},
+  tenant: null,
   fetchFromApi: async () => {
     if (typeof window === "undefined") return;
     set({ syncing: true });
     try {
-      const [accountsRes, transfersRes] = await Promise.all([
-        fetch("/api/v1/accounts", { cache: "no-store" }),
-        fetch("/api/v1/transfers", { cache: "no-store" }),
-      ]);
+      const [tenantRes, accountsRes, transfersRes, anomaliesRes] =
+        await Promise.all([
+          fetch("/api/v1/tenant", { cache: "no-store" }),
+          fetch("/api/v1/accounts", { cache: "no-store" }),
+          fetch("/api/v1/transfers", { cache: "no-store" }),
+          fetch("/api/v1/anomalies", { cache: "no-store" }),
+        ]);
       if (!accountsRes.ok || !transfersRes.ok) {
         console.error("[accounts-store] hydrate failed");
         set({ syncing: false });
         return;
       }
+      const tenantPayload = tenantRes.ok
+        ? ((await tenantRes.json()) as { tenant: TenantInfo })
+        : null;
       const { accounts: apiAccounts } = (await accountsRes.json()) as {
         accounts: ApiAccount[];
       };
       const { transfers: apiTransfers } = (await transfersRes.json()) as {
         transfers: ApiTransfer[];
       };
+      const anomaliesPayload = anomaliesRes.ok
+        ? ((await anomaliesRes.json()) as {
+            byAccount: Record<string, AnomalyEntry[]>;
+          })
+        : { byAccount: {} };
       const localAccounts = apiAccounts.map(apiToLocalAccount);
       const locationLookup: Record<string, [number, number]> = {};
       for (const a of localAccounts) locationLookup[a.id] = a.location;
@@ -254,6 +293,8 @@ export const useAccountsStore = create<AccountsStore>((set) => ({
       set({
         accounts: localAccounts,
         transfers: localTransfers,
+        anomaliesByAccount: anomaliesPayload.byAccount,
+        tenant: tenantPayload?.tenant ?? null,
         hydrated: true,
         lastSyncedAt: Date.now(),
         syncing: false,
@@ -420,12 +461,16 @@ export const useAccountsStore = create<AccountsStore>((set) => ({
     // Drop any runtime forecasts registered for custom accounts.
     const customIds = Object.keys(useAccountsStore.getState().customAccountIds);
     for (const id of customIds) removeRuntimeForecast(id);
+    // Re-pull from API instead of resetting to the bundled JSON snapshot —
+    // resetting must reflect the user's own tenant, not NovaPay.
     set({
-      accounts: buildAccountsFromMeta(),
+      accounts: [],
       transfers: [],
       customAccountIds: {},
       dismissedAccountIds: {},
       lastExecutedTransferId: null,
+      hydrated: false,
     });
+    void useAccountsStore.getState().fetchFromApi();
   },
 }));

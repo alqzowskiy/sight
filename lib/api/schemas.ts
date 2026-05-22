@@ -3,7 +3,16 @@ import { z } from "zod";
 // Single source of truth for all API request/response shapes.
 // Imported by both client (fetch wrappers) and server (route handlers).
 
-export const CurrencySchema = z.enum(["USD", "EUR", "GBP", "SGD", "CHF"]);
+export const CurrencySchema = z.enum([
+  "USD",
+  "EUR",
+  "GBP",
+  "SGD",
+  "CHF",
+  "KZT",
+  "AED",
+  "JPY",
+]);
 export type Currency = z.infer<typeof CurrencySchema>;
 
 export const AccountTypeSchema = z.enum([
@@ -48,11 +57,15 @@ export const AccountSchema = z.object({
   bank: z.string(),
   currency: CurrencySchema,
   country: z.string(),
+  city: z.string().optional(),
   location: z.tuple([z.number(), z.number()]),
   balance: z.number(),
   minBalance: z.number(),
   type: AccountTypeSchema,
   status: z.enum(["healthy", "warning", "critical"]),
+  /** True when this account's forecasts came from the naive baseline
+   *  generator (no trained ensemble yet). UI shows "ML warming up" badge. */
+  isBaseline: z.boolean().optional(),
 });
 
 export type AccountDTO = z.infer<typeof AccountSchema>;
@@ -60,6 +73,20 @@ export type AccountDTO = z.infer<typeof AccountSchema>;
 export const AccountsResponseSchema = z.object({
   accounts: z.array(AccountSchema),
 });
+
+export const CreateAccountSchema = z.object({
+  name: z.string().min(1).max(80),
+  bank: z.string().min(1).max(60),
+  currency: CurrencySchema,
+  country: z.string().length(2),
+  city: z.string().min(1).max(60).optional(),
+  location: z.tuple([z.number(), z.number()]),
+  balance: z.number().finite(),
+  minBalance: z.number().min(0).finite(),
+  type: AccountTypeSchema,
+});
+
+export type CreateAccountInput = z.infer<typeof CreateAccountSchema>;
 
 // -----------------------------------------------------------------------------
 // Forecasts

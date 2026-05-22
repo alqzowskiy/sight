@@ -31,6 +31,10 @@ model Tenant {
   slug      String   @unique
   name      String
   region    String   // CIS | EU | MENA | SEA | US
+  /** True for the public demo tenant (novapay). Read-only when accessed via /demo. */
+  isDemo    Boolean  @default(false)
+  /** True once the user has finished onboarding (cloned demo or chose blank). */
+  onboarded Boolean  @default(false)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
@@ -46,15 +50,18 @@ model Tenant {
 }
 
 model TenantUser {
-  id        String   @id @default(cuid())
-  tenantId  String
-  email     String
-  role      String   // CFO | TREASURER | ANALYST | COMPLIANCE
-  createdAt DateTime @default(now())
-  tenant    Tenant   @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  id         String   @id @default(cuid())
+  tenantId   String
+  /** Clerk user id (user_xxx). Globally unique — one Clerk user = one TenantUser. */
+  externalId String?  @unique
+  email      String
+  role       String   // CFO | TREASURER | ANALYST | COMPLIANCE
+  createdAt  DateTime @default(now())
+  tenant     Tenant   @relation(fields: [tenantId], references: [id], onDelete: Cascade)
 
   @@unique([tenantId, email])
   @@index([tenantId])
+  @@index([externalId])
 }
 
 // =============================================================================
@@ -67,8 +74,9 @@ model Account {
   externalId  String   // for future bank integrations (IBAN, account number)
   name        String   // display: "NovaPay USD · NYC"
   bank        String   // counterparty: "JPMorgan"
-  currency    String   // ISO 4217: USD, EUR, GBP, SGD, CHF
+  currency    String   // ISO 4217: USD, EUR, GBP, SGD, CHF, KZT…
   country     String   // ISO 3166-1 alpha-2
+  city        String?  // optional pretty city name for globe markers
   latitude    Float
   longitude   Float
   minBalance  Float    // Postgres: Decimal(20, 2)

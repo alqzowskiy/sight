@@ -15,6 +15,10 @@ import { useTimeStore } from "@/lib/store/time-store";
 import { useCrisisStore } from "@/lib/store/crisis-store";
 import { useUiStore } from "@/lib/store/ui-store";
 
+// Auto-tour script references the NovaPay JPMorgan account for the
+// counterparty cascade demo. If the tenant doesn't have that bank, the
+// tour either runs without the cascade beat or we disable the button.
+
 const ease = [0.16, 1, 0.3, 1] as const;
 const TICK_MS = 100;
 
@@ -59,6 +63,10 @@ export function AutoTourButton() {
   const intervalRef = useRef<number | null>(null);
   const startedAtRef = useRef<number>(0);
   const [elapsed, setElapsed] = useState(0);
+
+  // The tour shows off cascade/Compass/AI features — pointless on a tenant
+  // with no accounts. Disable the button rather than running a hollow tour.
+  const tourReady = useAccountsStore((s) => s.accounts.length > 0);
 
   function start() {
     const stores = buildStores();
@@ -133,9 +141,14 @@ export function AutoTourButton() {
       <button
         type="button"
         onClick={running ? stop : start}
+        disabled={!tourReady && !running}
         aria-label={running ? "Stop auto-tour" : "Start auto-tour"}
-        title="60-second guided demo"
-        className={`inline-flex items-center gap-1.5 rounded-md border px-2.5 py-1.5 font-mono text-[10px] uppercase tracking-[0.1em] transition-colors ${
+        title={
+          tourReady
+            ? "60-second guided demo"
+            : "Auto-tour needs a portfolio — clone the NovaPay demo or add accounts first."
+        }
+        className={`inline-flex items-center gap-1.5 rounded-md border px-2.5 py-1.5 font-mono text-[10px] uppercase tracking-[0.1em] transition-colors disabled:cursor-not-allowed disabled:border-zinc-200 disabled:bg-zinc-100 disabled:text-zinc-400 disabled:hover:border-zinc-200 ${
           running
             ? "border-purple-600 bg-purple-600 text-white"
             : "border-purple-200 bg-purple-50 text-purple-700 hover:border-purple-300"

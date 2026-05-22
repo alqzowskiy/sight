@@ -19,6 +19,7 @@ import { feature } from "topojson-client";
 import type { Feature, FeatureCollection, GeoJsonProperties, Geometry } from "geojson";
 import type { Topology } from "topojson-specification";
 import { MoneyFlowOverlay } from "@/components/globe/money-flow-overlay";
+import { ConnectionWebOverlay } from "@/components/globe/connection-web-overlay";
 import { GlobeHoverCard } from "@/components/globe/globe-hover-card";
 import { isVisible, type Projector } from "@/lib/globe/projection";
 import { useTimeStore } from "@/lib/store/time-store";
@@ -49,6 +50,14 @@ interface SightGlobeProps {
   className?: string;
   speed?: number;
   onMarkerClick?: (info: { clusterId: string; location: [number, number] }) => void;
+  /** Pre-computed connection web edges to draw on top of markers. */
+  connectionEdges?: import("@/lib/globe/connection-web").ConnectionEdge[];
+  /** Max edge volume from the same web (for line-width normalisation). */
+  connectionMaxAmount?: number;
+  /** Toggle the whole web layer. */
+  connectionsVisible?: boolean;
+  /** When set, dim non-incident edges to highlight one account's network. */
+  connectionFocusAccountId?: string | null;
 }
 
 export interface SightGlobeHandle {
@@ -161,6 +170,10 @@ export const SightGlobe = forwardRef<SightGlobeHandle, SightGlobeProps>(function
   className = "",
   speed = 0.16,
   onMarkerClick,
+  connectionEdges = [],
+  connectionMaxAmount = 0,
+  connectionsVisible = false,
+  connectionFocusAccountId = null,
 }, ref) {
   const clusters = useMemo(() => clusterMarkers(markers), [markers]);
   const dedupedArcs = useMemo(() => dedupeArcs(arcs), [arcs]);
@@ -676,8 +689,11 @@ export const SightGlobe = forwardRef<SightGlobeHandle, SightGlobeProps>(function
       if (totalMoved > 6) p.moved = true;
       const sensitivity = 0.35 / scaleRef.current;
       const nextLambda = rotRef.current[0] + dx * sensitivity;
+      // Trackball feel: dragging UP should bring the northern hemisphere
+      // toward the viewer (the surface follows the cursor). d3-geo's phi
+      // rotates the opposite way from screen-Y, so we subtract dy here.
       const nextPhi = clamp(
-        rotRef.current[1] + dy * sensitivity,
+        rotRef.current[1] - dy * sensitivity,
         -75,
         75,
       );
@@ -885,9 +901,22 @@ export const SightGlobe = forwardRef<SightGlobeHandle, SightGlobeProps>(function
           ))}
         </div>
 
+        <ConnectionWebOverlay
+          projectorRef={projectorRef}
+          edges={connectionEdges}
+          maxAmount={connectionMaxAmount}
+          visible={connectionsVisible}
+          focusedAccountId={connectionFocusAccountId}
+        />
+
         <MoneyFlowOverlay
           projectorRef={projectorRef}
-          enabled={true}
+          // Disable decorative money flows when the tenant has no accounts —
+          // a "blank" workspace should not show ghost SWIFT arrivals.
+          enabled={markers.length > 0}
+          allowedAccountIds={
+            new Set(markers.map((m) => m.id))
+          }
           paused={isInteracting}
           fade={offset > 0 ? 0.6 : offset < 0 ? 0.5 : 1}
           onArrival={(accountId) => {

@@ -13,6 +13,9 @@ const CURRENCY_SYMBOL: Record<string, string> = {
   GBP: "£",
   CHF: "CHF ",
   SGD: "S$",
+  KZT: "₸",
+  AED: "AED ",
+  JPY: "¥",
 };
 
 export function formatCompact(amount: number, currency: string): string {

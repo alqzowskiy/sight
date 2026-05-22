@@ -7,6 +7,7 @@ import {
   type AccountWithCountry,
   type ConcentrationDimension,
 } from "@/lib/utils/concentration";
+import { computeFxHedgePlan } from "@/lib/utils/fx-hedge";
 import { convertAmount } from "@/lib/optimizer/fx";
 import type { Account, Currency } from "@/types";
 
@@ -266,6 +267,53 @@ function makeTools(tenantId: string) {
           riskAdjustedLevel: result.riskAdjustedLevel,
           breakdown: result.breakdown.slice(0, 5),
           totalUsd: Math.round(result.totalUsd),
+        };
+      },
+    }),
+
+    /**
+     * Recommend FX hedge ratios for all non-USD positions.
+     */
+    optimizeFxHedge: tool({
+      description:
+        "Run the FX hedge optimizer. For each non-USD account it returns a recommended minimum-variance hedge ratio, the notional to hedge in USD, expected annual cost, and the residual 1-month VaR after applying the hedge. Read-only — does not place trades.",
+      inputSchema: z.object({}),
+      execute: async () => {
+        const accounts = await loadAccounts(tenantId);
+        const plan = computeFxHedgePlan(
+          accounts.map((a) => ({
+            id: a.id,
+            name: a.name,
+            bank: a.bank,
+            location: a.location,
+            currency: a.currency,
+            balance: a.balance,
+            minBalance: a.minBalance,
+            type: a.type,
+            status: a.status,
+          })),
+        );
+        return {
+          summary: {
+            totalExposureUsd: Math.round(plan.summary.totalExposureUsd),
+            totalUnhedgedVar1mUsd: Math.round(plan.summary.totalUnhedgedVar1mUsd),
+            totalResidualVar1mUsd: Math.round(plan.summary.totalResidualVar1mUsd),
+            totalHedgeNotionalUsd: Math.round(
+              plan.summary.totalHedgeNotionalUsd,
+            ),
+            totalAnnualCostUsd: Math.round(plan.summary.totalAnnualCostUsd),
+            hedgesRecommended: plan.summary.hedgesRecommended,
+          },
+          recommendations: plan.recommendations.map((r) => ({
+            accountId: r.accountId,
+            currency: r.currency,
+            positionUsd: Math.round(r.positionUsd),
+            hedgeRatio: r.hedgeRatio,
+            hedgeNotionalUsd: Math.round(r.hedgeNotionalUsd),
+            annualCostUsd: Math.round(r.annualCostUsd),
+            action: r.action,
+            reason: r.reason,
+          })),
         };
       },
     }),

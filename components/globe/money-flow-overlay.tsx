@@ -43,6 +43,12 @@ interface MoneyFlowOverlayProps {
   fade?: number;
   onArrival?: (accountId: string) => void;
   maxFlows?: number;
+  /**
+   * Ids of accounts currently on the globe. We only spawn decorative flows
+   * between accounts that actually exist on this tenant — otherwise we'd
+   * be drawing NovaPay phantom particles for user-created workspaces.
+   */
+  allowedAccountIds: Set<string>;
 }
 
 const FADE_OUT_MS = 600;
@@ -65,6 +71,7 @@ export function MoneyFlowOverlay({
   fade = 1,
   onArrival,
   maxFlows = DEFAULT_MAX_FLOWS,
+  allowedAccountIds,
 }: MoneyFlowOverlayProps) {
   const [flows, setFlows] = useState<ActiveFlow[]>([]);
   const flowsRef = useRef<ActiveFlow[]>([]);
@@ -122,6 +129,14 @@ export function MoneyFlowOverlay({
       if (!docVisibleRef.current) return;
       if (flowsRef.current.length >= maxFlows) return;
       const flowDef = pickRandomFlow();
+      // Only spawn for flows whose endpoints exist in the current tenant —
+      // otherwise we'd draw phantom NovaPay arcs for unrelated workspaces.
+      if (
+        !allowedAccountIds.has(flowDef.from) ||
+        !allowedAccountIds.has(flowDef.to)
+      ) {
+        return;
+      }
       const fromAcc = accountIndex.get(flowDef.from);
       const toAcc = accountIndex.get(flowDef.to);
       if (!fromAcc || !toAcc) return;

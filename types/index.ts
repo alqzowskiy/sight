@@ -1,6 +1,6 @@
 export type AccountStatus = "healthy" | "warning" | "critical";
 export type AccountType = "operational" | "settlement" | "reserve";
-export type Currency = "EUR" | "USD" | "GBP" | "SGD" | "CHF";
+export type Currency = "EUR" | "USD" | "GBP" | "SGD" | "CHF" | "KZT" | "AED" | "JPY";
 export type TransferChannel = "SWIFT" | "SEPA" | "VISA" | "MASTERCARD";
 export type TransferStatus =
   | "completed"
@@ -19,6 +19,10 @@ export interface Account {
   minBalance: number;
   type: AccountType;
   status: AccountStatus;
+  /** Optional pretty city name — used on globe markers. */
+  city?: string;
+  /** True if this account's forecast is naive baseline (no trained ML yet). */
+  isBaseline?: boolean;
 }
 
 export interface Transfer {
