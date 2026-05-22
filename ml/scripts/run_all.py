@@ -44,6 +44,7 @@ def main() -> int:
     )
     parser.add_argument("--skip-generate", action="store_true")
     parser.add_argument("--skip-train", action="store_true")
+    parser.add_argument("--skip-anomaly", action="store_true")
     parser.add_argument("--skip-export", action="store_true")
     parser.add_argument("--skip-backtest", action="store_true")
     parser.add_argument("--skip-calibrate", action="store_true")
@@ -56,6 +57,10 @@ def main() -> int:
         run("generate_history", gen_args)
     if not args.skip_train:
         run("train_ensemble", ["train_ensemble.py"])
+    # Anomaly detection runs BEFORE export so its findings can be embedded in
+    # the JSON contract consumed by the UI.
+    if not args.skip_anomaly:
+        run("anomaly", ["anomaly.py"])
     if not args.skip_export:
         run("export_for_frontend", ["export_for_frontend.py"])
     if not args.skip_backtest:

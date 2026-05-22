@@ -17,10 +17,11 @@ import type {
 import { AccountDetailPanel } from "./account-detail-panel";
 import { AccountCard } from "./account-card";
 import { AlertsPanel } from "./alerts-panel";
+import { ConcentrationCard } from "./concentration-card";
 import { LiquidityScore } from "./liquidity-score";
 import { TimeMachine } from "./time-machine";
 import { motion } from "motion/react";
-import { Search, RotateCcw, Send, Siren, Settings as SettingsIcon, Droplet } from "lucide-react";
+import { Search, RotateCcw, Send, Siren, Settings as SettingsIcon, Droplet, ShieldCheck } from "lucide-react";
 import { toast } from "sonner";
 import { CrisisPanel } from "./crisis-panel";
 import { CommandPalette } from "./command-palette";
@@ -32,6 +33,7 @@ import { ShortcutsOverlay } from "./shortcuts-overlay";
 import { SettingsPanel } from "./settings-panel";
 import { useCrisisStore } from "@/lib/store/crisis-store";
 import { useAlertsAt } from "@/lib/data/alerts";
+import { getTotalAnomalyCount } from "@/lib/data/forecasts";
 import { useInsightsStore } from "@/lib/store/insights-store";
 import { MobileFallback } from "./mobile-fallback";
 
@@ -213,6 +215,13 @@ export function DashboardLayout() {
           <span className="hidden font-mono text-[10px] uppercase tracking-[0.12em] text-zinc-900 sm:inline">
             Dashboard
           </span>
+          <span
+            className="hidden items-center gap-1 rounded-full border border-emerald-200 bg-emerald-50/70 px-2 py-0.5 font-mono text-[9px] uppercase tracking-[0.12em] text-emerald-800 md:inline-flex"
+            title="AI Co-pilot, not Autopilot — all transfers require explicit Execute with audit log"
+          >
+            <ShieldCheck className="h-2.5 w-2.5" strokeWidth={2.2} />
+            Co-pilot mode
+          </span>
         </motion.div>
 
         <motion.div
@@ -351,6 +360,11 @@ export function DashboardLayout() {
             </div>
             <div className="absolute bottom-3 left-3 z-10 font-mono text-[9px] uppercase tracking-[0.12em] text-zinc-400 lg:bottom-4 lg:left-4 lg:text-[10px]">
               {markers.length} accounts · {arcs.length} flows
+              {getTotalAnomalyCount() > 0 && (
+                <span className="ml-1" title="IsolationForest anomalies detected in last 90 days">
+                  · {getTotalAnomalyCount()} anomalies
+                </span>
+              )}
             </div>
             <div className="absolute bottom-3 right-3 z-10 hidden font-mono text-[10px] uppercase tracking-[0.12em] text-zinc-400 sm:block lg:bottom-4 lg:right-4">
               Drag · Scroll · 0 to reset
@@ -359,9 +373,12 @@ export function DashboardLayout() {
 
           <motion.div
             {...panel(0.14)}
-            className="min-h-0 overflow-hidden rounded-xl border border-zinc-200/80 bg-white/60 p-3 lg:order-3 lg:p-4"
+            className="flex min-h-0 flex-col gap-3 lg:order-3"
           >
-            <AlertsPanel />
+            <ConcentrationCard />
+            <div className="min-h-0 flex-1 overflow-hidden rounded-xl border border-zinc-200/80 bg-white/60 p-3 lg:p-4">
+              <AlertsPanel />
+            </div>
           </motion.div>
 
           <motion.div

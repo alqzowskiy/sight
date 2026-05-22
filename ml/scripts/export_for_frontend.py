@@ -57,6 +57,38 @@ def build_points(history: pd.DataFrame, forecast: pd.DataFrame, shap_per_horizon
     return points
 
 
+def load_anomalies(path: Path, history_days: int) -> dict[str, list[dict]]:
+    """Group anomalies by account_id and return only those within the visible
+    history window of the UI.
+
+    Returns a mapping {account_id: [{date, timestamp, channel, amount, score}]}.
+    Missing parquet returns an empty mapping (anomaly step is optional).
+    """
+    if not path.exists():
+        return {}
+    df = pd.read_parquet(path)
+    if df.empty:
+        return {}
+    df["timestamp"] = pd.to_datetime(df["timestamp"], utc=True)
+    cutoff = df["timestamp"].max() - pd.Timedelta(days=history_days)
+    df = df.loc[df["timestamp"] >= cutoff].copy()
+    df["date"] = df["timestamp"].dt.date.astype(str)
+
+    grouped: dict[str, list[dict]] = {}
+    for acc_id, group in df.groupby("account_id"):
+        grouped[str(acc_id)] = [
+            {
+                "date": row["date"],
+                "timestamp": row["timestamp"].isoformat(),
+                "channel": str(row["channel"]),
+                "amount": round(float(row["signed_amount"]), 2),
+                "score": round(float(row["score"]), 3),
+            }
+            for _, row in group.iterrows()
+        ]
+    return grouped
+
+
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument(
@@ -67,6 +99,12 @@ def main() -> int:
     )
     parser.add_argument(
         "--selection", type=str, default=str(ML_ROOT / "models" / "selection.json")
+    )
+    parser.add_argument(
+        "--anomalies",
+        type=str,
+        default=str(ML_ROOT / "data" / "anomalies.parquet"),
+        help="Optional anomalies parquet from ml/scripts/anomaly.py",
     )
     parser.add_argument(
         "--output", type=str, default=str(PUBLIC_DATA / "forecasts.json")
@@ -144,6 +182,13 @@ def main() -> int:
         chosen_by_account[account.id] = chosen
         print(f"  {account.id}: {chosen}, {len(points)} points")
 
+    anomalies_by_account = load_anomalies(Path(args.anomalies), args.history_days)
+    if anomalies_by_account:
+        total_anom = sum(len(v) for v in anomalies_by_account.values())
+        print(f"  embedded {total_anom} anomalies across {len(anomalies_by_account)} accounts")
+    else:
+        print("  no anomalies parquet found (run anomaly.py first to enable)")
+
     output_payload = {
         "generated_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
         "model_version": MODEL_VERSION,
@@ -152,6 +197,7 @@ def main() -> int:
         "forecast_days": args.forecast_days,
         "model_per_account": chosen_by_account,
         "accounts": payload,
+        "anomalies": anomalies_by_account,
     }
     out_path = Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)

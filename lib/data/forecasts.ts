@@ -20,6 +20,19 @@ export interface ForecastPointIndexed extends ForecastPointRaw {
   dayOffset: number;
 }
 
+export interface AnomalyEntry {
+  /** ISO date string (yyyy-mm-dd) for the transaction. */
+  date: string;
+  /** Full ISO timestamp including hour and timezone. */
+  timestamp: string;
+  /** Payment channel — SWIFT, SEPA_INSTANT, VISA, etc. */
+  channel: string;
+  /** Signed amount in the account currency: positive = inflow, negative = outflow. */
+  amount: number;
+  /** Normalized anomaly score in [0..1] — higher = more anomalous. */
+  score: number;
+}
+
 interface ForecastsPayload {
   generated_at: string;
   model_version: string;
@@ -28,6 +41,8 @@ interface ForecastsPayload {
   forecast_days: number;
   model_per_account: Record<string, string>;
   accounts: Record<string, ForecastPointRaw[]>;
+  /** Per-account anomalous transactions detected by ml/scripts/anomaly.py. */
+  anomalies?: Record<string, AnomalyEntry[]>;
   calibration?: {
     target_coverage?: number;
     scale_per_account?: Record<string, number>;
@@ -192,4 +207,22 @@ export function getOffsetBounds(accountId: string): {
 
 export function getModelForAccount(accountId: string): string {
   return forecastsMeta.modelPerAccount[accountId] ?? "prophet";
+}
+
+/**
+ * Anomalies detected in historical transactions by the IsolationForest filter.
+ * Returns the full list for a given account, sorted by timestamp.
+ * Empty array if anomaly detection wasn't run or no anomalies exist for the account.
+ */
+export function getAnomaliesForAccount(accountId: string): AnomalyEntry[] {
+  return RAW.anomalies?.[accountId] ?? [];
+}
+
+/** Total count of anomalies across all accounts in the loaded forecast snapshot. */
+export function getTotalAnomalyCount(): number {
+  if (!RAW.anomalies) return 0;
+  return Object.values(RAW.anomalies).reduce(
+    (sum, arr) => sum + arr.length,
+    0,
+  );
 }

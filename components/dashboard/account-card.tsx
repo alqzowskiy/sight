@@ -10,7 +10,9 @@ import {
   getEffectiveBalanceAt,
   getEffectiveStatusAt,
 } from "@/lib/utils/forecast";
+import { getAnomaliesForAccount } from "@/lib/data/forecasts";
 import { formatCurrency } from "@/lib/utils/format";
+import { AlertTriangle } from "lucide-react";
 
 const DOT: Record<Account["status"], string> = {
   healthy: "bg-zinc-900",
@@ -47,6 +49,8 @@ export function AccountCard({ account }: { account: Account }) {
   const isLow = currentBalance < account.minBalance;
   const city = account.name.split("·")[1]?.trim() ?? account.name;
   const symbol = CURRENCY_SYMBOL[account.currency] ?? `${account.currency} `;
+  const anomalies = getAnomaliesForAccount(account.id);
+  const anomalyCount = anomalies.length;
 
   return (
     <button
@@ -84,8 +88,17 @@ export function AccountCard({ account }: { account: Account }) {
           {symbol}
           <NumberTicker value={currentBalance} />
         </div>
-        <div className="mt-0.5 font-mono text-[10px] tabular-nums text-zinc-500">
-          Min · {formatCurrency(account.minBalance, account.currency)}
+        <div className="mt-0.5 flex items-center justify-between gap-2 font-mono text-[10px] tabular-nums text-zinc-500">
+          <span>Min · {formatCurrency(account.minBalance, account.currency)}</span>
+          {anomalyCount > 0 && (
+            <span
+              className="inline-flex items-center gap-1 rounded border border-amber-200 bg-amber-50/60 px-1.5 py-px text-amber-700"
+              title={`${anomalyCount} anomalous transactions detected by IsolationForest in the last 90 days`}
+            >
+              <AlertTriangle className="h-2.5 w-2.5" strokeWidth={2} />
+              {anomalyCount}
+            </span>
+          )}
         </div>
       </div>
     </button>

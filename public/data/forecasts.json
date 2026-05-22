@@ -8130,5 +8130,4082 @@
       }
     },
     "mean_empirical_coverage_on_test": 0.765
+  },
+  "anomalies": {
+    "chf-zurich": [
+      {
+        "date": "2026-02-21",
+        "timestamp": "2026-02-21T09:30:49+00:00",
+        "channel": "SEPA_STANDARD",
+        "amount": 35576.56,
+        "score": 0.929
+      },
+      {
+        "date": "2026-02-21",
+        "timestamp": "2026-02-21T11:24:33+00:00",
+        "channel": "SEPA_STANDARD",
+        "amount": 25953.81,
+        "score": 0.746
+      },
+      {
+        "date": "2026-02-23",
+        "timestamp": "2026-02-23T08:20:16+00:00",
+        "channel": "MASTERCARD",
+        "amount": 13091.37,
+        "score": 0.705
+      },
+      {
+        "date": "2026-03-03",
+        "timestamp": "2026-03-03T16:23:45+00:00",
+        "channel": "INTERNAL",
+        "amount": 19594.42,
+        "score": 0.701
+      },
+      {
+        "date": "2026-03-09",
+        "timestamp": "2026-03-09T08:31:17+00:00",
+        "channel": "INTERNAL",
+        "amount": 14921.29,
+        "score": 0.692
+      },
+      {
+        "date": "2026-03-09",
+        "timestamp": "2026-03-09T08:41:44+00:00",
+        "channel": "SEPA_STANDARD",
+        "amount": 21591.86,
+        "score": 0.68
+      },
+      {
+        "date": "2026-03-10",
+        "timestamp": "2026-03-10T17:12:06+00:00",
+        "channel": "SWIFT",
+        "amount": 28172.83,
+        "score": 0.786
+      },
+      {
+        "date": "2026-03-15",
+        "timestamp": "2026-03-15T21:09:40+00:00",
+        "channel": "SWIFT",
+        "amount": 21576.44,
+        "score": 0.686
+      },
+      {
+        "date": "2026-03-19",
+        "timestamp": "2026-03-19T13:07:01+00:00",
+        "channel": "SWIFT",
+        "amount": 1903.48,
+        "score": 0.711
+      },
+      {
+        "date": "2026-04-05",
+        "timestamp": "2026-04-05T21:56:35+00:00",
+        "channel": "MASTERCARD",
+        "amount": 20033.45,
+        "score": 0.769
+      },
+      {
+        "date": "2026-04-21",
+        "timestamp": "2026-04-21T20:14:20+00:00",
+        "channel": "INTERNAL",
+        "amount": 16394.24,
+        "score": 0.686
+      },
+      {
+        "date": "2026-04-27",
+        "timestamp": "2026-04-27T11:21:37+00:00",
+        "channel": "SWIFT",
+        "amount": 34300.51,
+        "score": 0.801
+      },
+      {
+        "date": "2026-04-30",
+        "timestamp": "2026-04-30T20:22:11+00:00",
+        "channel": "INTERNAL",
+        "amount": 24686.56,
+        "score": 0.854
+      },
+      {
+        "date": "2026-05-02",
+        "timestamp": "2026-05-02T19:59:47+00:00",
+        "channel": "MASTERCARD",
+        "amount": 26771.37,
+        "score": 0.814
+      },
+      {
+        "date": "2026-05-05",
+        "timestamp": "2026-05-05T08:18:12+00:00",
+        "channel": "SEPA_STANDARD",
+        "amount": 100.0,
+        "score": 0.802
+      },
+      {
+        "date": "2026-05-10",
+        "timestamp": "2026-05-10T09:57:38+00:00",
+        "channel": "SEPA_STANDARD",
+        "amount": 25319.96,
+        "score": 0.79
+      },
+      {
+        "date": "2026-05-10",
+        "timestamp": "2026-05-10T10:58:56+00:00",
+        "channel": "INTERNAL",
+        "amount": 2318.98,
+        "score": 0.863
+      },
+      {
+        "date": "2026-05-16",
+        "timestamp": "2026-05-16T14:28:08+00:00",
+        "channel": "VISA",
+        "amount": 36407.97,
+        "score": 0.887
+      },
+      {
+        "date": "2026-05-16",
+        "timestamp": "2026-05-16T21:17:58+00:00",
+        "channel": "SWIFT",
+        "amount": 1184.45,
+        "score": 0.84
+      },
+      {
+        "date": "2026-05-18",
+        "timestamp": "2026-05-18T19:00:09+00:00",
+        "channel": "SEPA_STANDARD",
+        "amount": 338.25,
+        "score": 0.751
+      },
+      {
+        "date": "2026-05-19",
+        "timestamp": "2026-05-19T19:05:08+00:00",
+        "channel": "INTERNAL",
+        "amount": 20040.1,
+        "score": 0.76
+      }
+    ],
+    "eur-frankfurt": [
+      {
+        "date": "2026-02-19",
+        "timestamp": "2026-02-19T21:41:15+00:00",
+        "channel": "SWIFT",
+        "amount": 14031.73,
+        "score": 0.714
+      },
+      {
+        "date": "2026-02-21",
+        "timestamp": "2026-02-21T13:22:58+00:00",
+        "channel": "SEPA_INSTANT",
+        "amount": 641.15,
+        "score": 0.731
+      },
+      {
+        "date": "2026-02-21",
+        "timestamp": "2026-02-21T20:07:38+00:00",
+        "channel": "SEPA_STANDARD",
+        "amount": 30163.4,
+        "score": 0.765
+      },
+      {
+        "date": "2026-02-22",
+        "timestamp": "2026-02-22T14:46:09+00:00",
+        "channel": "SWIFT",
+        "amount": 23970.33,
+        "score": 0.944
+      },
+      {
+        "date": "2026-02-23",
+        "timestamp": "2026-02-23T19:07:24+00:00",
+        "channel": "SWIFT",
+        "amount": 3089.72,
+        "score": 0.89
+      },
+      {
+        "date": "2026-02-28",
+        "timestamp": "2026-02-28T08:29:51+00:00",
+        "channel": "SEPA_STANDARD",
+        "amount": 26129.67,
+        "score": 0.74
+      },
+      {
+        "date": "2026-02-28",
+        "timestamp": "2026-02-28T16:42:17+00:00",
+        "channel": "SEPA_STANDARD",
+        "amount": 38269.27,
+        "score": 0.77
+      },
+      {
+        "date": "2026-03-06",
+        "timestamp": "2026-03-06T18:00:27+00:00",
+        "channel": "MASTERCARD",
+        "amount": 2093.65,
+        "score": 0.776
+      },
+      {
+        "date": "2026-03-08",
+        "timestamp": "2026-03-08T12:06:23+00:00",
+        "channel": "SEPA_STANDARD",
+        "amount": 35402.02,
+        "score": 0.828
+      },
+      {
+        "date": "2026-03-08",
+        "timestamp": "2026-03-08T14:09:12+00:00",
+        "channel": "MASTERCARD",
+        "amount": 17075.93,
+        "score": 0.813
+      },
+      {
+        "date": "2026-03-09",
+        "timestamp": "2026-03-09T08:35:19+00:00",
+        "channel": "MASTERCARD",
+        "amount": 13981.51,
+        "score": 0.806
+      },
+      {
+        "date": "2026-03-10",
+        "timestamp": "2026-03-10T18:44:37+00:00",
+        "channel": "SEPA_STANDARD",
+        "amount": 34138.19,
+        "score": 0.716
+      },
+      {
+        "date": "2026-03-11",
+        "timestamp": "2026-03-11T19:31:34+00:00",
+        "channel": "MASTERCARD",
+        "amount": 30256.31,
+        "score": 0.838
+      },
+      {
+        "date": "2026-03-13",
+        "timestamp": "2026-03-13T08:42:28+00:00",
+        "channel": "MASTERCARD",
+        "amount": 5304.87,
+        "score": 0.768
+      },
+      {
+        "date": "2026-03-15",
+        "timestamp": "2026-03-15T17:07:23+00:00",
+        "channel": "VISA",
+        "amount": 21445.79,
+        "score": 0.729
+      },
+      {
+        "date": "2026-03-15",
+        "timestamp": "2026-03-15T17:48:30+00:00",
+        "channel": "SWIFT",
+        "amount": 1990.53,
+        "score": 0.849
+      },
+      {
+        "date": "2026-03-15",
+        "timestamp": "2026-03-15T19:35:26+00:00",
+        "channel": "MASTERCARD",
+        "amount": 19004.4,
+        "score": 0.704
+      },
+      {
+        "date": "2026-03-15",
+        "timestamp": "2026-03-15T21:26:26+00:00",
+        "channel": "MASTERCARD",
+        "amount": 8834.36,
+        "score": 0.723
+      },
+      {
+        "date": "2026-03-16",
+        "timestamp": "2026-03-16T21:40:53+00:00",
+        "channel": "MASTERCARD",
+        "amount": 8705.19,
+        "score": 0.815
+      },
+      {
+        "date": "2026-03-17",
+        "timestamp": "2026-03-17T14:02:20+00:00",
+        "channel": "SWIFT",
+        "amount": 6170.25,
+        "score": 0.71
+      },
+      {
+        "date": "2026-03-17",
+        "timestamp": "2026-03-17T16:39:47+00:00",
+        "channel": "MASTERCARD",
+        "amount": 17551.5,
+        "score": 0.759
+      },
+      {
+        "date": "2026-03-19",
+        "timestamp": "2026-03-19T08:35:45+00:00",
+        "channel": "INTERNAL",
+        "amount": 22728.12,
+        "score": 0.814
+      },
+      {
+        "date": "2026-03-23",
+        "timestamp": "2026-03-23T19:51:15+00:00",
+        "channel": "SWIFT",
+        "amount": 21890.31,
+        "score": 0.751
+      },
+      {
+        "date": "2026-03-25",
+        "timestamp": "2026-03-25T09:28:27+00:00",
+        "channel": "SWIFT",
+        "amount": 16772.25,
+        "score": 0.809
+      },
+      {
+        "date": "2026-03-26",
+        "timestamp": "2026-03-26T08:07:34+00:00",
+        "channel": "SWIFT",
+        "amount": 15661.47,
+        "score": 0.808
+      },
+      {
+        "date": "2026-03-26",
+        "timestamp": "2026-03-26T19:04:35+00:00",
+        "channel": "INTERNAL",
+        "amount": 19696.34,
+        "score": 0.704
+      },
+      {
+        "date": "2026-03-27",
+        "timestamp": "2026-03-27T21:45:58+00:00",
+        "channel": "SEPA_INSTANT",
+        "amount": 26447.95,
+        "score": 0.715
+      },
+      {
+        "date": "2026-03-28",
+        "timestamp": "2026-03-28T10:10:43+00:00",
+        "channel": "SWIFT",
+        "amount": 25755.19,
+        "score": 0.784
+      },
+      {
+        "date": "2026-03-28",
+        "timestamp": "2026-03-28T21:44:18+00:00",
+        "channel": "INTERNAL",
+        "amount": 5042.55,
+        "score": 0.711
+      },
+      {
+        "date": "2026-04-02",
+        "timestamp": "2026-04-02T12:12:01+00:00",
+        "channel": "VISA",
+        "amount": 1126.59,
+        "score": 0.823
+      },
+      {
+        "date": "2026-04-07",
+        "timestamp": "2026-04-07T10:42:39+00:00",
+        "channel": "SEPA_STANDARD",
+        "amount": 100.0,
+        "score": 0.707
+      },
+      {
+        "date": "2026-04-07",
+        "timestamp": "2026-04-07T20:12:42+00:00",
+        "channel": "INTERNAL",
+        "amount": 141.59,
+        "score": 0.94
+      },
+      {
+        "date": "2026-04-11",
+        "timestamp": "2026-04-11T19:42:09+00:00",
+        "channel": "INTERNAL",
+        "amount": 29387.34,
+        "score": 0.927
+      },
+      {
+        "date": "2026-04-13",
+        "timestamp": "2026-04-13T16:39:40+00:00",
+        "channel": "SWIFT",
+        "amount": 19736.61,
+        "score": 0.874
+      },
+      {
+        "date": "2026-04-14",
+        "timestamp": "2026-04-14T14:48:39+00:00",
+        "channel": "SWIFT",
+        "amount": 15475.04,
+        "score": 0.756
+      },
+      {
+        "date": "2026-04-15",
+        "timestamp": "2026-04-15T08:30:18+00:00",
+        "channel": "VISA",
+        "amount": 1538.15,
+        "score": 0.869
+      },
+      {
+        "date": "2026-04-15",
+        "timestamp": "2026-04-15T09:07:50+00:00",
+        "channel": "VISA",
+        "amount": 2842.45,
+        "score": 0.711
+      },
+      {
+        "date": "2026-04-15",
+        "timestamp": "2026-04-15T21:16:31+00:00",
+        "channel": "VISA",
+        "amount": 2717.56,
+        "score": 0.744
+      },
+      {
+        "date": "2026-04-17",
+        "timestamp": "2026-04-17T20:18:59+00:00",
+        "channel": "SWIFT",
+        "amount": 8325.48,
+        "score": 0.712
+      },
+      {
+        "date": "2026-04-20",
+        "timestamp": "2026-04-20T11:27:30+00:00",
+        "channel": "SWIFT",
+        "amount": 6554.52,
+        "score": 0.774
+      },
+      {
+        "date": "2026-04-21",
+        "timestamp": "2026-04-21T11:17:24+00:00",
+        "channel": "SWIFT",
+        "amount": 2192.33,
+        "score": 0.756
+      },
+      {
+        "date": "2026-04-24",
+        "timestamp": "2026-04-24T21:59:06+00:00",
+        "channel": "VISA",
+        "amount": 19394.78,
+        "score": 0.706
+      },
+      {
+        "date": "2026-04-25",
+        "timestamp": "2026-04-25T14:33:50+00:00",
+        "channel": "MASTERCARD",
+        "amount": 2175.46,
+        "score": 0.815
+      },
+      {
+        "date": "2026-04-25",
+        "timestamp": "2026-04-25T16:21:27+00:00",
+        "channel": "SWIFT",
+        "amount": 29078.85,
+        "score": 0.79
+      },
+      {
+        "date": "2026-04-25",
+        "timestamp": "2026-04-25T18:04:23+00:00",
+        "channel": "SEPA_STANDARD",
+        "amount": 31593.51,
+        "score": 0.735
+      },
+      {
+        "date": "2026-04-26",
+        "timestamp": "2026-04-26T19:43:08+00:00",
+        "channel": "VISA",
+        "amount": 100.0,
+        "score": 0.98
+      },
+      {
+        "date": "2026-04-27",
+        "timestamp": "2026-04-27T11:57:11+00:00",
+        "channel": "SEPA_INSTANT",
+        "amount": 1207.72,
+        "score": 0.731
+      },
+      {
+        "date": "2026-04-30",
+        "timestamp": "2026-04-30T20:11:15+00:00",
+        "channel": "SWIFT",
+        "amount": 1713.86,
+        "score": 0.767
+      },
+      {
+        "date": "2026-05-04",
+        "timestamp": "2026-05-04T17:24:38+00:00",
+        "channel": "SWIFT",
+        "amount": 31272.74,
+        "score": 0.936
+      },
+      {
+        "date": "2026-05-05",
+        "timestamp": "2026-05-05T09:22:05+00:00",
+        "channel": "MASTERCARD",
+        "amount": 18953.29,
+        "score": 0.75
+      },
+      {
+        "date": "2026-05-10",
+        "timestamp": "2026-05-10T08:57:42+00:00",
+        "channel": "MASTERCARD",
+        "amount": 6263.48,
+        "score": 0.804
+      },
+      {
+        "date": "2026-05-10",
+        "timestamp": "2026-05-10T09:45:40+00:00",
+        "channel": "SWIFT",
+        "amount": 8507.97,
+        "score": 0.745
+      },
+      {
+        "date": "2026-05-10",
+        "timestamp": "2026-05-10T21:11:40+00:00",
+        "channel": "SWIFT",
+        "amount": 3637.85,
+        "score": 0.714
+      },
+      {
+        "date": "2026-05-12",
+        "timestamp": "2026-05-12T20:25:18+00:00",
+        "channel": "MASTERCARD",
+        "amount": 15679.83,
+        "score": 0.767
+      },
+      {
+        "date": "2026-05-14",
+        "timestamp": "2026-05-14T08:04:52+00:00",
+        "channel": "MASTERCARD",
+        "amount": 1844.96,
+        "score": 0.82
+      },
+      {
+        "date": "2026-05-15",
+        "timestamp": "2026-05-15T20:54:40+00:00",
+        "channel": "SWIFT",
+        "amount": 20453.12,
+        "score": 0.814
+      },
+      {
+        "date": "2026-05-15",
+        "timestamp": "2026-05-15T21:12:35+00:00",
+        "channel": "MASTERCARD",
+        "amount": 4534.35,
+        "score": 0.797
+      },
+      {
+        "date": "2026-05-16",
+        "timestamp": "2026-05-16T08:06:54+00:00",
+        "channel": "VISA",
+        "amount": 20597.51,
+        "score": 0.768
+      },
+      {
+        "date": "2026-05-16",
+        "timestamp": "2026-05-16T08:21:12+00:00",
+        "channel": "SEPA_STANDARD",
+        "amount": 30173.85,
+        "score": 0.823
+      },
+      {
+        "date": "2026-05-16",
+        "timestamp": "2026-05-16T16:42:24+00:00",
+        "channel": "SEPA_INSTANT",
+        "amount": 37802.5,
+        "score": 0.776
+      },
+      {
+        "date": "2026-05-18",
+        "timestamp": "2026-05-18T08:23:27+00:00",
+        "channel": "MASTERCARD",
+        "amount": 22697.53,
+        "score": 0.768
+      }
+    ],
+    "eur-paris": [
+      {
+        "date": "2026-02-21",
+        "timestamp": "2026-02-21T09:22:22+00:00",
+        "channel": "MASTERCARD",
+        "amount": 40379.51,
+        "score": 0.93
+      },
+      {
+        "date": "2026-02-21",
+        "timestamp": "2026-02-21T21:47:35+00:00",
+        "channel": "SEPA_INSTANT",
+        "amount": 32335.78,
+        "score": 0.763
+      },
+      {
+        "date": "2026-02-23",
+        "timestamp": "2026-02-23T19:38:24+00:00",
+        "channel": "VISA",
+        "amount": 21516.77,
+        "score": 0.696
+      },
+      {
+        "date": "2026-02-26",
+        "timestamp": "2026-02-26T11:06:11+00:00",
+        "channel": "SEPA_INSTANT",
+        "amount": 34614.17,
+        "score": 0.752
+      },
+      {
+        "date": "2026-02-26",
+        "timestamp": "2026-02-26T17:16:12+00:00",
+        "channel": "SWIFT",
+        "amount": 3769.79,
+        "score": 0.664
+      },
+      {
+        "date": "2026-02-27",
+        "timestamp": "2026-02-27T15:00:03+00:00",
+        "channel": "SEPA_INSTANT",
+        "amount": 37593.73,
+        "score": 0.732
+      },
+      {
+        "date": "2026-02-28",
+        "timestamp": "2026-02-28T08:32:48+00:00",
+        "channel": "SEPA_INSTANT",
+        "amount": 1960.95,
+        "score": 0.669
+      },
+      {
+        "date": "2026-03-03",
+        "timestamp": "2026-03-03T12:37:14+00:00",
+        "channel": "SWIFT",
+        "amount": 17012.93,
+        "score": 0.665
+      },
+      {
+        "date": "2026-03-06",
+        "timestamp": "2026-03-06T21:57:00+00:00",
+        "channel": "INTERNAL",
+        "amount": 2642.57,
+        "score": 0.75
+      },
+      {
+        "date": "2026-03-07",
+        "timestamp": "2026-03-07T12:53:31+00:00",
+        "channel": "SEPA_STANDARD",
+        "amount": 36381.7,
+        "score": 0.753
+      },
+      {
+        "date": "2026-03-15",
+        "timestamp": "2026-03-15T09:16:28+00:00",
+        "channel": "VISA",
+        "amount": 22795.32,
+        "score": 0.796
+      },
+      {
+        "date": "2026-03-15",
+        "timestamp": "2026-03-15T16:57:17+00:00",
+        "channel": "SEPA_INSTANT",
+        "amount": 954.08,
+        "score": 0.674
+      },
+      {
+        "date": "2026-03-19",
+        "timestamp": "2026-03-19T16:15:03+00:00",
+        "channel": "SWIFT",
+        "amount": 25713.96,
+        "score": 0.686
+      },
+      {
+        "date": "2026-03-22",
+        "timestamp": "2026-03-22T16:02:48+00:00",
+        "channel": "SWIFT",
+        "amount": 17148.52,
+        "score": 0.686
+      },
+      {
+        "date": "2026-03-22",
+        "timestamp": "2026-03-22T21:55:34+00:00",
+        "channel": "INTERNAL",
+        "amount": 1699.13,
+        "score": 0.906
+      },
+      {
+        "date": "2026-03-23",
+        "timestamp": "2026-03-23T08:19:20+00:00",
+        "channel": "SWIFT",
+        "amount": 9174.06,
+        "score": 0.763
+      },
+      {
+        "date": "2026-03-23",
+        "timestamp": "2026-03-23T12:22:55+00:00",
+        "channel": "SWIFT",
+        "amount": 5946.29,
+        "score": 0.677
+      },
+      {
+        "date": "2026-03-30",
+        "timestamp": "2026-03-30T10:43:45+00:00",
+        "channel": "INTERNAL",
+        "amount": 3894.76,
+        "score": 0.674
+      },
+      {
+        "date": "2026-03-30",
+        "timestamp": "2026-03-30T15:31:14+00:00",
+        "channel": "VISA",
+        "amount": 401.37,
+        "score": 0.794
+      },
+      {
+        "date": "2026-04-01",
+        "timestamp": "2026-04-01T12:45:01+00:00",
+        "channel": "SWIFT",
+        "amount": 25330.46,
+        "score": 0.769
+      },
+      {
+        "date": "2026-04-03",
+        "timestamp": "2026-04-03T19:12:11+00:00",
+        "channel": "SEPA_INSTANT",
+        "amount": 1234.43,
+        "score": 0.666
+      },
+      {
+        "date": "2026-04-07",
+        "timestamp": "2026-04-07T08:17:35+00:00",
+        "channel": "SWIFT",
+        "amount": 22794.66,
+        "score": 0.658
+      },
+      {
+        "date": "2026-04-07",
+        "timestamp": "2026-04-07T08:35:10+00:00",
+        "channel": "MASTERCARD",
+        "amount": 37458.45,
+        "score": 1.0
+      },
+      {
+        "date": "2026-04-07",
+        "timestamp": "2026-04-07T09:39:45+00:00",
+        "channel": "MASTERCARD",
+        "amount": 20644.23,
+        "score": 0.667
+      },
+      {
+        "date": "2026-04-07",
+        "timestamp": "2026-04-07T20:52:28+00:00",
+        "channel": "SWIFT",
+        "amount": 18045.36,
+        "score": 0.676
+      },
+      {
+        "date": "2026-04-10",
+        "timestamp": "2026-04-10T21:21:06+00:00",
+        "channel": "SWIFT",
+        "amount": 21192.95,
+        "score": 0.662
+      },
+      {
+        "date": "2026-04-11",
+        "timestamp": "2026-04-11T09:32:10+00:00",
+        "channel": "MASTERCARD",
+        "amount": 5200.51,
+        "score": 0.731
+      },
+      {
+        "date": "2026-04-11",
+        "timestamp": "2026-04-11T20:14:24+00:00",
+        "channel": "MASTERCARD",
+        "amount": 3904.55,
+        "score": 0.809
+      },
+      {
+        "date": "2026-04-12",
+        "timestamp": "2026-04-12T11:21:56+00:00",
+        "channel": "INTERNAL",
+        "amount": 21473.46,
+        "score": 0.771
+      },
+      {
+        "date": "2026-04-16",
+        "timestamp": "2026-04-16T11:41:29+00:00",
+        "channel": "SWIFT",
+        "amount": 4520.26,
+        "score": 0.724
+      },
+      {
+        "date": "2026-04-17",
+        "timestamp": "2026-04-17T21:01:17+00:00",
+        "channel": "SWIFT",
+        "amount": 3414.12,
+        "score": 0.719
+      },
+      {
+        "date": "2026-04-22",
+        "timestamp": "2026-04-22T13:41:18+00:00",
+        "channel": "MASTERCARD",
+        "amount": 19273.12,
+        "score": 0.699
+      },
+      {
+        "date": "2026-04-23",
+        "timestamp": "2026-04-23T14:59:37+00:00",
+        "channel": "SWIFT",
+        "amount": 1225.69,
+        "score": 0.707
+      },
+      {
+        "date": "2026-04-26",
+        "timestamp": "2026-04-26T15:21:42+00:00",
+        "channel": "SEPA_STANDARD",
+        "amount": 29972.8,
+        "score": 0.683
+      },
+      {
+        "date": "2026-04-27",
+        "timestamp": "2026-04-27T09:28:45+00:00",
+        "channel": "SEPA_STANDARD",
+        "amount": 1453.21,
+        "score": 0.659
+      },
+      {
+        "date": "2026-05-03",
+        "timestamp": "2026-05-03T09:28:04+00:00",
+        "channel": "SWIFT",
+        "amount": 6183.48,
+        "score": 0.717
+      },
+      {
+        "date": "2026-05-08",
+        "timestamp": "2026-05-08T13:05:48+00:00",
+        "channel": "SEPA_INSTANT",
+        "amount": 33421.82,
+        "score": 0.724
+      },
+      {
+        "date": "2026-05-10",
+        "timestamp": "2026-05-10T11:27:58+00:00",
+        "channel": "SWIFT",
+        "amount": 6979.72,
+        "score": 0.718
+      },
+      {
+        "date": "2026-05-11",
+        "timestamp": "2026-05-11T11:49:59+00:00",
+        "channel": "SWIFT",
+        "amount": 10117.33,
+        "score": 0.701
+      },
+      {
+        "date": "2026-05-12",
+        "timestamp": "2026-05-12T08:57:56+00:00",
+        "channel": "INTERNAL",
+        "amount": 1032.79,
+        "score": 0.908
+      },
+      {
+        "date": "2026-05-16",
+        "timestamp": "2026-05-16T16:17:28+00:00",
+        "channel": "SWIFT",
+        "amount": 23320.37,
+        "score": 0.83
+      },
+      {
+        "date": "2026-05-16",
+        "timestamp": "2026-05-16T21:16:45+00:00",
+        "channel": "SEPA_INSTANT",
+        "amount": 555.46,
+        "score": 0.755
+      },
+      {
+        "date": "2026-05-17",
+        "timestamp": "2026-05-17T14:29:02+00:00",
+        "channel": "SEPA_INSTANT",
+        "amount": 29148.07,
+        "score": 0.739
+      },
+      {
+        "date": "2026-05-18",
+        "timestamp": "2026-05-18T15:56:45+00:00",
+        "channel": "MASTERCARD",
+        "amount": 2014.22,
+        "score": 0.653
+      }
+    ],
+    "fx-hedging": [
+      {
+        "date": "2026-02-21",
+        "timestamp": "2026-02-21T13:50:46+00:00",
+        "channel": "ACH",
+        "amount": 100.0,
+        "score": 0.808
+      },
+      {
+        "date": "2026-03-14",
+        "timestamp": "2026-03-14T08:18:58+00:00",
+        "channel": "SWIFT",
+        "amount": 51761.64,
+        "score": 0.753
+      },
+      {
+        "date": "2026-03-25",
+        "timestamp": "2026-03-25T14:52:08+00:00",
+        "channel": "INTERNAL",
+        "amount": 270.45,
+        "score": 0.773
+      },
+      {
+        "date": "2026-03-28",
+        "timestamp": "2026-03-28T21:57:10+00:00",
+        "channel": "SWIFT",
+        "amount": 37581.34,
+        "score": 0.758
+      },
+      {
+        "date": "2026-03-30",
+        "timestamp": "2026-03-30T14:41:28+00:00",
+        "channel": "MASTERCARD",
+        "amount": 35253.41,
+        "score": 0.762
+      },
+      {
+        "date": "2026-04-04",
+        "timestamp": "2026-04-04T17:43:32+00:00",
+        "channel": "SWIFT",
+        "amount": 86128.97,
+        "score": 0.949
+      },
+      {
+        "date": "2026-04-06",
+        "timestamp": "2026-04-06T12:38:27+00:00",
+        "channel": "ACH",
+        "amount": 100.0,
+        "score": 0.826
+      },
+      {
+        "date": "2026-04-07",
+        "timestamp": "2026-04-07T13:58:33+00:00",
+        "channel": "ACH",
+        "amount": 84314.03,
+        "score": 0.86
+      },
+      {
+        "date": "2026-04-14",
+        "timestamp": "2026-04-14T13:16:42+00:00",
+        "channel": "MASTERCARD",
+        "amount": 100.0,
+        "score": 0.863
+      },
+      {
+        "date": "2026-04-16",
+        "timestamp": "2026-04-16T12:56:52+00:00",
+        "channel": "SWIFT",
+        "amount": 37200.39,
+        "score": 0.792
+      },
+      {
+        "date": "2026-04-16",
+        "timestamp": "2026-04-16T14:07:34+00:00",
+        "channel": "ACH",
+        "amount": 100.0,
+        "score": 0.746
+      },
+      {
+        "date": "2026-04-20",
+        "timestamp": "2026-04-20T21:06:13+00:00",
+        "channel": "VISA",
+        "amount": 461.02,
+        "score": 0.814
+      },
+      {
+        "date": "2026-04-27",
+        "timestamp": "2026-04-27T21:28:04+00:00",
+        "channel": "MASTERCARD",
+        "amount": 2713.17,
+        "score": 0.83
+      },
+      {
+        "date": "2026-04-30",
+        "timestamp": "2026-04-30T08:02:45+00:00",
+        "channel": "INTERNAL",
+        "amount": 800.61,
+        "score": 0.766
+      },
+      {
+        "date": "2026-05-10",
+        "timestamp": "2026-05-10T09:17:09+00:00",
+        "channel": "INTERNAL",
+        "amount": 695.42,
+        "score": 0.882
+      },
+      {
+        "date": "2026-05-16",
+        "timestamp": "2026-05-16T10:35:07+00:00",
+        "channel": "SWIFT",
+        "amount": 53124.27,
+        "score": 0.814
+      },
+      {
+        "date": "2026-05-16",
+        "timestamp": "2026-05-16T10:48:50+00:00",
+        "channel": "ACH",
+        "amount": 62786.37,
+        "score": 0.825
+      }
+    ],
+    "gbp-london": [
+      {
+        "date": "2026-02-21",
+        "timestamp": "2026-02-21T13:27:49+00:00",
+        "channel": "SWIFT",
+        "amount": 33054.81,
+        "score": 0.748
+      },
+      {
+        "date": "2026-02-23",
+        "timestamp": "2026-02-23T11:28:57+00:00",
+        "channel": "INTERNAL",
+        "amount": 21137.08,
+        "score": 0.711
+      },
+      {
+        "date": "2026-02-24",
+        "timestamp": "2026-02-24T09:36:15+00:00",
+        "channel": "INTERNAL",
+        "amount": 19769.12,
+        "score": 0.659
+      },
+      {
+        "date": "2026-03-01",
+        "timestamp": "2026-03-01T12:26:57+00:00",
+        "channel": "INTERNAL",
+        "amount": 21384.19,
+        "score": 0.718
+      },
+      {
+        "date": "2026-03-01",
+        "timestamp": "2026-03-01T20:21:00+00:00",
+        "channel": "INTERNAL",
+        "amount": 28461.03,
+        "score": 0.902
+      },
+      {
+        "date": "2026-03-05",
+        "timestamp": "2026-03-05T14:01:53+00:00",
+        "channel": "MASTERCARD",
+        "amount": 35446.64,
+        "score": 0.867
+      },
+      {
+        "date": "2026-03-08",
+        "timestamp": "2026-03-08T20:07:49+00:00",
+        "channel": "SWIFT",
+        "amount": 4939.6,
+        "score": 0.732
+      },
+      {
+        "date": "2026-03-15",
+        "timestamp": "2026-03-15T13:43:11+00:00",
+        "channel": "SWIFT",
+        "amount": 2438.52,
+        "score": 0.838
+      },
+      {
+        "date": "2026-03-15",
+        "timestamp": "2026-03-15T18:09:39+00:00",
+        "channel": "SWIFT",
+        "amount": 16205.71,
+        "score": 0.734
+      },
+      {
+        "date": "2026-03-17",
+        "timestamp": "2026-03-17T08:33:54+00:00",
+        "channel": "MASTERCARD",
+        "amount": 47417.38,
+        "score": 1.0
+      },
+      {
+        "date": "2026-03-20",
+        "timestamp": "2026-03-20T16:18:44+00:00",
+        "channel": "SWIFT",
+        "amount": 3057.16,
+        "score": 0.674
+      },
+      {
+        "date": "2026-03-20",
+        "timestamp": "2026-03-20T21:18:34+00:00",
+        "channel": "INTERNAL",
+        "amount": 20260.36,
+        "score": 0.69
+      },
+      {
+        "date": "2026-03-27",
+        "timestamp": "2026-03-27T13:31:02+00:00",
+        "channel": "INTERNAL",
+        "amount": 2269.51,
+        "score": 0.7
+      },
+      {
+        "date": "2026-04-02",
+        "timestamp": "2026-04-02T09:08:42+00:00",
+        "channel": "SWIFT",
+        "amount": 28531.53,
+        "score": 0.69
+      },
+      {
+        "date": "2026-04-03",
+        "timestamp": "2026-04-03T13:58:44+00:00",
+        "channel": "INTERNAL",
+        "amount": 32166.48,
+        "score": 0.875
+      },
+      {
+        "date": "2026-04-06",
+        "timestamp": "2026-04-06T18:22:06+00:00",
+        "channel": "VISA",
+        "amount": 36373.78,
+        "score": 0.885
+      },
+      {
+        "date": "2026-04-07",
+        "timestamp": "2026-04-07T16:05:57+00:00",
+        "channel": "INTERNAL",
+        "amount": 1914.68,
+        "score": 0.699
+      },
+      {
+        "date": "2026-04-08",
+        "timestamp": "2026-04-08T08:07:07+00:00",
+        "channel": "INTERNAL",
+        "amount": 20156.29,
+        "score": 0.71
+      },
+      {
+        "date": "2026-04-08",
+        "timestamp": "2026-04-08T17:47:34+00:00",
+        "channel": "MASTERCARD",
+        "amount": 1284.47,
+        "score": 0.712
+      },
+      {
+        "date": "2026-04-11",
+        "timestamp": "2026-04-11T08:15:56+00:00",
+        "channel": "SEPA_STANDARD",
+        "amount": 24723.86,
+        "score": 0.678
+      },
+      {
+        "date": "2026-04-16",
+        "timestamp": "2026-04-16T10:20:07+00:00",
+        "channel": "VISA",
+        "amount": 29315.17,
+        "score": 0.733
+      },
+      {
+        "date": "2026-04-17",
+        "timestamp": "2026-04-17T08:50:51+00:00",
+        "channel": "SWIFT",
+        "amount": 16048.14,
+        "score": 0.69
+      },
+      {
+        "date": "2026-04-18",
+        "timestamp": "2026-04-18T18:13:02+00:00",
+        "channel": "SEPA_STANDARD",
+        "amount": 26771.58,
+        "score": 0.659
+      },
+      {
+        "date": "2026-04-19",
+        "timestamp": "2026-04-19T12:32:59+00:00",
+        "channel": "INTERNAL",
+        "amount": 19158.23,
+        "score": 0.671
+      },
+      {
+        "date": "2026-04-27",
+        "timestamp": "2026-04-27T20:07:41+00:00",
+        "channel": "SWIFT",
+        "amount": 30152.37,
+        "score": 0.805
+      },
+      {
+        "date": "2026-05-02",
+        "timestamp": "2026-05-02T08:17:05+00:00",
+        "channel": "SEPA_STANDARD",
+        "amount": 25065.57,
+        "score": 0.693
+      },
+      {
+        "date": "2026-05-05",
+        "timestamp": "2026-05-05T19:18:42+00:00",
+        "channel": "SWIFT",
+        "amount": 1865.62,
+        "score": 0.735
+      },
+      {
+        "date": "2026-05-10",
+        "timestamp": "2026-05-10T15:35:53+00:00",
+        "channel": "INTERNAL",
+        "amount": 22366.02,
+        "score": 0.735
+      },
+      {
+        "date": "2026-05-10",
+        "timestamp": "2026-05-10T18:16:41+00:00",
+        "channel": "MASTERCARD",
+        "amount": 20030.21,
+        "score": 0.678
+      },
+      {
+        "date": "2026-05-11",
+        "timestamp": "2026-05-11T21:59:35+00:00",
+        "channel": "INTERNAL",
+        "amount": 2797.04,
+        "score": 0.755
+      },
+      {
+        "date": "2026-05-14",
+        "timestamp": "2026-05-14T21:57:39+00:00",
+        "channel": "SEPA_STANDARD",
+        "amount": 26446.69,
+        "score": 0.66
+      },
+      {
+        "date": "2026-05-18",
+        "timestamp": "2026-05-18T15:16:19+00:00",
+        "channel": "INTERNAL",
+        "amount": 21709.3,
+        "score": 0.688
+      }
+    ],
+    "mc-usd": [
+      {
+        "date": "2026-02-22",
+        "timestamp": "2026-02-22T09:55:43+00:00",
+        "channel": "SWIFT",
+        "amount": 30696.56,
+        "score": 0.737
+      },
+      {
+        "date": "2026-02-22",
+        "timestamp": "2026-02-22T19:23:35+00:00",
+        "channel": "SWIFT",
+        "amount": 41605.42,
+        "score": 0.826
+      },
+      {
+        "date": "2026-02-24",
+        "timestamp": "2026-02-24T12:40:19+00:00",
+        "channel": "SWIFT",
+        "amount": 24494.41,
+        "score": 0.663
+      },
+      {
+        "date": "2026-02-24",
+        "timestamp": "2026-02-24T20:21:45+00:00",
+        "channel": "INTERNAL",
+        "amount": 55611.37,
+        "score": 0.881
+      },
+      {
+        "date": "2026-02-26",
+        "timestamp": "2026-02-26T18:32:07+00:00",
+        "channel": "ACH",
+        "amount": 100.0,
+        "score": 0.695
+      },
+      {
+        "date": "2026-02-27",
+        "timestamp": "2026-02-27T21:26:01+00:00",
+        "channel": "SWIFT",
+        "amount": 2065.17,
+        "score": 0.768
+      },
+      {
+        "date": "2026-02-28",
+        "timestamp": "2026-02-28T09:11:17+00:00",
+        "channel": "ACH",
+        "amount": 29623.84,
+        "score": 0.677
+      },
+      {
+        "date": "2026-03-01",
+        "timestamp": "2026-03-01T09:40:28+00:00",
+        "channel": "INTERNAL",
+        "amount": 29444.32,
+        "score": 0.813
+      },
+      {
+        "date": "2026-03-01",
+        "timestamp": "2026-03-01T21:54:28+00:00",
+        "channel": "MASTERCARD",
+        "amount": 35303.27,
+        "score": 0.826
+      },
+      {
+        "date": "2026-03-02",
+        "timestamp": "2026-03-02T08:05:23+00:00",
+        "channel": "INTERNAL",
+        "amount": 27982.27,
+        "score": 0.82
+      },
+      {
+        "date": "2026-03-02",
+        "timestamp": "2026-03-02T14:39:24+00:00",
+        "channel": "ACH",
+        "amount": 31590.55,
+        "score": 0.667
+      },
+      {
+        "date": "2026-03-03",
+        "timestamp": "2026-03-03T14:49:38+00:00",
+        "channel": "VISA",
+        "amount": 38809.26,
+        "score": 0.731
+      },
+      {
+        "date": "2026-03-04",
+        "timestamp": "2026-03-04T08:22:10+00:00",
+        "channel": "ACH",
+        "amount": 28134.27,
+        "score": 0.666
+      },
+      {
+        "date": "2026-03-04",
+        "timestamp": "2026-03-04T09:12:43+00:00",
+        "channel": "SWIFT",
+        "amount": 1554.49,
+        "score": 0.807
+      },
+      {
+        "date": "2026-03-09",
+        "timestamp": "2026-03-09T14:06:03+00:00",
+        "channel": "MASTERCARD",
+        "amount": 23743.62,
+        "score": 0.665
+      },
+      {
+        "date": "2026-03-09",
+        "timestamp": "2026-03-09T17:33:25+00:00",
+        "channel": "INTERNAL",
+        "amount": 188.17,
+        "score": 0.803
+      },
+      {
+        "date": "2026-03-09",
+        "timestamp": "2026-03-09T17:48:19+00:00",
+        "channel": "SWIFT",
+        "amount": 52145.32,
+        "score": 0.811
+      },
+      {
+        "date": "2026-03-10",
+        "timestamp": "2026-03-10T20:10:07+00:00",
+        "channel": "SWIFT",
+        "amount": 27912.09,
+        "score": 0.879
+      },
+      {
+        "date": "2026-03-11",
+        "timestamp": "2026-03-11T11:21:04+00:00",
+        "channel": "VISA",
+        "amount": 37091.01,
+        "score": 0.723
+      },
+      {
+        "date": "2026-03-12",
+        "timestamp": "2026-03-12T08:38:16+00:00",
+        "channel": "INTERNAL",
+        "amount": 36119.57,
+        "score": 0.848
+      },
+      {
+        "date": "2026-03-12",
+        "timestamp": "2026-03-12T09:14:57+00:00",
+        "channel": "SWIFT",
+        "amount": 32629.81,
+        "score": 0.66
+      },
+      {
+        "date": "2026-03-12",
+        "timestamp": "2026-03-12T11:49:36+00:00",
+        "channel": "SWIFT",
+        "amount": 25730.32,
+        "score": 0.804
+      },
+      {
+        "date": "2026-03-14",
+        "timestamp": "2026-03-14T15:52:15+00:00",
+        "channel": "ACH",
+        "amount": 50188.33,
+        "score": 0.842
+      },
+      {
+        "date": "2026-03-15",
+        "timestamp": "2026-03-15T20:06:39+00:00",
+        "channel": "VISA",
+        "amount": 45914.98,
+        "score": 0.927
+      },
+      {
+        "date": "2026-03-16",
+        "timestamp": "2026-03-16T08:45:54+00:00",
+        "channel": "INTERNAL",
+        "amount": 64380.8,
+        "score": 1.0
+      },
+      {
+        "date": "2026-03-16",
+        "timestamp": "2026-03-16T13:16:26+00:00",
+        "channel": "SWIFT",
+        "amount": 1462.48,
+        "score": 0.861
+      },
+      {
+        "date": "2026-03-16",
+        "timestamp": "2026-03-16T13:36:08+00:00",
+        "channel": "VISA",
+        "amount": 100.0,
+        "score": 0.816
+      },
+      {
+        "date": "2026-03-16",
+        "timestamp": "2026-03-16T16:07:28+00:00",
+        "channel": "SWIFT",
+        "amount": 23715.97,
+        "score": 0.729
+      },
+      {
+        "date": "2026-03-18",
+        "timestamp": "2026-03-18T12:06:03+00:00",
+        "channel": "VISA",
+        "amount": 38864.52,
+        "score": 0.736
+      },
+      {
+        "date": "2026-03-23",
+        "timestamp": "2026-03-23T09:56:26+00:00",
+        "channel": "SWIFT",
+        "amount": 34041.02,
+        "score": 0.731
+      },
+      {
+        "date": "2026-03-23",
+        "timestamp": "2026-03-23T15:22:21+00:00",
+        "channel": "ACH",
+        "amount": 36740.77,
+        "score": 0.729
+      },
+      {
+        "date": "2026-03-23",
+        "timestamp": "2026-03-23T15:46:02+00:00",
+        "channel": "VISA",
+        "amount": 36996.71,
+        "score": 0.746
+      },
+      {
+        "date": "2026-03-28",
+        "timestamp": "2026-03-28T08:39:13+00:00",
+        "channel": "ACH",
+        "amount": 786.61,
+        "score": 0.693
+      },
+      {
+        "date": "2026-03-28",
+        "timestamp": "2026-03-28T09:56:36+00:00",
+        "channel": "ACH",
+        "amount": 100.0,
+        "score": 0.748
+      },
+      {
+        "date": "2026-03-28",
+        "timestamp": "2026-03-28T11:33:07+00:00",
+        "channel": "SWIFT",
+        "amount": 41612.46,
+        "score": 0.988
+      },
+      {
+        "date": "2026-03-29",
+        "timestamp": "2026-03-29T08:01:52+00:00",
+        "channel": "ACH",
+        "amount": 36315.26,
+        "score": 0.893
+      },
+      {
+        "date": "2026-03-29",
+        "timestamp": "2026-03-29T09:46:10+00:00",
+        "channel": "INTERNAL",
+        "amount": 24457.0,
+        "score": 0.722
+      },
+      {
+        "date": "2026-03-29",
+        "timestamp": "2026-03-29T19:03:26+00:00",
+        "channel": "ACH",
+        "amount": 44839.5,
+        "score": 0.907
+      },
+      {
+        "date": "2026-03-30",
+        "timestamp": "2026-03-30T09:17:48+00:00",
+        "channel": "SWIFT",
+        "amount": 372.68,
+        "score": 0.966
+      },
+      {
+        "date": "2026-03-30",
+        "timestamp": "2026-03-30T13:48:46+00:00",
+        "channel": "SWIFT",
+        "amount": 44684.68,
+        "score": 0.889
+      },
+      {
+        "date": "2026-03-30",
+        "timestamp": "2026-03-30T18:40:28+00:00",
+        "channel": "ACH",
+        "amount": 39166.8,
+        "score": 0.794
+      },
+      {
+        "date": "2026-03-30",
+        "timestamp": "2026-03-30T19:39:54+00:00",
+        "channel": "SWIFT",
+        "amount": 37887.86,
+        "score": 0.83
+      },
+      {
+        "date": "2026-03-30",
+        "timestamp": "2026-03-30T19:57:39+00:00",
+        "channel": "MASTERCARD",
+        "amount": 24864.07,
+        "score": 0.725
+      },
+      {
+        "date": "2026-03-30",
+        "timestamp": "2026-03-30T20:54:24+00:00",
+        "channel": "INTERNAL",
+        "amount": 24715.99,
+        "score": 0.671
+      },
+      {
+        "date": "2026-03-30",
+        "timestamp": "2026-03-30T21:44:24+00:00",
+        "channel": "INTERNAL",
+        "amount": 26092.8,
+        "score": 0.75
+      },
+      {
+        "date": "2026-03-31",
+        "timestamp": "2026-03-31T17:22:58+00:00",
+        "channel": "VISA",
+        "amount": 35392.87,
+        "score": 0.713
+      },
+      {
+        "date": "2026-04-02",
+        "timestamp": "2026-04-02T08:28:56+00:00",
+        "channel": "INTERNAL",
+        "amount": 30694.9,
+        "score": 0.772
+      },
+      {
+        "date": "2026-04-03",
+        "timestamp": "2026-04-03T09:39:36+00:00",
+        "channel": "MASTERCARD",
+        "amount": 100.0,
+        "score": 0.762
+      },
+      {
+        "date": "2026-04-03",
+        "timestamp": "2026-04-03T20:24:10+00:00",
+        "channel": "VISA",
+        "amount": 35024.36,
+        "score": 0.727
+      },
+      {
+        "date": "2026-04-05",
+        "timestamp": "2026-04-05T12:20:43+00:00",
+        "channel": "SWIFT",
+        "amount": 37248.0,
+        "score": 0.839
+      },
+      {
+        "date": "2026-04-05",
+        "timestamp": "2026-04-05T17:05:50+00:00",
+        "channel": "INTERNAL",
+        "amount": 1524.75,
+        "score": 0.704
+      },
+      {
+        "date": "2026-04-06",
+        "timestamp": "2026-04-06T11:59:33+00:00",
+        "channel": "VISA",
+        "amount": 32903.16,
+        "score": 0.717
+      },
+      {
+        "date": "2026-04-06",
+        "timestamp": "2026-04-06T19:24:11+00:00",
+        "channel": "ACH",
+        "amount": 32061.76,
+        "score": 0.683
+      },
+      {
+        "date": "2026-04-06",
+        "timestamp": "2026-04-06T20:19:45+00:00",
+        "channel": "INTERNAL",
+        "amount": 30738.68,
+        "score": 0.796
+      },
+      {
+        "date": "2026-04-07",
+        "timestamp": "2026-04-07T08:52:54+00:00",
+        "channel": "MASTERCARD",
+        "amount": 27683.73,
+        "score": 0.845
+      },
+      {
+        "date": "2026-04-07",
+        "timestamp": "2026-04-07T09:30:37+00:00",
+        "channel": "SWIFT",
+        "amount": 20878.04,
+        "score": 0.747
+      },
+      {
+        "date": "2026-04-08",
+        "timestamp": "2026-04-08T09:26:47+00:00",
+        "channel": "VISA",
+        "amount": 32496.98,
+        "score": 0.707
+      },
+      {
+        "date": "2026-04-09",
+        "timestamp": "2026-04-09T11:44:43+00:00",
+        "channel": "INTERNAL",
+        "amount": 30913.97,
+        "score": 0.705
+      },
+      {
+        "date": "2026-04-09",
+        "timestamp": "2026-04-09T21:09:19+00:00",
+        "channel": "ACH",
+        "amount": 43012.8,
+        "score": 0.84
+      },
+      {
+        "date": "2026-04-12",
+        "timestamp": "2026-04-12T14:14:57+00:00",
+        "channel": "ACH",
+        "amount": 609.86,
+        "score": 0.683
+      },
+      {
+        "date": "2026-04-12",
+        "timestamp": "2026-04-12T20:14:21+00:00",
+        "channel": "SWIFT",
+        "amount": 1755.55,
+        "score": 0.772
+      },
+      {
+        "date": "2026-04-13",
+        "timestamp": "2026-04-13T10:30:50+00:00",
+        "channel": "SWIFT",
+        "amount": 18147.94,
+        "score": 0.713
+      },
+      {
+        "date": "2026-04-13",
+        "timestamp": "2026-04-13T15:20:32+00:00",
+        "channel": "ACH",
+        "amount": 31171.58,
+        "score": 0.678
+      },
+      {
+        "date": "2026-04-16",
+        "timestamp": "2026-04-16T08:36:09+00:00",
+        "channel": "SWIFT",
+        "amount": 1803.54,
+        "score": 0.827
+      },
+      {
+        "date": "2026-04-16",
+        "timestamp": "2026-04-16T16:59:24+00:00",
+        "channel": "VISA",
+        "amount": 100.0,
+        "score": 0.759
+      },
+      {
+        "date": "2026-04-16",
+        "timestamp": "2026-04-16T20:31:39+00:00",
+        "channel": "VISA",
+        "amount": 699.02,
+        "score": 0.691
+      },
+      {
+        "date": "2026-04-20",
+        "timestamp": "2026-04-20T10:28:18+00:00",
+        "channel": "INTERNAL",
+        "amount": 25281.21,
+        "score": 0.668
+      },
+      {
+        "date": "2026-04-20",
+        "timestamp": "2026-04-20T20:02:14+00:00",
+        "channel": "ACH",
+        "amount": 33284.74,
+        "score": 0.737
+      },
+      {
+        "date": "2026-04-21",
+        "timestamp": "2026-04-21T17:46:00+00:00",
+        "channel": "SWIFT",
+        "amount": 37699.36,
+        "score": 0.749
+      },
+      {
+        "date": "2026-04-21",
+        "timestamp": "2026-04-21T18:33:25+00:00",
+        "channel": "ACH",
+        "amount": 41509.74,
+        "score": 0.76
+      },
+      {
+        "date": "2026-04-22",
+        "timestamp": "2026-04-22T18:10:49+00:00",
+        "channel": "SWIFT",
+        "amount": 50664.56,
+        "score": 0.77
+      },
+      {
+        "date": "2026-04-22",
+        "timestamp": "2026-04-22T20:50:19+00:00",
+        "channel": "VISA",
+        "amount": 30913.2,
+        "score": 0.666
+      },
+      {
+        "date": "2026-04-22",
+        "timestamp": "2026-04-22T21:50:28+00:00",
+        "channel": "SWIFT",
+        "amount": 1351.59,
+        "score": 0.763
+      },
+      {
+        "date": "2026-04-23",
+        "timestamp": "2026-04-23T10:08:18+00:00",
+        "channel": "VISA",
+        "amount": 41951.59,
+        "score": 0.808
+      },
+      {
+        "date": "2026-04-23",
+        "timestamp": "2026-04-23T12:13:30+00:00",
+        "channel": "ACH",
+        "amount": 100.0,
+        "score": 0.705
+      },
+      {
+        "date": "2026-04-24",
+        "timestamp": "2026-04-24T09:28:27+00:00",
+        "channel": "ACH",
+        "amount": 33802.35,
+        "score": 0.736
+      },
+      {
+        "date": "2026-04-26",
+        "timestamp": "2026-04-26T10:17:27+00:00",
+        "channel": "SWIFT",
+        "amount": 15757.52,
+        "score": 0.743
+      },
+      {
+        "date": "2026-04-27",
+        "timestamp": "2026-04-27T10:13:08+00:00",
+        "channel": "MASTERCARD",
+        "amount": 1535.2,
+        "score": 0.698
+      },
+      {
+        "date": "2026-04-27",
+        "timestamp": "2026-04-27T11:37:42+00:00",
+        "channel": "MASTERCARD",
+        "amount": 779.64,
+        "score": 0.74
+      },
+      {
+        "date": "2026-04-27",
+        "timestamp": "2026-04-27T18:41:35+00:00",
+        "channel": "VISA",
+        "amount": 28956.81,
+        "score": 0.664
+      },
+      {
+        "date": "2026-04-27",
+        "timestamp": "2026-04-27T20:19:57+00:00",
+        "channel": "MASTERCARD",
+        "amount": 26300.92,
+        "score": 0.655
+      },
+      {
+        "date": "2026-04-28",
+        "timestamp": "2026-04-28T19:36:57+00:00",
+        "channel": "SWIFT",
+        "amount": 22981.25,
+        "score": 0.749
+      },
+      {
+        "date": "2026-04-29",
+        "timestamp": "2026-04-29T10:57:17+00:00",
+        "channel": "VISA",
+        "amount": 100.0,
+        "score": 0.758
+      },
+      {
+        "date": "2026-04-29",
+        "timestamp": "2026-04-29T12:25:44+00:00",
+        "channel": "ACH",
+        "amount": 42629.87,
+        "score": 0.739
+      },
+      {
+        "date": "2026-04-29",
+        "timestamp": "2026-04-29T15:18:57+00:00",
+        "channel": "SWIFT",
+        "amount": 22024.28,
+        "score": 0.655
+      },
+      {
+        "date": "2026-04-29",
+        "timestamp": "2026-04-29T16:30:59+00:00",
+        "channel": "VISA",
+        "amount": 100.0,
+        "score": 0.756
+      },
+      {
+        "date": "2026-04-29",
+        "timestamp": "2026-04-29T18:20:12+00:00",
+        "channel": "MASTERCARD",
+        "amount": 330.85,
+        "score": 0.655
+      },
+      {
+        "date": "2026-04-29",
+        "timestamp": "2026-04-29T21:25:50+00:00",
+        "channel": "INTERNAL",
+        "amount": 34548.55,
+        "score": 0.796
+      },
+      {
+        "date": "2026-05-01",
+        "timestamp": "2026-05-01T10:07:25+00:00",
+        "channel": "INTERNAL",
+        "amount": 356.57,
+        "score": 0.78
+      },
+      {
+        "date": "2026-05-03",
+        "timestamp": "2026-05-03T16:33:37+00:00",
+        "channel": "SWIFT",
+        "amount": 29681.81,
+        "score": 0.67
+      },
+      {
+        "date": "2026-05-04",
+        "timestamp": "2026-05-04T09:25:10+00:00",
+        "channel": "VISA",
+        "amount": 39403.81,
+        "score": 0.83
+      },
+      {
+        "date": "2026-05-04",
+        "timestamp": "2026-05-04T13:39:28+00:00",
+        "channel": "SWIFT",
+        "amount": 31113.46,
+        "score": 0.682
+      },
+      {
+        "date": "2026-05-05",
+        "timestamp": "2026-05-05T18:27:27+00:00",
+        "channel": "VISA",
+        "amount": 30860.19,
+        "score": 0.655
+      },
+      {
+        "date": "2026-05-05",
+        "timestamp": "2026-05-05T19:05:58+00:00",
+        "channel": "SWIFT",
+        "amount": 34388.2,
+        "score": 0.937
+      },
+      {
+        "date": "2026-05-05",
+        "timestamp": "2026-05-05T21:08:05+00:00",
+        "channel": "ACH",
+        "amount": 30093.19,
+        "score": 0.698
+      },
+      {
+        "date": "2026-05-07",
+        "timestamp": "2026-05-07T08:00:54+00:00",
+        "channel": "INTERNAL",
+        "amount": 916.62,
+        "score": 0.713
+      },
+      {
+        "date": "2026-05-08",
+        "timestamp": "2026-05-08T11:05:49+00:00",
+        "channel": "SWIFT",
+        "amount": 2387.42,
+        "score": 0.698
+      },
+      {
+        "date": "2026-05-10",
+        "timestamp": "2026-05-10T08:38:46+00:00",
+        "channel": "SWIFT",
+        "amount": 18799.08,
+        "score": 0.786
+      },
+      {
+        "date": "2026-05-10",
+        "timestamp": "2026-05-10T13:22:42+00:00",
+        "channel": "SWIFT",
+        "amount": 24607.89,
+        "score": 0.688
+      },
+      {
+        "date": "2026-05-10",
+        "timestamp": "2026-05-10T13:32:47+00:00",
+        "channel": "MASTERCARD",
+        "amount": 34432.33,
+        "score": 0.878
+      },
+      {
+        "date": "2026-05-10",
+        "timestamp": "2026-05-10T15:29:04+00:00",
+        "channel": "VISA",
+        "amount": 31400.18,
+        "score": 0.715
+      },
+      {
+        "date": "2026-05-10",
+        "timestamp": "2026-05-10T19:34:49+00:00",
+        "channel": "INTERNAL",
+        "amount": 27908.38,
+        "score": 0.741
+      },
+      {
+        "date": "2026-05-11",
+        "timestamp": "2026-05-11T15:41:49+00:00",
+        "channel": "SWIFT",
+        "amount": 23816.09,
+        "score": 0.799
+      },
+      {
+        "date": "2026-05-11",
+        "timestamp": "2026-05-11T17:44:12+00:00",
+        "channel": "ACH",
+        "amount": 39834.65,
+        "score": 0.795
+      },
+      {
+        "date": "2026-05-11",
+        "timestamp": "2026-05-11T20:22:04+00:00",
+        "channel": "INTERNAL",
+        "amount": 412.6,
+        "score": 0.8
+      },
+      {
+        "date": "2026-05-12",
+        "timestamp": "2026-05-12T18:11:37+00:00",
+        "channel": "VISA",
+        "amount": 34351.62,
+        "score": 0.7
+      },
+      {
+        "date": "2026-05-16",
+        "timestamp": "2026-05-16T16:46:11+00:00",
+        "channel": "INTERNAL",
+        "amount": 431.6,
+        "score": 0.781
+      },
+      {
+        "date": "2026-05-17",
+        "timestamp": "2026-05-17T08:43:45+00:00",
+        "channel": "MASTERCARD",
+        "amount": 834.49,
+        "score": 0.768
+      },
+      {
+        "date": "2026-05-17",
+        "timestamp": "2026-05-17T16:54:21+00:00",
+        "channel": "ACH",
+        "amount": 1140.11,
+        "score": 0.668
+      },
+      {
+        "date": "2026-05-17",
+        "timestamp": "2026-05-17T20:22:01+00:00",
+        "channel": "SWIFT",
+        "amount": 16989.04,
+        "score": 0.674
+      },
+      {
+        "date": "2026-05-19",
+        "timestamp": "2026-05-19T12:27:54+00:00",
+        "channel": "SWIFT",
+        "amount": 2072.54,
+        "score": 0.731
+      },
+      {
+        "date": "2026-05-19",
+        "timestamp": "2026-05-19T14:20:22+00:00",
+        "channel": "SWIFT",
+        "amount": 44470.68,
+        "score": 0.782
+      }
+    ],
+    "regulatory-reserve": [
+      {
+        "date": "2026-02-20",
+        "timestamp": "2026-02-20T11:19:13+00:00",
+        "channel": "MASTERCARD",
+        "amount": 40662.88,
+        "score": 0.905
+      },
+      {
+        "date": "2026-02-27",
+        "timestamp": "2026-02-27T15:36:51+00:00",
+        "channel": "MASTERCARD",
+        "amount": 2759.53,
+        "score": 0.809
+      },
+      {
+        "date": "2026-03-09",
+        "timestamp": "2026-03-09T18:15:49+00:00",
+        "channel": "SWIFT",
+        "amount": 5803.88,
+        "score": 0.764
+      },
+      {
+        "date": "2026-03-19",
+        "timestamp": "2026-03-19T21:48:49+00:00",
+        "channel": "SEPA_INSTANT",
+        "amount": 39610.75,
+        "score": 0.744
+      },
+      {
+        "date": "2026-04-07",
+        "timestamp": "2026-04-07T12:33:20+00:00",
+        "channel": "INTERNAL",
+        "amount": 28399.66,
+        "score": 0.702
+      },
+      {
+        "date": "2026-04-18",
+        "timestamp": "2026-04-18T09:14:59+00:00",
+        "channel": "INTERNAL",
+        "amount": 33813.97,
+        "score": 0.837
+      },
+      {
+        "date": "2026-05-16",
+        "timestamp": "2026-05-16T21:59:20+00:00",
+        "channel": "SWIFT",
+        "amount": 18246.61,
+        "score": 0.797
+      }
+    ],
+    "sgd-singapore": [
+      {
+        "date": "2026-02-21",
+        "timestamp": "2026-02-21T16:28:10+00:00",
+        "channel": "MASTERCARD",
+        "amount": 32780.78,
+        "score": 0.684
+      },
+      {
+        "date": "2026-02-21",
+        "timestamp": "2026-02-21T19:55:00+00:00",
+        "channel": "INTERNAL",
+        "amount": 25198.46,
+        "score": 0.651
+      },
+      {
+        "date": "2026-02-22",
+        "timestamp": "2026-02-22T16:11:15+00:00",
+        "channel": "INTERNAL",
+        "amount": 2675.07,
+        "score": 0.696
+      },
+      {
+        "date": "2026-02-23",
+        "timestamp": "2026-02-23T10:41:43+00:00",
+        "channel": "INTERNAL",
+        "amount": 3531.12,
+        "score": 0.632
+      },
+      {
+        "date": "2026-02-23",
+        "timestamp": "2026-02-23T12:13:20+00:00",
+        "channel": "SWIFT",
+        "amount": 34000.47,
+        "score": 0.671
+      },
+      {
+        "date": "2026-02-26",
+        "timestamp": "2026-02-26T08:55:31+00:00",
+        "channel": "VISA",
+        "amount": 100.0,
+        "score": 0.797
+      },
+      {
+        "date": "2026-02-28",
+        "timestamp": "2026-02-28T08:56:25+00:00",
+        "channel": "MASTERCARD",
+        "amount": 38188.65,
+        "score": 0.768
+      },
+      {
+        "date": "2026-03-06",
+        "timestamp": "2026-03-06T09:39:08+00:00",
+        "channel": "MASTERCARD",
+        "amount": 137.8,
+        "score": 0.731
+      },
+      {
+        "date": "2026-03-06",
+        "timestamp": "2026-03-06T21:43:02+00:00",
+        "channel": "MASTERCARD",
+        "amount": 22818.99,
+        "score": 0.705
+      },
+      {
+        "date": "2026-03-08",
+        "timestamp": "2026-03-08T18:54:44+00:00",
+        "channel": "VISA",
+        "amount": 1474.06,
+        "score": 0.675
+      },
+      {
+        "date": "2026-03-09",
+        "timestamp": "2026-03-09T12:59:04+00:00",
+        "channel": "INTERNAL",
+        "amount": 24159.56,
+        "score": 0.658
+      },
+      {
+        "date": "2026-03-09",
+        "timestamp": "2026-03-09T15:08:53+00:00",
+        "channel": "SWIFT",
+        "amount": 24182.46,
+        "score": 0.677
+      },
+      {
+        "date": "2026-03-09",
+        "timestamp": "2026-03-09T21:11:00+00:00",
+        "channel": "SWIFT",
+        "amount": 27905.53,
+        "score": 0.685
+      },
+      {
+        "date": "2026-03-19",
+        "timestamp": "2026-03-19T09:08:51+00:00",
+        "channel": "VISA",
+        "amount": 43496.03,
+        "score": 0.793
+      },
+      {
+        "date": "2026-03-19",
+        "timestamp": "2026-03-19T12:03:21+00:00",
+        "channel": "SWIFT",
+        "amount": 100.0,
+        "score": 0.732
+      },
+      {
+        "date": "2026-03-20",
+        "timestamp": "2026-03-20T08:03:13+00:00",
+        "channel": "SWIFT",
+        "amount": 36989.8,
+        "score": 0.768
+      },
+      {
+        "date": "2026-03-20",
+        "timestamp": "2026-03-20T13:32:15+00:00",
+        "channel": "INTERNAL",
+        "amount": 26203.97,
+        "score": 0.628
+      },
+      {
+        "date": "2026-03-20",
+        "timestamp": "2026-03-20T21:26:47+00:00",
+        "channel": "SWIFT",
+        "amount": 38091.76,
+        "score": 0.749
+      },
+      {
+        "date": "2026-03-21",
+        "timestamp": "2026-03-21T14:55:03+00:00",
+        "channel": "INTERNAL",
+        "amount": 739.01,
+        "score": 0.781
+      },
+      {
+        "date": "2026-03-22",
+        "timestamp": "2026-03-22T15:39:11+00:00",
+        "channel": "SWIFT",
+        "amount": 1169.09,
+        "score": 0.679
+      },
+      {
+        "date": "2026-03-24",
+        "timestamp": "2026-03-24T09:53:58+00:00",
+        "channel": "SWIFT",
+        "amount": 2943.0,
+        "score": 0.64
+      },
+      {
+        "date": "2026-03-28",
+        "timestamp": "2026-03-28T09:25:50+00:00",
+        "channel": "SWIFT",
+        "amount": 33214.36,
+        "score": 0.645
+      },
+      {
+        "date": "2026-03-28",
+        "timestamp": "2026-03-28T15:34:40+00:00",
+        "channel": "MASTERCARD",
+        "amount": 100.0,
+        "score": 0.716
+      },
+      {
+        "date": "2026-03-30",
+        "timestamp": "2026-03-30T08:26:40+00:00",
+        "channel": "INTERNAL",
+        "amount": 18746.56,
+        "score": 0.64
+      },
+      {
+        "date": "2026-03-30",
+        "timestamp": "2026-03-30T08:59:36+00:00",
+        "channel": "SWIFT",
+        "amount": 21468.29,
+        "score": 0.691
+      },
+      {
+        "date": "2026-03-30",
+        "timestamp": "2026-03-30T16:10:55+00:00",
+        "channel": "INTERNAL",
+        "amount": 2822.14,
+        "score": 0.672
+      },
+      {
+        "date": "2026-04-02",
+        "timestamp": "2026-04-02T17:20:54+00:00",
+        "channel": "INTERNAL",
+        "amount": 1578.59,
+        "score": 0.664
+      },
+      {
+        "date": "2026-04-02",
+        "timestamp": "2026-04-02T20:14:16+00:00",
+        "channel": "SWIFT",
+        "amount": 26287.68,
+        "score": 0.672
+      },
+      {
+        "date": "2026-04-05",
+        "timestamp": "2026-04-05T10:10:56+00:00",
+        "channel": "INTERNAL",
+        "amount": 20288.58,
+        "score": 0.648
+      },
+      {
+        "date": "2026-04-06",
+        "timestamp": "2026-04-06T08:15:41+00:00",
+        "channel": "MASTERCARD",
+        "amount": 1824.48,
+        "score": 0.693
+      },
+      {
+        "date": "2026-04-07",
+        "timestamp": "2026-04-07T08:41:10+00:00",
+        "channel": "MASTERCARD",
+        "amount": 21049.42,
+        "score": 0.688
+      },
+      {
+        "date": "2026-04-07",
+        "timestamp": "2026-04-07T11:31:47+00:00",
+        "channel": "INTERNAL",
+        "amount": 29923.96,
+        "score": 0.735
+      },
+      {
+        "date": "2026-04-07",
+        "timestamp": "2026-04-07T18:13:13+00:00",
+        "channel": "INTERNAL",
+        "amount": 26030.11,
+        "score": 0.655
+      },
+      {
+        "date": "2026-04-13",
+        "timestamp": "2026-04-13T16:19:55+00:00",
+        "channel": "SWIFT",
+        "amount": 1031.09,
+        "score": 0.651
+      },
+      {
+        "date": "2026-04-13",
+        "timestamp": "2026-04-13T17:14:53+00:00",
+        "channel": "INTERNAL",
+        "amount": 23725.07,
+        "score": 0.635
+      },
+      {
+        "date": "2026-04-14",
+        "timestamp": "2026-04-14T15:56:18+00:00",
+        "channel": "INTERNAL",
+        "amount": 48167.6,
+        "score": 0.834
+      },
+      {
+        "date": "2026-04-15",
+        "timestamp": "2026-04-15T09:50:06+00:00",
+        "channel": "VISA",
+        "amount": 30190.2,
+        "score": 0.677
+      },
+      {
+        "date": "2026-04-16",
+        "timestamp": "2026-04-16T09:02:48+00:00",
+        "channel": "SWIFT",
+        "amount": 32150.27,
+        "score": 0.656
+      },
+      {
+        "date": "2026-04-20",
+        "timestamp": "2026-04-20T20:21:11+00:00",
+        "channel": "INTERNAL",
+        "amount": 20898.42,
+        "score": 0.639
+      },
+      {
+        "date": "2026-04-24",
+        "timestamp": "2026-04-24T13:30:09+00:00",
+        "channel": "SWIFT",
+        "amount": 30715.01,
+        "score": 0.711
+      },
+      {
+        "date": "2026-04-26",
+        "timestamp": "2026-04-26T16:59:34+00:00",
+        "channel": "INTERNAL",
+        "amount": 2259.46,
+        "score": 0.727
+      },
+      {
+        "date": "2026-04-28",
+        "timestamp": "2026-04-28T14:06:58+00:00",
+        "channel": "MASTERCARD",
+        "amount": 23569.22,
+        "score": 0.629
+      },
+      {
+        "date": "2026-05-02",
+        "timestamp": "2026-05-02T08:30:25+00:00",
+        "channel": "SWIFT",
+        "amount": 36789.01,
+        "score": 0.716
+      },
+      {
+        "date": "2026-05-02",
+        "timestamp": "2026-05-02T15:46:21+00:00",
+        "channel": "INTERNAL",
+        "amount": 38544.25,
+        "score": 0.814
+      },
+      {
+        "date": "2026-05-02",
+        "timestamp": "2026-05-02T17:17:35+00:00",
+        "channel": "INTERNAL",
+        "amount": 38926.09,
+        "score": 0.819
+      },
+      {
+        "date": "2026-05-09",
+        "timestamp": "2026-05-09T15:19:49+00:00",
+        "channel": "INTERNAL",
+        "amount": 33060.04,
+        "score": 0.767
+      },
+      {
+        "date": "2026-05-16",
+        "timestamp": "2026-05-16T14:06:40+00:00",
+        "channel": "VISA",
+        "amount": 50961.65,
+        "score": 0.832
+      },
+      {
+        "date": "2026-05-16",
+        "timestamp": "2026-05-16T15:13:10+00:00",
+        "channel": "VISA",
+        "amount": 100.0,
+        "score": 0.761
+      },
+      {
+        "date": "2026-05-16",
+        "timestamp": "2026-05-16T18:39:42+00:00",
+        "channel": "MASTERCARD",
+        "amount": 32758.74,
+        "score": 0.66
+      },
+      {
+        "date": "2026-05-17",
+        "timestamp": "2026-05-17T12:52:18+00:00",
+        "channel": "VISA",
+        "amount": 1769.17,
+        "score": 0.639
+      },
+      {
+        "date": "2026-05-17",
+        "timestamp": "2026-05-17T18:34:42+00:00",
+        "channel": "MASTERCARD",
+        "amount": 29833.9,
+        "score": 0.706
+      }
+    ],
+    "usd-nyc": [
+      {
+        "date": "2026-02-20",
+        "timestamp": "2026-02-20T19:07:16+00:00",
+        "channel": "SWIFT",
+        "amount": 32692.81,
+        "score": 0.826
+      },
+      {
+        "date": "2026-02-23",
+        "timestamp": "2026-02-23T20:14:03+00:00",
+        "channel": "ACH",
+        "amount": 35681.87,
+        "score": 0.764
+      },
+      {
+        "date": "2026-02-23",
+        "timestamp": "2026-02-23T21:12:06+00:00",
+        "channel": "ACH",
+        "amount": 33794.9,
+        "score": 0.768
+      },
+      {
+        "date": "2026-02-26",
+        "timestamp": "2026-02-26T14:41:06+00:00",
+        "channel": "SWIFT",
+        "amount": 25674.74,
+        "score": 0.668
+      },
+      {
+        "date": "2026-03-01",
+        "timestamp": "2026-03-01T13:41:59+00:00",
+        "channel": "SWIFT",
+        "amount": 3769.51,
+        "score": 0.727
+      },
+      {
+        "date": "2026-03-03",
+        "timestamp": "2026-03-03T09:53:11+00:00",
+        "channel": "SWIFT",
+        "amount": 25095.97,
+        "score": 0.718
+      },
+      {
+        "date": "2026-03-03",
+        "timestamp": "2026-03-03T19:33:03+00:00",
+        "channel": "INTERNAL",
+        "amount": 1397.63,
+        "score": 0.675
+      },
+      {
+        "date": "2026-03-04",
+        "timestamp": "2026-03-04T08:57:31+00:00",
+        "channel": "VISA",
+        "amount": 27453.03,
+        "score": 0.682
+      },
+      {
+        "date": "2026-03-07",
+        "timestamp": "2026-03-07T14:43:37+00:00",
+        "channel": "INTERNAL",
+        "amount": 29525.23,
+        "score": 0.653
+      },
+      {
+        "date": "2026-03-07",
+        "timestamp": "2026-03-07T20:47:34+00:00",
+        "channel": "SWIFT",
+        "amount": 3016.2,
+        "score": 0.669
+      },
+      {
+        "date": "2026-03-08",
+        "timestamp": "2026-03-08T15:16:32+00:00",
+        "channel": "SWIFT",
+        "amount": 1518.4,
+        "score": 0.705
+      },
+      {
+        "date": "2026-03-08",
+        "timestamp": "2026-03-08T17:44:22+00:00",
+        "channel": "SWIFT",
+        "amount": 3420.34,
+        "score": 0.75
+      },
+      {
+        "date": "2026-03-09",
+        "timestamp": "2026-03-09T08:50:06+00:00",
+        "channel": "VISA",
+        "amount": 24391.32,
+        "score": 0.652
+      },
+      {
+        "date": "2026-03-09",
+        "timestamp": "2026-03-09T09:44:38+00:00",
+        "channel": "ACH",
+        "amount": 35049.97,
+        "score": 0.788
+      },
+      {
+        "date": "2026-03-09",
+        "timestamp": "2026-03-09T14:19:37+00:00",
+        "channel": "INTERNAL",
+        "amount": 1946.07,
+        "score": 0.658
+      },
+      {
+        "date": "2026-03-09",
+        "timestamp": "2026-03-09T19:28:59+00:00",
+        "channel": "ACH",
+        "amount": 563.82,
+        "score": 0.699
+      },
+      {
+        "date": "2026-03-09",
+        "timestamp": "2026-03-09T19:44:19+00:00",
+        "channel": "SWIFT",
+        "amount": 3798.15,
+        "score": 0.703
+      },
+      {
+        "date": "2026-03-09",
+        "timestamp": "2026-03-09T20:08:56+00:00",
+        "channel": "INTERNAL",
+        "amount": 28897.46,
+        "score": 0.743
+      },
+      {
+        "date": "2026-03-09",
+        "timestamp": "2026-03-09T21:26:41+00:00",
+        "channel": "SWIFT",
+        "amount": 38228.64,
+        "score": 1.0
+      },
+      {
+        "date": "2026-03-10",
+        "timestamp": "2026-03-10T17:30:47+00:00",
+        "channel": "VISA",
+        "amount": 42000.73,
+        "score": 0.774
+      },
+      {
+        "date": "2026-03-14",
+        "timestamp": "2026-03-14T20:01:16+00:00",
+        "channel": "ACH",
+        "amount": 27615.92,
+        "score": 0.653
+      },
+      {
+        "date": "2026-03-15",
+        "timestamp": "2026-03-15T08:53:03+00:00",
+        "channel": "INTERNAL",
+        "amount": 23195.91,
+        "score": 0.747
+      },
+      {
+        "date": "2026-03-15",
+        "timestamp": "2026-03-15T13:35:42+00:00",
+        "channel": "INTERNAL",
+        "amount": 1674.03,
+        "score": 0.747
+      },
+      {
+        "date": "2026-03-15",
+        "timestamp": "2026-03-15T16:34:44+00:00",
+        "channel": "ACH",
+        "amount": 32809.9,
+        "score": 0.758
+      },
+      {
+        "date": "2026-03-15",
+        "timestamp": "2026-03-15T18:02:02+00:00",
+        "channel": "SWIFT",
+        "amount": 659.79,
+        "score": 0.659
+      },
+      {
+        "date": "2026-03-15",
+        "timestamp": "2026-03-15T21:33:47+00:00",
+        "channel": "SWIFT",
+        "amount": 4169.87,
+        "score": 0.78
+      },
+      {
+        "date": "2026-03-16",
+        "timestamp": "2026-03-16T10:38:55+00:00",
+        "channel": "SWIFT",
+        "amount": 2923.86,
+        "score": 0.738
+      },
+      {
+        "date": "2026-03-17",
+        "timestamp": "2026-03-17T20:38:26+00:00",
+        "channel": "MASTERCARD",
+        "amount": 30420.42,
+        "score": 0.668
+      },
+      {
+        "date": "2026-03-20",
+        "timestamp": "2026-03-20T10:01:58+00:00",
+        "channel": "MASTERCARD",
+        "amount": 34138.59,
+        "score": 0.792
+      },
+      {
+        "date": "2026-03-21",
+        "timestamp": "2026-03-21T11:09:19+00:00",
+        "channel": "ACH",
+        "amount": 33159.55,
+        "score": 0.724
+      },
+      {
+        "date": "2026-03-21",
+        "timestamp": "2026-03-21T20:51:41+00:00",
+        "channel": "SWIFT",
+        "amount": 17675.74,
+        "score": 0.665
+      },
+      {
+        "date": "2026-03-26",
+        "timestamp": "2026-03-26T10:48:57+00:00",
+        "channel": "MASTERCARD",
+        "amount": 45817.5,
+        "score": 0.838
+      },
+      {
+        "date": "2026-03-26",
+        "timestamp": "2026-03-26T13:04:36+00:00",
+        "channel": "MASTERCARD",
+        "amount": 494.65,
+        "score": 0.657
+      },
+      {
+        "date": "2026-03-26",
+        "timestamp": "2026-03-26T19:00:31+00:00",
+        "channel": "MASTERCARD",
+        "amount": 100.0,
+        "score": 0.743
+      },
+      {
+        "date": "2026-03-26",
+        "timestamp": "2026-03-26T19:23:42+00:00",
+        "channel": "INTERNAL",
+        "amount": 513.23,
+        "score": 0.744
+      },
+      {
+        "date": "2026-03-27",
+        "timestamp": "2026-03-27T14:18:19+00:00",
+        "channel": "VISA",
+        "amount": 32832.15,
+        "score": 0.674
+      },
+      {
+        "date": "2026-03-27",
+        "timestamp": "2026-03-27T20:31:31+00:00",
+        "channel": "SWIFT",
+        "amount": 35631.02,
+        "score": 0.71
+      },
+      {
+        "date": "2026-03-28",
+        "timestamp": "2026-03-28T18:07:22+00:00",
+        "channel": "SWIFT",
+        "amount": 31871.98,
+        "score": 0.695
+      },
+      {
+        "date": "2026-03-31",
+        "timestamp": "2026-03-31T18:57:02+00:00",
+        "channel": "INTERNAL",
+        "amount": 119.39,
+        "score": 0.797
+      },
+      {
+        "date": "2026-04-01",
+        "timestamp": "2026-04-01T19:01:19+00:00",
+        "channel": "VISA",
+        "amount": 29562.38,
+        "score": 0.656
+      },
+      {
+        "date": "2026-04-02",
+        "timestamp": "2026-04-02T10:22:05+00:00",
+        "channel": "VISA",
+        "amount": 502.01,
+        "score": 0.655
+      },
+      {
+        "date": "2026-04-02",
+        "timestamp": "2026-04-02T19:57:09+00:00",
+        "channel": "INTERNAL",
+        "amount": 410.76,
+        "score": 0.747
+      },
+      {
+        "date": "2026-04-03",
+        "timestamp": "2026-04-03T17:43:26+00:00",
+        "channel": "INTERNAL",
+        "amount": 100.0,
+        "score": 0.805
+      },
+      {
+        "date": "2026-04-04",
+        "timestamp": "2026-04-04T16:17:57+00:00",
+        "channel": "SWIFT",
+        "amount": 1373.84,
+        "score": 0.719
+      },
+      {
+        "date": "2026-04-10",
+        "timestamp": "2026-04-10T21:13:45+00:00",
+        "channel": "SWIFT",
+        "amount": 38551.81,
+        "score": 0.868
+      },
+      {
+        "date": "2026-04-11",
+        "timestamp": "2026-04-11T21:01:16+00:00",
+        "channel": "ACH",
+        "amount": 34773.69,
+        "score": 0.783
+      },
+      {
+        "date": "2026-04-12",
+        "timestamp": "2026-04-12T08:53:36+00:00",
+        "channel": "ACH",
+        "amount": 23249.56,
+        "score": 0.687
+      },
+      {
+        "date": "2026-04-12",
+        "timestamp": "2026-04-12T13:48:44+00:00",
+        "channel": "SWIFT",
+        "amount": 100.0,
+        "score": 0.711
+      },
+      {
+        "date": "2026-04-12",
+        "timestamp": "2026-04-12T19:04:06+00:00",
+        "channel": "MASTERCARD",
+        "amount": 163.17,
+        "score": 0.821
+      },
+      {
+        "date": "2026-04-13",
+        "timestamp": "2026-04-13T15:11:26+00:00",
+        "channel": "ACH",
+        "amount": 37251.13,
+        "score": 0.751
+      },
+      {
+        "date": "2026-04-13",
+        "timestamp": "2026-04-13T19:55:50+00:00",
+        "channel": "ACH",
+        "amount": 42529.36,
+        "score": 0.817
+      },
+      {
+        "date": "2026-04-15",
+        "timestamp": "2026-04-15T08:41:56+00:00",
+        "channel": "ACH",
+        "amount": 904.31,
+        "score": 0.707
+      },
+      {
+        "date": "2026-04-17",
+        "timestamp": "2026-04-17T08:31:09+00:00",
+        "channel": "INTERNAL",
+        "amount": 29904.11,
+        "score": 0.776
+      },
+      {
+        "date": "2026-04-18",
+        "timestamp": "2026-04-18T17:36:50+00:00",
+        "channel": "SWIFT",
+        "amount": 3545.03,
+        "score": 0.657
+      },
+      {
+        "date": "2026-04-18",
+        "timestamp": "2026-04-18T21:40:28+00:00",
+        "channel": "SWIFT",
+        "amount": 1471.87,
+        "score": 0.696
+      },
+      {
+        "date": "2026-04-19",
+        "timestamp": "2026-04-19T17:39:08+00:00",
+        "channel": "INTERNAL",
+        "amount": 1964.11,
+        "score": 0.731
+      },
+      {
+        "date": "2026-04-20",
+        "timestamp": "2026-04-20T16:43:27+00:00",
+        "channel": "MASTERCARD",
+        "amount": 41114.91,
+        "score": 0.802
+      },
+      {
+        "date": "2026-04-20",
+        "timestamp": "2026-04-20T19:59:39+00:00",
+        "channel": "SWIFT",
+        "amount": 31991.49,
+        "score": 0.826
+      },
+      {
+        "date": "2026-04-24",
+        "timestamp": "2026-04-24T08:05:49+00:00",
+        "channel": "SWIFT",
+        "amount": 3251.73,
+        "score": 0.692
+      },
+      {
+        "date": "2026-04-24",
+        "timestamp": "2026-04-24T14:40:59+00:00",
+        "channel": "ACH",
+        "amount": 34287.5,
+        "score": 0.693
+      },
+      {
+        "date": "2026-04-24",
+        "timestamp": "2026-04-24T20:27:01+00:00",
+        "channel": "SWIFT",
+        "amount": 33220.66,
+        "score": 0.771
+      },
+      {
+        "date": "2026-04-25",
+        "timestamp": "2026-04-25T09:57:53+00:00",
+        "channel": "SWIFT",
+        "amount": 23850.6,
+        "score": 0.699
+      },
+      {
+        "date": "2026-04-25",
+        "timestamp": "2026-04-25T21:13:50+00:00",
+        "channel": "MASTERCARD",
+        "amount": 24794.24,
+        "score": 0.703
+      },
+      {
+        "date": "2026-04-26",
+        "timestamp": "2026-04-26T13:15:13+00:00",
+        "channel": "ACH",
+        "amount": 35862.79,
+        "score": 0.794
+      },
+      {
+        "date": "2026-04-27",
+        "timestamp": "2026-04-27T20:13:22+00:00",
+        "channel": "VISA",
+        "amount": 28489.49,
+        "score": 0.679
+      },
+      {
+        "date": "2026-04-28",
+        "timestamp": "2026-04-28T11:57:57+00:00",
+        "channel": "SWIFT",
+        "amount": 37077.49,
+        "score": 0.722
+      },
+      {
+        "date": "2026-05-02",
+        "timestamp": "2026-05-02T10:58:10+00:00",
+        "channel": "SWIFT",
+        "amount": 34304.12,
+        "score": 0.737
+      },
+      {
+        "date": "2026-05-02",
+        "timestamp": "2026-05-02T16:44:30+00:00",
+        "channel": "ACH",
+        "amount": 39567.86,
+        "score": 0.79
+      },
+      {
+        "date": "2026-05-02",
+        "timestamp": "2026-05-02T17:43:50+00:00",
+        "channel": "VISA",
+        "amount": 52126.47,
+        "score": 0.864
+      },
+      {
+        "date": "2026-05-02",
+        "timestamp": "2026-05-02T18:00:19+00:00",
+        "channel": "ACH",
+        "amount": 100.0,
+        "score": 0.78
+      },
+      {
+        "date": "2026-05-03",
+        "timestamp": "2026-05-03T08:25:46+00:00",
+        "channel": "SWIFT",
+        "amount": 7504.26,
+        "score": 0.69
+      },
+      {
+        "date": "2026-05-03",
+        "timestamp": "2026-05-03T10:58:35+00:00",
+        "channel": "INTERNAL",
+        "amount": 24790.79,
+        "score": 0.685
+      },
+      {
+        "date": "2026-05-03",
+        "timestamp": "2026-05-03T13:30:21+00:00",
+        "channel": "SWIFT",
+        "amount": 31233.23,
+        "score": 0.67
+      },
+      {
+        "date": "2026-05-06",
+        "timestamp": "2026-05-06T11:18:49+00:00",
+        "channel": "SWIFT",
+        "amount": 36298.87,
+        "score": 0.782
+      },
+      {
+        "date": "2026-05-07",
+        "timestamp": "2026-05-07T20:16:07+00:00",
+        "channel": "ACH",
+        "amount": 34451.04,
+        "score": 0.751
+      },
+      {
+        "date": "2026-05-08",
+        "timestamp": "2026-05-08T08:07:58+00:00",
+        "channel": "SWIFT",
+        "amount": 37084.28,
+        "score": 0.794
+      },
+      {
+        "date": "2026-05-08",
+        "timestamp": "2026-05-08T09:19:28+00:00",
+        "channel": "ACH",
+        "amount": 32344.74,
+        "score": 0.743
+      },
+      {
+        "date": "2026-05-10",
+        "timestamp": "2026-05-10T20:58:50+00:00",
+        "channel": "INTERNAL",
+        "amount": 21742.26,
+        "score": 0.673
+      },
+      {
+        "date": "2026-05-11",
+        "timestamp": "2026-05-11T09:30:12+00:00",
+        "channel": "VISA",
+        "amount": 377.03,
+        "score": 0.79
+      },
+      {
+        "date": "2026-05-11",
+        "timestamp": "2026-05-11T09:36:28+00:00",
+        "channel": "VISA",
+        "amount": 1610.87,
+        "score": 0.686
+      },
+      {
+        "date": "2026-05-11",
+        "timestamp": "2026-05-11T12:40:05+00:00",
+        "channel": "ACH",
+        "amount": 38122.68,
+        "score": 0.758
+      },
+      {
+        "date": "2026-05-11",
+        "timestamp": "2026-05-11T15:10:57+00:00",
+        "channel": "MASTERCARD",
+        "amount": 1685.65,
+        "score": 0.698
+      },
+      {
+        "date": "2026-05-11",
+        "timestamp": "2026-05-11T16:04:09+00:00",
+        "channel": "VISA",
+        "amount": 37878.29,
+        "score": 0.769
+      },
+      {
+        "date": "2026-05-11",
+        "timestamp": "2026-05-11T17:36:46+00:00",
+        "channel": "VISA",
+        "amount": 29467.66,
+        "score": 0.668
+      },
+      {
+        "date": "2026-05-12",
+        "timestamp": "2026-05-12T10:01:24+00:00",
+        "channel": "ACH",
+        "amount": 35412.83,
+        "score": 0.762
+      },
+      {
+        "date": "2026-05-12",
+        "timestamp": "2026-05-12T13:58:13+00:00",
+        "channel": "INTERNAL",
+        "amount": 29553.48,
+        "score": 0.658
+      },
+      {
+        "date": "2026-05-13",
+        "timestamp": "2026-05-13T21:33:48+00:00",
+        "channel": "ACH",
+        "amount": 1260.94,
+        "score": 0.658
+      },
+      {
+        "date": "2026-05-14",
+        "timestamp": "2026-05-14T14:17:45+00:00",
+        "channel": "SWIFT",
+        "amount": 30760.95,
+        "score": 0.767
+      },
+      {
+        "date": "2026-05-15",
+        "timestamp": "2026-05-15T16:14:19+00:00",
+        "channel": "SWIFT",
+        "amount": 24603.46,
+        "score": 0.672
+      },
+      {
+        "date": "2026-05-16",
+        "timestamp": "2026-05-16T10:00:45+00:00",
+        "channel": "ACH",
+        "amount": 38558.8,
+        "score": 0.805
+      },
+      {
+        "date": "2026-05-16",
+        "timestamp": "2026-05-16T10:40:04+00:00",
+        "channel": "INTERNAL",
+        "amount": 100.0,
+        "score": 0.867
+      },
+      {
+        "date": "2026-05-16",
+        "timestamp": "2026-05-16T14:14:13+00:00",
+        "channel": "SWIFT",
+        "amount": 30478.0,
+        "score": 0.714
+      },
+      {
+        "date": "2026-05-16",
+        "timestamp": "2026-05-16T17:34:18+00:00",
+        "channel": "MASTERCARD",
+        "amount": 21754.16,
+        "score": 0.669
+      },
+      {
+        "date": "2026-05-16",
+        "timestamp": "2026-05-16T17:54:22+00:00",
+        "channel": "ACH",
+        "amount": 35427.91,
+        "score": 0.75
+      },
+      {
+        "date": "2026-05-16",
+        "timestamp": "2026-05-16T21:20:17+00:00",
+        "channel": "ACH",
+        "amount": 62152.17,
+        "score": 0.939
+      },
+      {
+        "date": "2026-05-17",
+        "timestamp": "2026-05-17T09:01:37+00:00",
+        "channel": "INTERNAL",
+        "amount": 21982.58,
+        "score": 0.679
+      },
+      {
+        "date": "2026-05-17",
+        "timestamp": "2026-05-17T14:04:09+00:00",
+        "channel": "MASTERCARD",
+        "amount": 1380.12,
+        "score": 0.67
+      },
+      {
+        "date": "2026-05-17",
+        "timestamp": "2026-05-17T16:58:19+00:00",
+        "channel": "INTERNAL",
+        "amount": 30058.07,
+        "score": 0.734
+      },
+      {
+        "date": "2026-05-17",
+        "timestamp": "2026-05-17T21:34:26+00:00",
+        "channel": "ACH",
+        "amount": 100.0,
+        "score": 0.873
+      },
+      {
+        "date": "2026-05-18",
+        "timestamp": "2026-05-18T12:05:08+00:00",
+        "channel": "ACH",
+        "amount": 100.0,
+        "score": 0.762
+      }
+    ],
+    "usd-sf": [
+      {
+        "date": "2026-02-21",
+        "timestamp": "2026-02-21T08:46:36+00:00",
+        "channel": "ACH",
+        "amount": 24556.81,
+        "score": 0.735
+      },
+      {
+        "date": "2026-02-24",
+        "timestamp": "2026-02-24T09:18:50+00:00",
+        "channel": "VISA",
+        "amount": 679.29,
+        "score": 0.755
+      },
+      {
+        "date": "2026-02-25",
+        "timestamp": "2026-02-25T21:15:49+00:00",
+        "channel": "ACH",
+        "amount": 1231.99,
+        "score": 0.727
+      },
+      {
+        "date": "2026-03-01",
+        "timestamp": "2026-03-01T08:45:18+00:00",
+        "channel": "MASTERCARD",
+        "amount": 38338.24,
+        "score": 0.95
+      },
+      {
+        "date": "2026-03-06",
+        "timestamp": "2026-03-06T20:03:15+00:00",
+        "channel": "SWIFT",
+        "amount": 1180.72,
+        "score": 0.696
+      },
+      {
+        "date": "2026-03-09",
+        "timestamp": "2026-03-09T08:11:15+00:00",
+        "channel": "INTERNAL",
+        "amount": 20182.25,
+        "score": 0.665
+      },
+      {
+        "date": "2026-03-10",
+        "timestamp": "2026-03-10T14:07:39+00:00",
+        "channel": "ACH",
+        "amount": 703.17,
+        "score": 0.684
+      },
+      {
+        "date": "2026-03-14",
+        "timestamp": "2026-03-14T11:20:21+00:00",
+        "channel": "SWIFT",
+        "amount": 23407.78,
+        "score": 0.671
+      },
+      {
+        "date": "2026-03-14",
+        "timestamp": "2026-03-14T18:28:21+00:00",
+        "channel": "INTERNAL",
+        "amount": 26737.69,
+        "score": 0.733
+      },
+      {
+        "date": "2026-03-15",
+        "timestamp": "2026-03-15T08:05:57+00:00",
+        "channel": "INTERNAL",
+        "amount": 3904.31,
+        "score": 0.721
+      },
+      {
+        "date": "2026-03-20",
+        "timestamp": "2026-03-20T11:51:55+00:00",
+        "channel": "MASTERCARD",
+        "amount": 1698.89,
+        "score": 0.763
+      },
+      {
+        "date": "2026-03-26",
+        "timestamp": "2026-03-26T20:02:47+00:00",
+        "channel": "INTERNAL",
+        "amount": 30114.05,
+        "score": 0.815
+      },
+      {
+        "date": "2026-03-28",
+        "timestamp": "2026-03-28T17:25:10+00:00",
+        "channel": "ACH",
+        "amount": 31669.42,
+        "score": 0.812
+      },
+      {
+        "date": "2026-03-28",
+        "timestamp": "2026-03-28T19:51:02+00:00",
+        "channel": "VISA",
+        "amount": 605.02,
+        "score": 0.764
+      },
+      {
+        "date": "2026-03-29",
+        "timestamp": "2026-03-29T08:27:06+00:00",
+        "channel": "SWIFT",
+        "amount": 21533.42,
+        "score": 0.708
+      },
+      {
+        "date": "2026-04-07",
+        "timestamp": "2026-04-07T14:23:46+00:00",
+        "channel": "INTERNAL",
+        "amount": 27100.24,
+        "score": 0.733
+      },
+      {
+        "date": "2026-04-07",
+        "timestamp": "2026-04-07T21:45:49+00:00",
+        "channel": "MASTERCARD",
+        "amount": 26828.83,
+        "score": 0.733
+      },
+      {
+        "date": "2026-04-10",
+        "timestamp": "2026-04-10T14:25:34+00:00",
+        "channel": "SWIFT",
+        "amount": 35021.56,
+        "score": 0.91
+      },
+      {
+        "date": "2026-04-14",
+        "timestamp": "2026-04-14T21:38:51+00:00",
+        "channel": "VISA",
+        "amount": 26074.91,
+        "score": 0.778
+      },
+      {
+        "date": "2026-04-18",
+        "timestamp": "2026-04-18T09:53:02+00:00",
+        "channel": "SWIFT",
+        "amount": 1004.88,
+        "score": 0.713
+      },
+      {
+        "date": "2026-04-25",
+        "timestamp": "2026-04-25T08:19:49+00:00",
+        "channel": "SWIFT",
+        "amount": 34845.39,
+        "score": 0.812
+      },
+      {
+        "date": "2026-04-26",
+        "timestamp": "2026-04-26T14:14:31+00:00",
+        "channel": "ACH",
+        "amount": 26974.08,
+        "score": 0.769
+      },
+      {
+        "date": "2026-04-30",
+        "timestamp": "2026-04-30T08:53:19+00:00",
+        "channel": "ACH",
+        "amount": 29226.22,
+        "score": 0.816
+      },
+      {
+        "date": "2026-05-02",
+        "timestamp": "2026-05-02T18:28:15+00:00",
+        "channel": "ACH",
+        "amount": 1003.22,
+        "score": 0.683
+      },
+      {
+        "date": "2026-05-03",
+        "timestamp": "2026-05-03T11:24:48+00:00",
+        "channel": "ACH",
+        "amount": 29055.0,
+        "score": 0.842
+      },
+      {
+        "date": "2026-05-03",
+        "timestamp": "2026-05-03T14:12:16+00:00",
+        "channel": "ACH",
+        "amount": 24438.74,
+        "score": 0.691
+      },
+      {
+        "date": "2026-05-04",
+        "timestamp": "2026-05-04T19:10:40+00:00",
+        "channel": "SWIFT",
+        "amount": 28676.93,
+        "score": 0.745
+      },
+      {
+        "date": "2026-05-05",
+        "timestamp": "2026-05-05T21:59:32+00:00",
+        "channel": "MASTERCARD",
+        "amount": 1262.36,
+        "score": 0.717
+      },
+      {
+        "date": "2026-05-09",
+        "timestamp": "2026-05-09T15:11:57+00:00",
+        "channel": "SWIFT",
+        "amount": 36093.2,
+        "score": 0.746
+      },
+      {
+        "date": "2026-05-09",
+        "timestamp": "2026-05-09T15:59:17+00:00",
+        "channel": "MASTERCARD",
+        "amount": 39424.78,
+        "score": 0.843
+      },
+      {
+        "date": "2026-05-10",
+        "timestamp": "2026-05-10T08:18:12+00:00",
+        "channel": "VISA",
+        "amount": 3148.04,
+        "score": 0.656
+      },
+      {
+        "date": "2026-05-16",
+        "timestamp": "2026-05-16T12:59:03+00:00",
+        "channel": "MASTERCARD",
+        "amount": 37611.81,
+        "score": 0.845
+      },
+      {
+        "date": "2026-05-16",
+        "timestamp": "2026-05-16T13:48:21+00:00",
+        "channel": "SWIFT",
+        "amount": 28113.23,
+        "score": 0.66
+      },
+      {
+        "date": "2026-05-18",
+        "timestamp": "2026-05-18T20:42:44+00:00",
+        "channel": "VISA",
+        "amount": 25800.45,
+        "score": 0.749
+      }
+    ],
+    "visa-eur": [
+      {
+        "date": "2026-02-19",
+        "timestamp": "2026-02-19T12:39:43+00:00",
+        "channel": "SWIFT",
+        "amount": 40916.7,
+        "score": 0.794
+      },
+      {
+        "date": "2026-02-19",
+        "timestamp": "2026-02-19T16:46:16+00:00",
+        "channel": "VISA",
+        "amount": 1152.0,
+        "score": 0.67
+      },
+      {
+        "date": "2026-02-19",
+        "timestamp": "2026-02-19T20:28:44+00:00",
+        "channel": "SEPA_INSTANT",
+        "amount": 136.64,
+        "score": 0.64
+      },
+      {
+        "date": "2026-02-19",
+        "timestamp": "2026-02-19T21:24:54+00:00",
+        "channel": "SEPA_STANDARD",
+        "amount": 100.0,
+        "score": 0.651
+      },
+      {
+        "date": "2026-02-21",
+        "timestamp": "2026-02-21T12:59:08+00:00",
+        "channel": "SWIFT",
+        "amount": 2855.57,
+        "score": 0.679
+      },
+      {
+        "date": "2026-02-22",
+        "timestamp": "2026-02-22T08:32:10+00:00",
+        "channel": "SWIFT",
+        "amount": 5393.45,
+        "score": 0.691
+      },
+      {
+        "date": "2026-02-22",
+        "timestamp": "2026-02-22T16:02:04+00:00",
+        "channel": "SWIFT",
+        "amount": 4833.97,
+        "score": 0.681
+      },
+      {
+        "date": "2026-02-22",
+        "timestamp": "2026-02-22T19:16:45+00:00",
+        "channel": "INTERNAL",
+        "amount": 2471.96,
+        "score": 0.72
+      },
+      {
+        "date": "2026-02-23",
+        "timestamp": "2026-02-23T14:39:53+00:00",
+        "channel": "SWIFT",
+        "amount": 48990.2,
+        "score": 0.834
+      },
+      {
+        "date": "2026-02-26",
+        "timestamp": "2026-02-26T16:08:12+00:00",
+        "channel": "INTERNAL",
+        "amount": 2435.55,
+        "score": 0.64
+      },
+      {
+        "date": "2026-02-27",
+        "timestamp": "2026-02-27T15:44:03+00:00",
+        "channel": "SEPA_INSTANT",
+        "amount": 100.0,
+        "score": 0.662
+      },
+      {
+        "date": "2026-02-28",
+        "timestamp": "2026-02-28T09:31:46+00:00",
+        "channel": "INTERNAL",
+        "amount": 21406.07,
+        "score": 0.642
+      },
+      {
+        "date": "2026-02-28",
+        "timestamp": "2026-02-28T15:23:57+00:00",
+        "channel": "MASTERCARD",
+        "amount": 100.0,
+        "score": 0.801
+      },
+      {
+        "date": "2026-03-01",
+        "timestamp": "2026-03-01T12:24:07+00:00",
+        "channel": "SEPA_STANDARD",
+        "amount": 35203.57,
+        "score": 0.659
+      },
+      {
+        "date": "2026-03-01",
+        "timestamp": "2026-03-01T16:31:15+00:00",
+        "channel": "VISA",
+        "amount": 952.35,
+        "score": 0.805
+      },
+      {
+        "date": "2026-03-01",
+        "timestamp": "2026-03-01T17:31:50+00:00",
+        "channel": "SEPA_INSTANT",
+        "amount": 42698.06,
+        "score": 0.774
+      },
+      {
+        "date": "2026-03-01",
+        "timestamp": "2026-03-01T21:19:50+00:00",
+        "channel": "SEPA_INSTANT",
+        "amount": 32392.21,
+        "score": 0.7
+      },
+      {
+        "date": "2026-03-04",
+        "timestamp": "2026-03-04T19:32:05+00:00",
+        "channel": "SWIFT",
+        "amount": 15751.56,
+        "score": 0.645
+      },
+      {
+        "date": "2026-03-05",
+        "timestamp": "2026-03-05T11:16:10+00:00",
+        "channel": "SWIFT",
+        "amount": 3269.23,
+        "score": 0.706
+      },
+      {
+        "date": "2026-03-05",
+        "timestamp": "2026-03-05T12:13:56+00:00",
+        "channel": "SWIFT",
+        "amount": 4545.78,
+        "score": 0.639
+      },
+      {
+        "date": "2026-03-06",
+        "timestamp": "2026-03-06T10:07:16+00:00",
+        "channel": "SEPA_STANDARD",
+        "amount": 44524.39,
+        "score": 0.723
+      },
+      {
+        "date": "2026-03-06",
+        "timestamp": "2026-03-06T19:16:09+00:00",
+        "channel": "SEPA_STANDARD",
+        "amount": 46944.39,
+        "score": 0.739
+      },
+      {
+        "date": "2026-03-06",
+        "timestamp": "2026-03-06T21:49:42+00:00",
+        "channel": "INTERNAL",
+        "amount": 2187.51,
+        "score": 0.723
+      },
+      {
+        "date": "2026-03-08",
+        "timestamp": "2026-03-08T14:25:08+00:00",
+        "channel": "VISA",
+        "amount": 100.0,
+        "score": 0.852
+      },
+      {
+        "date": "2026-03-08",
+        "timestamp": "2026-03-08T17:36:33+00:00",
+        "channel": "SEPA_STANDARD",
+        "amount": 100.0,
+        "score": 0.701
+      },
+      {
+        "date": "2026-03-09",
+        "timestamp": "2026-03-09T09:49:17+00:00",
+        "channel": "SEPA_INSTANT",
+        "amount": 100.0,
+        "score": 0.71
+      },
+      {
+        "date": "2026-03-09",
+        "timestamp": "2026-03-09T16:42:38+00:00",
+        "channel": "SEPA_STANDARD",
+        "amount": 47006.33,
+        "score": 0.757
+      },
+      {
+        "date": "2026-03-10",
+        "timestamp": "2026-03-10T08:11:00+00:00",
+        "channel": "INTERNAL",
+        "amount": 2858.69,
+        "score": 0.699
+      },
+      {
+        "date": "2026-03-11",
+        "timestamp": "2026-03-11T17:15:33+00:00",
+        "channel": "VISA",
+        "amount": 29125.55,
+        "score": 0.667
+      },
+      {
+        "date": "2026-03-11",
+        "timestamp": "2026-03-11T20:24:16+00:00",
+        "channel": "MASTERCARD",
+        "amount": 29675.38,
+        "score": 0.652
+      },
+      {
+        "date": "2026-03-11",
+        "timestamp": "2026-03-11T21:13:04+00:00",
+        "channel": "SEPA_STANDARD",
+        "amount": 37131.78,
+        "score": 0.662
+      },
+      {
+        "date": "2026-03-13",
+        "timestamp": "2026-03-13T10:17:11+00:00",
+        "channel": "INTERNAL",
+        "amount": 2181.43,
+        "score": 0.691
+      },
+      {
+        "date": "2026-03-15",
+        "timestamp": "2026-03-15T10:28:23+00:00",
+        "channel": "SWIFT",
+        "amount": 24084.87,
+        "score": 0.725
+      },
+      {
+        "date": "2026-03-15",
+        "timestamp": "2026-03-15T16:41:57+00:00",
+        "channel": "SWIFT",
+        "amount": 1659.72,
+        "score": 0.718
+      },
+      {
+        "date": "2026-03-16",
+        "timestamp": "2026-03-16T14:02:15+00:00",
+        "channel": "VISA",
+        "amount": 550.37,
+        "score": 0.774
+      },
+      {
+        "date": "2026-03-16",
+        "timestamp": "2026-03-16T15:19:13+00:00",
+        "channel": "SWIFT",
+        "amount": 33697.42,
+        "score": 0.71
+      },
+      {
+        "date": "2026-03-16",
+        "timestamp": "2026-03-16T18:22:07+00:00",
+        "channel": "SEPA_STANDARD",
+        "amount": 50138.72,
+        "score": 0.759
+      },
+      {
+        "date": "2026-03-17",
+        "timestamp": "2026-03-17T19:40:24+00:00",
+        "channel": "MASTERCARD",
+        "amount": 34948.98,
+        "score": 0.771
+      },
+      {
+        "date": "2026-03-18",
+        "timestamp": "2026-03-18T15:45:38+00:00",
+        "channel": "SEPA_STANDARD",
+        "amount": 41171.8,
+        "score": 0.642
+      },
+      {
+        "date": "2026-03-18",
+        "timestamp": "2026-03-18T20:23:50+00:00",
+        "channel": "SWIFT",
+        "amount": 3400.69,
+        "score": 0.684
+      },
+      {
+        "date": "2026-03-18",
+        "timestamp": "2026-03-18T21:42:49+00:00",
+        "channel": "MASTERCARD",
+        "amount": 8755.47,
+        "score": 0.674
+      },
+      {
+        "date": "2026-03-19",
+        "timestamp": "2026-03-19T21:18:34+00:00",
+        "channel": "MASTERCARD",
+        "amount": 15831.15,
+        "score": 0.719
+      },
+      {
+        "date": "2026-03-20",
+        "timestamp": "2026-03-20T13:10:33+00:00",
+        "channel": "SEPA_STANDARD",
+        "amount": 43947.56,
+        "score": 0.704
+      },
+      {
+        "date": "2026-03-22",
+        "timestamp": "2026-03-22T09:06:29+00:00",
+        "channel": "SWIFT",
+        "amount": 12901.7,
+        "score": 0.692
+      },
+      {
+        "date": "2026-03-22",
+        "timestamp": "2026-03-22T10:42:32+00:00",
+        "channel": "SEPA_INSTANT",
+        "amount": 100.0,
+        "score": 0.753
+      },
+      {
+        "date": "2026-03-22",
+        "timestamp": "2026-03-22T11:28:03+00:00",
+        "channel": "SWIFT",
+        "amount": 17576.82,
+        "score": 0.672
+      },
+      {
+        "date": "2026-03-22",
+        "timestamp": "2026-03-22T15:09:27+00:00",
+        "channel": "SWIFT",
+        "amount": 667.83,
+        "score": 0.734
+      },
+      {
+        "date": "2026-03-22",
+        "timestamp": "2026-03-22T15:18:15+00:00",
+        "channel": "MASTERCARD",
+        "amount": 40644.5,
+        "score": 0.902
+      },
+      {
+        "date": "2026-03-22",
+        "timestamp": "2026-03-22T15:27:53+00:00",
+        "channel": "SWIFT",
+        "amount": 42707.95,
+        "score": 0.873
+      },
+      {
+        "date": "2026-03-22",
+        "timestamp": "2026-03-22T17:01:20+00:00",
+        "channel": "SEPA_INSTANT",
+        "amount": 41711.5,
+        "score": 0.764
+      },
+      {
+        "date": "2026-03-22",
+        "timestamp": "2026-03-22T19:15:08+00:00",
+        "channel": "INTERNAL",
+        "amount": 32288.17,
+        "score": 0.836
+      },
+      {
+        "date": "2026-03-23",
+        "timestamp": "2026-03-23T09:00:39+00:00",
+        "channel": "INTERNAL",
+        "amount": 23106.3,
+        "score": 0.718
+      },
+      {
+        "date": "2026-03-23",
+        "timestamp": "2026-03-23T21:01:12+00:00",
+        "channel": "SEPA_INSTANT",
+        "amount": 33369.42,
+        "score": 0.678
+      },
+      {
+        "date": "2026-03-26",
+        "timestamp": "2026-03-26T18:01:21+00:00",
+        "channel": "MASTERCARD",
+        "amount": 26534.71,
+        "score": 0.826
+      },
+      {
+        "date": "2026-03-27",
+        "timestamp": "2026-03-27T13:34:25+00:00",
+        "channel": "INTERNAL",
+        "amount": 26831.25,
+        "score": 0.69
+      },
+      {
+        "date": "2026-03-27",
+        "timestamp": "2026-03-27T21:30:50+00:00",
+        "channel": "VISA",
+        "amount": 38260.3,
+        "score": 0.853
+      },
+      {
+        "date": "2026-03-29",
+        "timestamp": "2026-03-29T21:16:46+00:00",
+        "channel": "SEPA_STANDARD",
+        "amount": 1416.66,
+        "score": 0.662
+      },
+      {
+        "date": "2026-03-30",
+        "timestamp": "2026-03-30T08:12:26+00:00",
+        "channel": "MASTERCARD",
+        "amount": 27806.91,
+        "score": 0.692
+      },
+      {
+        "date": "2026-03-30",
+        "timestamp": "2026-03-30T10:09:12+00:00",
+        "channel": "SWIFT",
+        "amount": 29367.37,
+        "score": 0.712
+      },
+      {
+        "date": "2026-03-30",
+        "timestamp": "2026-03-30T19:20:18+00:00",
+        "channel": "SWIFT",
+        "amount": 26853.76,
+        "score": 0.809
+      },
+      {
+        "date": "2026-04-01",
+        "timestamp": "2026-04-01T17:59:52+00:00",
+        "channel": "SWIFT",
+        "amount": 3402.56,
+        "score": 0.714
+      },
+      {
+        "date": "2026-04-04",
+        "timestamp": "2026-04-04T21:38:54+00:00",
+        "channel": "MASTERCARD",
+        "amount": 31928.29,
+        "score": 0.78
+      },
+      {
+        "date": "2026-04-05",
+        "timestamp": "2026-04-05T13:28:42+00:00",
+        "channel": "MASTERCARD",
+        "amount": 22904.97,
+        "score": 0.781
+      },
+      {
+        "date": "2026-04-05",
+        "timestamp": "2026-04-05T18:06:01+00:00",
+        "channel": "INTERNAL",
+        "amount": 394.58,
+        "score": 0.88
+      },
+      {
+        "date": "2026-04-08",
+        "timestamp": "2026-04-08T16:16:02+00:00",
+        "channel": "VISA",
+        "amount": 32646.61,
+        "score": 0.718
+      },
+      {
+        "date": "2026-04-11",
+        "timestamp": "2026-04-11T21:25:06+00:00",
+        "channel": "SWIFT",
+        "amount": 18448.07,
+        "score": 0.722
+      },
+      {
+        "date": "2026-04-13",
+        "timestamp": "2026-04-13T10:32:14+00:00",
+        "channel": "SEPA_INSTANT",
+        "amount": 36617.62,
+        "score": 0.675
+      },
+      {
+        "date": "2026-04-13",
+        "timestamp": "2026-04-13T21:07:48+00:00",
+        "channel": "VISA",
+        "amount": 3065.44,
+        "score": 0.647
+      },
+      {
+        "date": "2026-04-15",
+        "timestamp": "2026-04-15T11:47:46+00:00",
+        "channel": "MASTERCARD",
+        "amount": 47561.17,
+        "score": 0.886
+      },
+      {
+        "date": "2026-04-15",
+        "timestamp": "2026-04-15T21:04:56+00:00",
+        "channel": "INTERNAL",
+        "amount": 24607.97,
+        "score": 0.701
+      },
+      {
+        "date": "2026-04-17",
+        "timestamp": "2026-04-17T19:43:01+00:00",
+        "channel": "MASTERCARD",
+        "amount": 43076.51,
+        "score": 0.996
+      },
+      {
+        "date": "2026-04-20",
+        "timestamp": "2026-04-20T15:09:41+00:00",
+        "channel": "SWIFT",
+        "amount": 19945.46,
+        "score": 0.679
+      },
+      {
+        "date": "2026-04-21",
+        "timestamp": "2026-04-21T15:30:43+00:00",
+        "channel": "INTERNAL",
+        "amount": 1418.24,
+        "score": 0.731
+      },
+      {
+        "date": "2026-04-24",
+        "timestamp": "2026-04-24T17:50:37+00:00",
+        "channel": "SEPA_STANDARD",
+        "amount": 43113.21,
+        "score": 0.669
+      },
+      {
+        "date": "2026-04-25",
+        "timestamp": "2026-04-25T17:30:52+00:00",
+        "channel": "SWIFT",
+        "amount": 36177.12,
+        "score": 0.737
+      },
+      {
+        "date": "2026-04-26",
+        "timestamp": "2026-04-26T10:40:29+00:00",
+        "channel": "SEPA_STANDARD",
+        "amount": 38275.31,
+        "score": 0.745
+      },
+      {
+        "date": "2026-04-27",
+        "timestamp": "2026-04-27T12:38:10+00:00",
+        "channel": "INTERNAL",
+        "amount": 20871.69,
+        "score": 0.66
+      },
+      {
+        "date": "2026-04-27",
+        "timestamp": "2026-04-27T15:43:52+00:00",
+        "channel": "SEPA_INSTANT",
+        "amount": 100.0,
+        "score": 0.659
+      },
+      {
+        "date": "2026-04-27",
+        "timestamp": "2026-04-27T19:03:22+00:00",
+        "channel": "INTERNAL",
+        "amount": 22041.88,
+        "score": 0.673
+      },
+      {
+        "date": "2026-05-01",
+        "timestamp": "2026-05-01T21:37:54+00:00",
+        "channel": "SEPA_STANDARD",
+        "amount": 55598.69,
+        "score": 0.777
+      },
+      {
+        "date": "2026-05-02",
+        "timestamp": "2026-05-02T14:19:54+00:00",
+        "channel": "VISA",
+        "amount": 35598.35,
+        "score": 0.787
+      },
+      {
+        "date": "2026-05-02",
+        "timestamp": "2026-05-02T19:10:33+00:00",
+        "channel": "VISA",
+        "amount": 25708.85,
+        "score": 0.682
+      },
+      {
+        "date": "2026-05-02",
+        "timestamp": "2026-05-02T20:24:33+00:00",
+        "channel": "SWIFT",
+        "amount": 41632.5,
+        "score": 0.962
+      },
+      {
+        "date": "2026-05-03",
+        "timestamp": "2026-05-03T09:47:47+00:00",
+        "channel": "INTERNAL",
+        "amount": 3713.72,
+        "score": 0.703
+      },
+      {
+        "date": "2026-05-03",
+        "timestamp": "2026-05-03T11:24:25+00:00",
+        "channel": "VISA",
+        "amount": 27280.73,
+        "score": 0.753
+      },
+      {
+        "date": "2026-05-04",
+        "timestamp": "2026-05-04T08:12:05+00:00",
+        "channel": "INTERNAL",
+        "amount": 16297.26,
+        "score": 0.657
+      },
+      {
+        "date": "2026-05-06",
+        "timestamp": "2026-05-06T17:50:54+00:00",
+        "channel": "INTERNAL",
+        "amount": 28049.13,
+        "score": 0.699
+      },
+      {
+        "date": "2026-05-09",
+        "timestamp": "2026-05-09T08:25:32+00:00",
+        "channel": "MASTERCARD",
+        "amount": 2890.93,
+        "score": 0.718
+      },
+      {
+        "date": "2026-05-09",
+        "timestamp": "2026-05-09T08:35:11+00:00",
+        "channel": "SEPA_STANDARD",
+        "amount": 46793.64,
+        "score": 0.813
+      },
+      {
+        "date": "2026-05-09",
+        "timestamp": "2026-05-09T19:49:47+00:00",
+        "channel": "SWIFT",
+        "amount": 22083.03,
+        "score": 0.718
+      },
+      {
+        "date": "2026-05-10",
+        "timestamp": "2026-05-10T14:33:08+00:00",
+        "channel": "MASTERCARD",
+        "amount": 39219.16,
+        "score": 0.934
+      },
+      {
+        "date": "2026-05-10",
+        "timestamp": "2026-05-10T16:17:48+00:00",
+        "channel": "INTERNAL",
+        "amount": 100.0,
+        "score": 0.925
+      },
+      {
+        "date": "2026-05-10",
+        "timestamp": "2026-05-10T21:18:17+00:00",
+        "channel": "SWIFT",
+        "amount": 2401.97,
+        "score": 0.672
+      },
+      {
+        "date": "2026-05-12",
+        "timestamp": "2026-05-12T18:02:55+00:00",
+        "channel": "SWIFT",
+        "amount": 3362.61,
+        "score": 0.666
+      },
+      {
+        "date": "2026-05-13",
+        "timestamp": "2026-05-13T16:59:43+00:00",
+        "channel": "MASTERCARD",
+        "amount": 4210.12,
+        "score": 0.666
+      },
+      {
+        "date": "2026-05-19",
+        "timestamp": "2026-05-19T12:17:52+00:00",
+        "channel": "SWIFT",
+        "amount": 39967.69,
+        "score": 0.918
+      },
+      {
+        "date": "2026-05-19",
+        "timestamp": "2026-05-19T12:56:29+00:00",
+        "channel": "SWIFT",
+        "amount": 18362.66,
+        "score": 0.666
+      },
+      {
+        "date": "2026-05-19",
+        "timestamp": "2026-05-19T16:15:35+00:00",
+        "channel": "SWIFT",
+        "amount": 24476.69,
+        "score": 0.726
+      },
+      {
+        "date": "2026-05-19",
+        "timestamp": "2026-05-19T20:00:44+00:00",
+        "channel": "SWIFT",
+        "amount": 3561.71,
+        "score": 0.7
+      },
+      {
+        "date": "2026-05-19",
+        "timestamp": "2026-05-19T20:17:39+00:00",
+        "channel": "SWIFT",
+        "amount": 3046.63,
+        "score": 0.716
+      }
+    ]
   }
 }

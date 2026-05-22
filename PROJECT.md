@@ -22,6 +22,160 @@
 
 ---
 
+## Doctrine and references
+
+Sight спроектирован против конкретных, задокументированных провалов индустрии. Эта секция фиксирует источники и связь «индустриальный факт → фича Sight», чтобы будущие изменения не размывали продуктовый замысел.
+
+### Размер и боли рынка
+
+| Источник | Тезис | Что это значит для Sight |
+|---|---|---|
+| **McKinsey Global Payments Report** (annual) | Global B2B payment flows > $150T/год | TAM — это объём, который казначеи реально оркестрируют. Sight адресует mid-market срез ($150T × small % = огромный рынок) |
+| **Capgemini World Payments Report** (annual) | Рост B2B real-time payments на двузначные проценты YoY | Скорость движения денег растёт быстрее, чем способность Excel-процессов её отслеживать |
+| **Verified Market Research / Grand View** (2025) | TMS market $5-6B в 2024, CAGR ~10% до 2030 | Софт-сегмент растёт, основной драйвер — переход от Excel к specialized treasury software в SMB/mid-market |
+| **PwC Global Treasury Benchmarking Survey** | Forecast accuracy и manual processes — top-2 pain point казначеев | Sight закрывает оба: ML-ансамбль с conformal интервалами + автоматизация перебалансировки |
+| **Deloitte Global Treasury Survey** | Компании держат 10-25% excess working capital под settlement uncertainty | Liquidity Gradient solver минимизирует idle capital через жадно-итеративный flow |
+
+### Incident-кейсы — почему именно эти фичи
+
+Каждый ключевой компонент Sight можно проследить к историческому провалу:
+
+#### Silicon Valley Bank — март 2023
+- $200B+ депозитов, овернайт-неликвидность. Многие финтехи и стартапы держали 80%+ кэша в одном банке.
+- **Связь с Sight:** `ConcentrationCard` (HHI по контрагентам) — отслеживает долю портфеля в одном банке. Шкала US DOJ: HHI > 2500 = высокая концентрация = красный флаг. См. `lib/utils/concentration.ts`.
+
+#### Credit Suisse — март 2023
+- $1.6T балансовая, экстренный UBS takeover. Counterparty risk материализовался для контрагентов CS по всему миру.
+- **Связь с Sight:** dimension `bank` в HHI, плюс roadmap-фича «counterparty graph» для отслеживания вторичных зависимостей.
+
+#### Synapse bankruptcy — апрель 2024
+- Banking-as-a-service ledger discrepancies, $85M+ клиентских средств в limbo. Корневая причина — рассинхрон ledger и реальных балансов на корреспондентских счетах.
+- **Связь с Sight:** версионируемый JSON-контракт между ML-пайплайном и UI (`public/data/*.json`), audit log переводов (`useAccountsStore.transfers`), conformal интервалы P10/P90 как explicit статистическая граница (а не «прогноз = последнее значение»).
+
+#### JPMorgan London Whale — 2012-2013
+- $6.2B trading loss. Расследование вскрыло copy-paste errors в Excel при расчёте VaR — модель риска делилась на сумму вместо среднего, и эта ошибка прошла без ревью.
+- **Связь с Sight:** Liquidity Gradient solver (`lib/optimizer/gradient.ts`) — детерминированный, типизированный код вместо Excel-формул. Pressure × supply считается через `min(balance_d − minBalance)`, всё покрывается тестами. Excel как замена — не вариант.
+
+### Что Sight НЕ делает (и почему)
+
+Чтобы понимать границы продукта, важно зафиксировать что Sight не пытается делать:
+
+- **Не процессит платежи.** Sight рекомендует переводы, человек подтверждает через `executeTransfer`. Это снимает PCI DSS, AML и большинство compliance вопросов с продукта.
+- **Не подключается к банкам напрямую в v1.** В демо данные синтетические; в прод-версии — через адаптеры (Plaid, Halyk Open Banking, Kaspi B2B, GoCardless). Это снимает регулятивный риск AISP/PISP лицензий с раннего MVP.
+- **Не делает FX-хеджирование.** Есть отдельный счёт `fx-hedging` как индикатор, но full FX risk management — это отдельный продукт (Kantox, Currencycloud territory).
+- **Не replaces казначея.** AI Co-pilot, не Autopilot. Все рекомендации требуют human-in-the-loop. Это закрывает 80% compliance возражений до того, как их зададут.
+
+### Compliance posture (companion to §11)
+
+- **GDPR-compatible с Day 1** — Sight процессит treasury metadata (балансы, prediction), не персональные данные клиентов банков. Pseudonymization где нужно.
+- **PCI DSS не требуется** — мы не процессим карты.
+- **SOC 2 Type II — Y2 цель** для US/EU enterprise клиентов.
+- **ISO 27001 — Y3 цель** для tier-1 банков.
+- **PSD2 Open Banking** — только при экспансии в EU и подключении прямых банковских API (AISP license).
+
+---
+
+## CustDev insights
+
+Композитные персоны, синтезированные из CustDev-разговоров и вторичного research. Каждая пара pain → feature фиксирована в коде — если CustDev меняется, фичи переезжают вместе с ним. Используется для приоритезации roadmap и формулировок в питче.
+
+### Persona 1 — CFO of mid-market FinTech (KZT/USD corridor)
+
+| Aspect | Detail |
+|---|---|
+| Role | CFO |
+| Company shape | Mid-market FinTech, ~$50-150M annual processing volume |
+| Corridor | KZT/USD, 2 банка-корреспондента в US (JPMorgan, BNY Mellon) |
+| Tool stack today | Excel + 8 банковских порталов + email-уведомления |
+| Top pain | Ручная сверка nostro-балансов и SWIFT-подтверждений (2 дня/неделю) |
+| Reactive moment | Узнают о пробое minBalance из email банка → 6-8 часов scramble |
+| **Mapped Sight feature** | Live globe (visibility), `useAlertsAt` (proactive alerts на 7 дней вперёд), AI insight panel (объяснение в plain English) |
+
+Quote: «Сверка nostro-балансов в Excel — 2 дня/неделю. Когда USD-NYC падает, мы узнаём из email банка.»
+
+### Persona 2 — Treasurer of EU EMI (SEPA & SWIFT corridor)
+
+| Aspect | Detail |
+|---|---|
+| Role | Treasurer / Head of Treasury |
+| Company shape | EU-licensed EMI, ~$200M float, mid-market PSP-tier клиенты |
+| Corridor | SEPA Instant + SWIFT для не-EUR, multi-currency reserves |
+| Tool stack today | TreasuryView или ION Treasury (entry-level), плюс Excel-overlays |
+| Top pain | 5-7% оборотного капитала идёт в буфер под SEPA holiday + SWIFT cut-off |
+| Industry benchmark | Deloitte Treasury Survey: 10-25% — нормальный диапазон |
+| **Mapped Sight feature** | `lib/optimizer/gradient.ts` — Liquidity Gradient solver минимизирует буфер per channel SLA. Channel selection в `lib/optimizer/channels.ts` (EUR↔EUR → SEPA $0.50, иначе SWIFT $25) |
+
+Quote: «5-7% капитала в буфере. На $200M это $10-14M idle cash.»
+
+### Persona 3 — Compliance Officer of regulated PSP
+
+| Aspect | Detail |
+|---|---|
+| Role | Head of Compliance / MLRO |
+| Company shape | Licensed PSP, объём не главное, регулятор — главное |
+| Pain | AI demos с autonomous money movement = automatic compliance fail |
+| Hard requirement | Human-in-the-loop на любое движение средств между корр-счетами |
+| Audit expectation | GDPR Day 1, SOC 2 Y2, audit log на каждый перевод с подписью |
+| **Mapped Sight feature** | `executeTransfer` в `accounts-store.ts` требует явного вызова из UI (`Execute` button в AlertCard, OptimizerPanel, NewTransferModal). Audit log = массив transfers в store. Insight cache инвалидируется при перевода. **AI Co-pilot, не Autopilot** — это не маркетинговый слоган, это design constraint. |
+
+Quote: «AI demos с autonomous money movement не пройдут наш audit gate.»
+
+### Как это используется в продукте
+
+- **Приоритезация:** любая новая фича должна снимать pain хотя бы одной из трёх персон, иначе она не попадает в roadmap.
+- **Питч:** в pitch deck отдельный slide «Voice of the customer» с этими цитатами и mapping.
+- **README + landing:** анонимизированные версии этих же quotes в [`README.md`](README.md) и `components/landing/VoicesSection.tsx`.
+- **Compliance posture:** Persona 3 диктует, почему мы делаем Co-pilot а не Autopilot.
+
+---
+
+## Commercial roadmap
+
+### Y1 — Validation через pilots ($0 → $300K ARR)
+
+| Месяц | Activity | Deliverable |
+|---|---|---|
+| M1-M3 | Founder-led outbound в KZ FinTech | 3-5 active pilots |
+| M4-M6 | Pilot execution, case study collection | 2-3 paid конверсии |
+| M7-M9 | EU EMI pilot (1 customer) | SEPA corridor validation |
+| M10-M12 | Pricing experiments, expansion в Baltic | $300K ARR |
+
+**Ресурсы:** 2-3 founders, без paid acquisition. Cost: salaries + Vercel + AI Gateway ≈ $40-60K total Y1.
+
+### Y2 — Self-serve SaaS launch ($300K → $1.5M ARR)
+
+| Квартал | Activity | Deliverable |
+|---|---|---|
+| Q1 | Public launch, pricing page, self-serve onboarding | Signup funnel live |
+| Q2 | SOC 2 Type II audit | Certification |
+| Q3 | Challenger-bank partnership (referral or white-label) | Distribution channel |
+| Q4 | Content engine, product-led growth | 150 paying, $1.5M ARR |
+
+**Ресурсы:** +1 senior eng (data pipeline), +1 customer success, +1 designer. Burn ≈ $50K/мес.
+
+### Y3 — Enterprise + Expansion ($1.5M → $5M ARR)
+
+| Квартал | Activity | Deliverable |
+|---|---|---|
+| Q1 | Enterprise tier launch ($5-15K/мес), ISO 27001 | First enterprise deal |
+| Q2 | PSD2 AISP integration для EU | EU enterprise expansion |
+| Q3 | ОАЭ (DIFC) launch | 1-2 MENA pilots |
+| Q4 | SEA (Singapore MAS partnership) | 1-2 APAC pilots |
+
+**Ресурсы:** +1 enterprise sales, +1 customer success, +1 compliance officer. Burn ≈ $80-100K/мес.
+
+### Что НЕ делаем
+
+Чтобы roadmap был выполним, явно фиксируем чего НЕ делаем:
+
+- **Не идём в US с Y1.** Там Kyriba, HighRadius, Trovata. Battle of titans, без локального presence и compliance не выживем.
+- **Не строим собственный bank.** Sight — это software-layer поверх существующих банков. Не привлекаем banking license.
+- **Не делаем FX-хеджирование как продукт.** Indicator есть в дашборде (`fx-hedging` account), но full FX risk management — отдельный продукт (Kantox, Currencycloud territory).
+- **Не интегрируемся с tier-1 банками напрямую с Y1.** Через адаптеры партнёров (Plaid, Halyk Open Banking, GoCardless) — это снимает регулятивную нагрузку с раннего MVP.
+- **Не делаем on-prem deployment.** Cloud-only, SaaS-only. On-prem убивает SOC 2 и замедляет release cycle.
+
+---
+
 ## 3. Стек
 
 **Frontend**

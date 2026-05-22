@@ -3,7 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { motion } from "motion/react";
-import { ArrowRight, Code2 } from "lucide-react";
+import { ArrowRight, Code2, ShieldCheck } from "lucide-react";
 
 const EASE = [0.16, 1, 0.3, 1] as const;
 
@@ -57,6 +57,14 @@ export function Hero() {
           raises alerts before deficits happen, and explains each prediction
           with gpt-4o-mini.
         </motion.p>
+
+        <motion.div
+          {...fade(2.5)}
+          className="mx-auto mt-5 inline-flex items-center gap-2 rounded-full border border-emerald-200 bg-emerald-50/70 px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.12em] text-emerald-800"
+        >
+          <ShieldCheck className="h-3 w-3" strokeWidth={2} />
+          AI Co-pilot, not Autopilot · Human-in-the-loop by design
+        </motion.div>
 
         <motion.div
           {...fade(3)}
