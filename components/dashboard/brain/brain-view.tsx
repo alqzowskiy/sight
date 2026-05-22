@@ -14,6 +14,7 @@ import {
   type BaseModel,
 } from "@/lib/data/ensemble";
 import { getForecastPoint } from "@/lib/utils/forecast";
+import { getForecastPointRaw, type ForecastShapItem } from "@/lib/data/forecasts";
 import { formatCompact, formatCurrency } from "@/lib/utils/format";
 import { NumberTicker } from "@/components/dashboard/number-ticker";
 import { ModelIllustration } from "./model-illustrations";
@@ -52,6 +53,11 @@ export function BrainView() {
     () => getForecastPoint(localAccountId, offset),
     [localAccountId, offset],
   );
+
+  const shap = useMemo<ForecastShapItem[]>(() => {
+    const raw = getForecastPointRaw(localAccountId, offset);
+    return raw?.shap ?? [];
+  }, [localAccountId, offset]);
 
   if (!account || !snapshot) {
     return (
@@ -101,9 +107,15 @@ export function BrainView() {
           />
         </motion.div>
 
-        <motion.div {...panel(0.14)} className="grid gap-3 md:grid-cols-2">
+        <motion.div {...panel(0.14)} className="grid gap-3 md:grid-cols-3">
           <InspectingPanel hovered={hovered} />
           <LeaderboardPanel snapshot={snapshot} />
+          <WhyPanel
+            shap={shap}
+            isHistorical={isHistorical}
+            offset={offset}
+            currency={account.currency}
+          />
         </motion.div>
       </div>
     </div>
@@ -875,6 +887,78 @@ function InspectingPanel({ hovered }: { hovered: CardId | null }) {
           </motion.p>
         )}
       </AnimatePresence>
+    </div>
+  );
+}
+
+function WhyPanel({
+  shap,
+  isHistorical,
+  offset,
+  currency,
+}: {
+  shap: ForecastShapItem[];
+  isHistorical: boolean;
+  offset: number;
+  currency: string;
+}) {
+  const empty = shap.length === 0;
+  const items = [...shap]
+    .sort((a, b) => Math.abs(b.impact) - Math.abs(a.impact))
+    .slice(0, 5);
+  const maxAbs = items.reduce((m, x) => Math.max(m, Math.abs(x.impact)), 1);
+
+  return (
+    <div className="rounded-xl border border-zinc-200/80 bg-white/60 p-4">
+      <div className="flex items-baseline justify-between">
+        <div className="font-mono text-[10px] uppercase tracking-[0.12em] text-zinc-500">
+          Why this forecast
+        </div>
+        <div className="font-mono text-[10px] uppercase tracking-[0.12em] text-zinc-400">
+          SHAP · top 5
+        </div>
+      </div>
+
+      {empty ? (
+        <p className="mt-3 text-[12px] leading-relaxed text-zinc-500">
+          {isHistorical
+            ? "Historical point — no model attribution. Drag Time Machine into the future to see why."
+            : `No SHAP attribution available for offset +${offset}d. LightGBM model required.`}
+        </p>
+      ) : (
+        <div className="mt-3 space-y-2">
+          {items.map((item) => {
+            const pct = (Math.abs(item.impact) / maxAbs) * 100;
+            const isNegative = item.impact < 0;
+            return (
+              <div key={item.feature} className="space-y-0.5">
+                <div className="flex items-baseline justify-between gap-2 font-mono text-[10px] uppercase tracking-[0.08em]">
+                  <span className="truncate text-zinc-700">{item.label}</span>
+                  <span
+                    className={`tabular-nums ${isNegative ? "text-red-600" : "text-emerald-600"}`}
+                  >
+                    {isNegative ? "−" : "+"}
+                    {formatCompact(Math.abs(item.impact), currency)}
+                  </span>
+                </div>
+                <div className="relative h-1 overflow-hidden rounded-full bg-zinc-100">
+                  <div
+                    className={`absolute top-0 bottom-0 ${
+                      isNegative ? "right-1/2 bg-red-400" : "left-1/2 bg-emerald-400"
+                    }`}
+                    style={{ width: `${Math.max(4, pct / 2)}%` }}
+                  />
+                  <div className="absolute left-1/2 top-0 h-full w-px bg-zinc-300" />
+                </div>
+              </div>
+            );
+          })}
+          <p className="pt-2 text-[10px] leading-snug text-zinc-500">
+            Negative impact pushes the forecast down. Positive supports it.
+            Magnitudes are LightGBM SHAP values in {currency}.
+          </p>
+        </div>
+      )}
     </div>
   );
 }

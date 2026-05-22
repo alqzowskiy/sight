@@ -11,8 +11,10 @@ import {
 } from "@/lib/data/forecasts";
 
 const CURRENCY_BY_ACCOUNT = new Map<string, Account["currency"]>();
+const BANK_BY_ACCOUNT = new Map<string, string>();
 for (const a of accountMetas) {
   CURRENCY_BY_ACCOUNT.set(a.id, a.currency);
+  BANK_BY_ACCOUNT.set(a.id, a.bank);
 }
 
 function toForecastPoint(
@@ -73,15 +75,24 @@ export function getCrisisDelta(
   dayOffset: number,
   baseBalance: number,
 ): number {
-  const active = useCrisisStore.getState().activeScenarios;
+  const state = useCrisisStore.getState();
+  const active = state.activeScenarios;
   if (active.length === 0) return 0;
   const currency = CURRENCY_BY_ACCOUNT.get(accountId);
   if (!currency) return 0;
+  const bank = BANK_BY_ACCOUNT.get(accountId) ?? "";
   let total = 0;
   for (const id of active) {
     const scenario = getCrisisScenario(id);
     if (!scenario) continue;
-    total += scenario.delta({ accountId, currency, dayOffset, baseBalance });
+    total += scenario.delta({
+      accountId,
+      currency,
+      bank,
+      dayOffset,
+      baseBalance,
+      config: state.counterpartyConfig,
+    });
   }
   return total;
 }

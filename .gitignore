@@ -34,6 +34,11 @@ yarn-error.log*
 # env files (can opt-in for committing if needed)
 .env*
 
+# Prisma — local SQLite db
+prisma/dev.db
+prisma/dev.db-journal
+prisma/migrations/dev.db*
+
 # vercel
 .vercel
 
@@ -50,3 +55,4 @@ TECH_TODO.md
 .gitignore
 sight-hackathon-analysis.md
 .gitignore
+BACKEND_PLAN.md

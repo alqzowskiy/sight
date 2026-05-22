@@ -21,7 +21,7 @@ import { ConcentrationCard } from "./concentration-card";
 import { LiquidityScore } from "./liquidity-score";
 import { TimeMachine } from "./time-machine";
 import { motion } from "motion/react";
-import { Search, RotateCcw, Send, Siren, Settings as SettingsIcon, Droplet, ShieldCheck } from "lucide-react";
+import { Search, RotateCcw, Send, Siren, Settings as SettingsIcon, Droplet, ShieldCheck, Sparkles } from "lucide-react";
 import { toast } from "sonner";
 import { CrisisPanel } from "./crisis-panel";
 import { CommandPalette } from "./command-palette";
@@ -29,6 +29,8 @@ import { DemoMode } from "./demo-mode";
 import { NewTransferModal } from "./new-transfer-modal";
 import { OptimizerPanel } from "./optimizer-panel";
 import { CompassBanner } from "./compass-banner";
+import { CounterpartyBanner } from "./counterparty-banner";
+import { AiChatPanel } from "./ai-chat-panel";
 import { ShortcutsOverlay } from "./shortcuts-overlay";
 import { SettingsPanel } from "./settings-panel";
 import { useCrisisStore } from "@/lib/store/crisis-store";
@@ -62,12 +64,23 @@ export function DashboardLayout() {
     (s) => s.lastExecutedTransferId,
   );
   const resetAccounts = useAccountsStore((s) => s.reset);
+  const fetchFromApi = useAccountsStore((s) => s.fetchFromApi);
+
+  // Hydrate from the API on first mount so state persists across page refreshes.
+  // The initial render uses the static JSON snapshot for SSR; once mounted we
+  // immediately replace it with the live DB state.
+  useEffect(() => {
+    void fetchFromApi();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   const resetTime = useTimeStore((s) => s.reset);
   const clearCrisis = useCrisisStore((s) => s.clearAll);
   const setCrisisModeOpen = useCrisisStore((s) => s.setCrisisModeOpen);
   const crisisModeOpen = useCrisisStore((s) => s.crisisModeOpen);
   const activeScenarios = useCrisisStore((s) => s.activeScenarios);
+  const counterpartyConfig = useCrisisStore((s) => s.counterpartyConfig);
   const openCommandPalette = useUiStore((s) => s.setCommandPaletteOpen);
+  const setChatOpen = useUiStore((s) => s.setChatOpen);
   const offset = useTimeStore((s) => s.currentOffset);
   const alerts = useAlertsAt(offset);
 
@@ -162,6 +175,35 @@ export function DashboardLayout() {
     globeRef.current?.focusOnLocation(acc.location, { zoom: false });
   }, [hoveredAccountId, accounts]);
 
+  // Counterparty default activation → sequential cinematic red pulses on each
+  // affected account in succession. This is the visceral "watch SVB happen"
+  // moment in the demo.
+  const lastCounterpartyBankRef = useRef<string | null>(null);
+  useEffect(() => {
+    if (!counterpartyConfig) {
+      lastCounterpartyBankRef.current = null;
+      return;
+    }
+    if (lastCounterpartyBankRef.current === counterpartyConfig.bank) return;
+    lastCounterpartyBankRef.current = counterpartyConfig.bank;
+
+    const affected = accounts.filter((a) => a.bank === counterpartyConfig.bank);
+    if (affected.length === 0) return;
+
+    // Stagger pulses 180ms apart so the cascade reads as a wave rolling across
+    // the globe rather than all markers blinking at once.
+    affected.forEach((acc, i) => {
+      const delay = 180 * i;
+      const isFirst = i === 0;
+      window.setTimeout(() => {
+        if (isFirst) {
+          globeRef.current?.focusOnLocation(acc.location, { zoom: true });
+        }
+        globeRef.current?.triggerPulse(acc.location, "alert");
+      }, delay);
+    });
+  }, [counterpartyConfig, accounts]);
+
   const arcs: TransferArc[] = useMemo(() => {
     const baseArcs: TransferArc[] = transfers
       .filter((t) => {
@@ -245,6 +287,23 @@ export function DashboardLayout() {
           </button>
           <button
             type="button"
+            onClick={() => setChatOpen(true)}
+            aria-label="Open Sight Copilot chat"
+            title="Sight Copilot · ⌘J"
+            className="inline-flex items-center gap-1.5 rounded-md border bg-white px-2.5 py-1.5 font-mono text-[10px] uppercase tracking-[0.1em] transition-colors"
+            style={{
+              borderColor: "rgba(139,92,246,0.3)",
+              color: "#7C3AED",
+            }}
+          >
+            <Sparkles className="h-3 w-3" strokeWidth={1.8} />
+            <span className="hidden md:inline">Copilot</span>
+            <kbd className="ml-1 hidden rounded border border-purple-200 bg-purple-50 px-1 font-mono text-[9px] text-purple-600 md:inline">
+              ⌘J
+            </kbd>
+          </button>
+          <button
+            type="button"
             onClick={() => setOptimizerOpen(true)}
             aria-label="Liquidity Optimizer"
             className="inline-flex items-center gap-1.5 rounded-md border bg-white px-2.5 py-1.5 font-mono text-[10px] uppercase tracking-[0.1em] transition-colors"
@@ -309,6 +368,7 @@ export function DashboardLayout() {
       </header>
 
       <div className="flex min-h-0 flex-1 flex-col gap-3 p-3 lg:p-4">
+        <CounterpartyBanner />
         <CompassBanner />
         <div className="grid min-h-0 flex-1 grid-cols-1 gap-3 lg:grid-cols-[300px_minmax(0,1fr)_360px] lg:gap-4">
           <motion.div
@@ -409,6 +469,7 @@ export function DashboardLayout() {
       <CommandPalette />
       <ShortcutsOverlay />
       <SettingsPanel />
+      <AiChatPanel />
       <MobileFallback />
       <NewTransferModal
         open={newTransferOpen}

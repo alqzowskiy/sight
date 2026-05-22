@@ -22,6 +22,46 @@ import { convertAmount } from "@/lib/optimizer/fx";
 export type ConcentrationDimension = "bank" | "currency" | "country";
 export type ConcentrationLevel = "low" | "moderate" | "high";
 
+/**
+ * Indicative credit ratings for the demo's counterparties.
+ *
+ * These are NOT real-time S&P/Moody's feeds. They reflect long-term issuer
+ * credit ratings as of the demo's reference period and are hardcoded to make
+ * risk-adjusted HHI possible without an external rating-agency integration.
+ *
+ * Higher multiplier = riskier counterparty. A bank with multiplier 1.5 in a
+ * portfolio means "concentration here is 50% more painful than concentration
+ * in a AA bank, dollar for dollar".
+ *
+ * In production these would come from a ratings vendor (S&P Capital IQ,
+ * Moody's Analytics) or be replaced by CDS-implied probabilities.
+ */
+export interface BankRating {
+  rating: string;
+  /** Multiplier applied to bank's share² when computing risk-weighted HHI. */
+  multiplier: number;
+}
+
+export const BANK_RATINGS: Record<string, BankRating> = {
+  JPMorgan: { rating: "A+", multiplier: 1.0 },
+  "BNY Mellon": { rating: "AA-", multiplier: 0.95 },
+  "Bank of America": { rating: "A+", multiplier: 1.0 },
+  HSBC: { rating: "A+", multiplier: 1.0 },
+  Barclays: { rating: "A", multiplier: 1.05 },
+  UBS: { rating: "A+", multiplier: 1.05 },
+  "Deutsche Bank": { rating: "A", multiplier: 1.15 },
+  "BNP Paribas": { rating: "A+", multiplier: 1.0 },
+  DBS: { rating: "AA-", multiplier: 0.95 },
+  Halyk: { rating: "BB+", multiplier: 1.35 },
+  Kaspi: { rating: "BB", multiplier: 1.4 },
+  Visa: { rating: "AA-", multiplier: 0.95 },
+  Mastercard: { rating: "A+", multiplier: 1.0 },
+};
+
+export function getBankRating(bank: string): BankRating {
+  return BANK_RATINGS[bank] ?? { rating: "NR", multiplier: 1.2 };
+}
+
 export interface ConcentrationBucket {
   /** The grouping key — e.g., "JPMorgan", "USD", "US". */
   key: string;
@@ -37,7 +77,14 @@ export interface ConcentrationResult {
   dimension: ConcentrationDimension;
   /** HHI in DOJ units (sum of squared percentage shares), 0..10000. */
   hhi: number;
+  /**
+   * Risk-adjusted HHI — each bucket's contribution is multiplied by the
+   * counterparty's credit-risk multiplier. Only meaningful for dimension="bank";
+   * for currency/country dimensions this equals the unadjusted HHI.
+   */
+  hhiRiskAdjusted: number;
   level: ConcentrationLevel;
+  riskAdjustedLevel: ConcentrationLevel;
   /** Buckets sorted by share desc. */
   breakdown: ConcentrationBucket[];
   /** Sum of USD-equivalent balances across all positive-balance accounts. */
@@ -87,7 +134,9 @@ export function computeHHI(
     return {
       dimension,
       hhi: 0,
+      hhiRiskAdjusted: 0,
       level: "low",
+      riskAdjustedLevel: "low",
       breakdown: [],
       totalUsd: 0,
     };
@@ -117,10 +166,23 @@ export function computeHHI(
   // HHI = Σ (share_pct)² where share_pct = share × 100, range 0..10000.
   const hhi = breakdown.reduce((sum, b) => sum + (b.share * 100) ** 2, 0);
 
+  // Risk-adjusted: weight each bucket's contribution by counterparty credit
+  // multiplier. Only meaningful for bank dimension.
+  const hhiRiskAdjusted =
+    dimension === "bank"
+      ? breakdown.reduce(
+          (sum, b) =>
+            sum + (b.share * 100) ** 2 * getBankRating(b.key).multiplier,
+          0,
+        )
+      : hhi;
+
   return {
     dimension,
     hhi: Math.round(hhi),
+    hhiRiskAdjusted: Math.round(hhiRiskAdjusted),
     level: classifyLevel(hhi),
+    riskAdjustedLevel: classifyLevel(hhiRiskAdjusted),
     breakdown,
     totalUsd,
   };

@@ -8,6 +8,7 @@ import { accountMetas } from "@/lib/data/accounts";
 import { getEffectiveBalanceAt } from "@/lib/utils/forecast";
 import {
   computeHHI,
+  getBankRating,
   levelBg,
   levelColor,
   levelLabel,
@@ -77,6 +78,14 @@ export function ConcentrationCard() {
           <div className="font-mono text-[9px] uppercase tracking-[0.14em] text-zinc-500">
             Herfindahl-Hirschman
           </div>
+          {dimension === "bank" && result.hhiRiskAdjusted !== result.hhi && (
+            <div
+              className={`mt-0.5 font-mono text-[9px] uppercase tracking-[0.12em] ${levelColor(result.riskAdjustedLevel)}`}
+              title="Risk-adjusted HHI weights each bucket by the counterparty's credit rating multiplier."
+            >
+              Risk-adjusted · <NumberTicker value={result.hhiRiskAdjusted} />
+            </div>
+          )}
         </div>
 
         <div className="ml-auto flex items-center gap-0.5 rounded-md border border-zinc-200/80 bg-zinc-50 p-0.5">
@@ -100,31 +109,48 @@ export function ConcentrationCard() {
 
       {topBuckets.length > 0 && (
         <div className="mt-3 space-y-1.5">
-          {topBuckets.map((b) => (
-            <div key={b.key} className="flex items-center gap-2">
-              <span className="w-20 truncate font-mono text-[10px] uppercase tracking-[0.08em] text-zinc-600">
-                {b.key}
-              </span>
-              <div className="relative h-1.5 flex-1 overflow-hidden rounded-full bg-zinc-100">
-                <div
-                  className={`h-full rounded-full ${
-                    b.share >= 0.5
-                      ? "bg-red-500"
-                      : b.share >= 0.25
-                        ? "bg-amber-500"
-                        : "bg-emerald-500"
-                  }`}
-                  style={{ width: `${Math.max(2, b.share * 100)}%` }}
-                />
+          {topBuckets.map((b) => {
+            const rating = dimension === "bank" ? getBankRating(b.key) : null;
+            return (
+              <div key={b.key} className="flex items-center gap-2">
+                <span className="w-20 truncate font-mono text-[10px] uppercase tracking-[0.08em] text-zinc-600">
+                  {b.key}
+                </span>
+                {rating && (
+                  <span
+                    className={`rounded px-1 font-mono text-[8px] uppercase tracking-[0.08em] ${
+                      rating.multiplier <= 1.0
+                        ? "bg-emerald-50 text-emerald-700"
+                        : rating.multiplier <= 1.15
+                          ? "bg-amber-50 text-amber-700"
+                          : "bg-red-50 text-red-700"
+                    }`}
+                    title={`Credit rating ${rating.rating}, risk multiplier ${rating.multiplier.toFixed(2)}`}
+                  >
+                    {rating.rating}
+                  </span>
+                )}
+                <div className="relative h-1.5 flex-1 overflow-hidden rounded-full bg-zinc-100">
+                  <div
+                    className={`h-full rounded-full ${
+                      b.share >= 0.5
+                        ? "bg-red-500"
+                        : b.share >= 0.25
+                          ? "bg-amber-500"
+                          : "bg-emerald-500"
+                    }`}
+                    style={{ width: `${Math.max(2, b.share * 100)}%` }}
+                  />
+                </div>
+                <span className="w-10 text-right font-mono text-[10px] tabular-nums text-zinc-500">
+                  {Math.round(b.share * 100)}%
+                </span>
+                <span className="w-12 text-right font-mono text-[10px] tabular-nums text-zinc-400">
+                  {formatCompact(b.balance, "USD")}
+                </span>
               </div>
-              <span className="w-10 text-right font-mono text-[10px] tabular-nums text-zinc-500">
-                {Math.round(b.share * 100)}%
-              </span>
-              <span className="w-12 text-right font-mono text-[10px] tabular-nums text-zinc-400">
-                {formatCompact(b.balance, "USD")}
-              </span>
-            </div>
-          ))}
+            );
+          })}
         </div>
       )}
 

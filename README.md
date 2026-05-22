@@ -421,14 +421,14 @@ supply(account) = min_{d=0..14}(balance_d − minBalance)
 Архитектура спроектирована так, чтобы переход от демо к прод-версии не ломал ни UI, ни ML-пайплайн. Меняется только источник балансов и transactions.
 
 ```
-🟢 [Реализовано в демо]              ⚪ [Roadmap для прод-версии]
+🟢 [Реализовано]                     ⚪ [Roadmap для прод-версии]
 
 ⚪ Banking adapters                  
    (Halyk Open Banking, Kaspi B2B,   
     Plaid, GoCardless, SWIFT GPI)    
    → lib/data/banking-adapter.ts     
                 ↓                    
-⚪ Postgres (Prisma schema)          
+🟢 Postgres / SQLite (Prisma)         
    Tenant / Account / Transaction /  
    Forecast / Alert / AuditEvent     
    → prisma/schema.prisma            
@@ -437,8 +437,11 @@ supply(account) = min_{d=0..14}(balance_d − minBalance)
    generate_history → train_ensemble 
    → calibrate → export_for_frontend 
                 ↓                    
-🟢 JSON contract (public/data/*.json)
-   accounts / forecasts / backtest / selection
+🟢 Seed → DB (prisma/seed.ts)
+                ↓                    
+🟢 REST API (/api/v1/*)
+   accounts / forecasts / transfers /
+   alerts / concentration / audit
                 ↓                    
 🟢 Next.js (Vercel)                  
    App Router + Zustand + Globe + AI  
@@ -453,6 +456,38 @@ supply(account) = min_{d=0..14}(balance_d − minBalance)
 - Tenant isolation на уровне схемы — multi-tenant SaaS без рефакторинга.
 
 См. [`prisma/schema.prisma`](prisma/schema.prisma) для полного дизайна и [`lib/data/banking-adapter.ts`](lib/data/banking-adapter.ts) для интерфейса интеграций.
+
+### REST API
+
+Шесть endpoints под `/api/v1/`:
+
+| Method | Path | Что |
+|---|---|---|
+| `GET` | `/api/v1/accounts` | 11 accounts с текущим balance из БД |
+| `GET` | `/api/v1/forecasts/[accountId]` | 90 history + 14 forecast points с P10/P90 |
+| `GET` | `/api/v1/alerts` | Computed alerts на 7 дней вперёд |
+| `GET, POST` | `/api/v1/transfers` | История переводов и execution |
+| `GET` | `/api/v1/concentration?dimension=bank` | HHI по контрагентам/валютам/странам |
+| `GET` | `/api/v1/audit?limit=50` | Audit log |
+
+**Persistent state:** все переводы пишутся в SQLite через Prisma. Refresh страницы сохраняет состояние — это не in-memory demo. Audit log содержит каждое движение средств с timestamps для SOC 2 compliance.
+
+**Тестирование:**
+```bash
+curl http://localhost:3000/api/v1/accounts
+curl -X POST http://localhost:3000/api/v1/transfers \
+  -H "Content-Type: application/json" \
+  -d '{"fromAccountId":"usd-sf","toAccountId":"usd-nyc","amount":100000,"origin":"MANUAL"}'
+```
+
+**Локальная БД:** SQLite в `prisma/dev.db` (gitignored). Для прода — Postgres через тот же `DATABASE_URL`. Migration файлы в `prisma/migrations/`.
+
+Запуск:
+```bash
+pnpm exec prisma migrate dev    # apply migrations
+pnpm db:seed                    # seed from public/data/*.json
+pnpm db:studio                  # interactive DB browser
+```
 
 ---
 

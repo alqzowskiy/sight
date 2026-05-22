@@ -1,16 +1,23 @@
 import type { Currency } from "@/types";
+import type { CounterpartyConfig } from "@/lib/store/crisis-store";
 
 export interface CrisisCtx {
   accountId: string;
   currency: Currency;
+  /** Bank name from accountMetas — needed for counterparty-default scoping. */
+  bank: string;
   dayOffset: number;
   baseBalance: number;
+  /** Parameterized config for the counterparty-default scenario. */
+  config: CounterpartyConfig | null;
 }
 
 export interface CrisisScenario {
   id: string;
   name: string;
   description: string;
+  /** Whether this scenario requires extra config (e.g., counterparty-default needs a bank). */
+  requiresConfig?: boolean;
   delta: (ctx: CrisisCtx) => number;
 }
 
@@ -93,6 +100,32 @@ export const crisisScenarios: CrisisScenario[] = [
       if (dayOffset <= 0) return 0;
       if (currency !== "EUR") return 0;
       return -baseBalance * 0.05;
+    },
+  },
+  {
+    id: "counterparty-default",
+    name: "Counterparty Default",
+    description:
+      "A single bank goes into default. All accounts at that bank lose access until recovery. Echoes the SVB-2023 cascade.",
+    requiresConfig: true,
+    delta: ({ bank, dayOffset, baseBalance, config }) => {
+      // Without config the scenario is inert — UI guides the user to pick a bank.
+      if (!config) return 0;
+      if (bank !== config.bank) return 0;
+      // Freeze the entire forecasted balance for the recovery window.
+      // After that, balances ramp back linearly over ~3 days.
+      const freezeUntil = config.recoveryDays;
+      const fullRecovery = freezeUntil + 3;
+      if (dayOffset <= 0) return 0;
+      if (dayOffset <= freezeUntil) {
+        return -baseBalance;
+      }
+      if (dayOffset < fullRecovery) {
+        const t = (dayOffset - freezeUntil) / 3;
+        // Smooth recovery from -baseBalance back to 0.
+        return -baseBalance * (1 - t);
+      }
+      return 0;
     },
   },
 ];

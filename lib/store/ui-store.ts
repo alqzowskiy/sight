@@ -7,6 +7,7 @@ interface UiStore {
   detailPanelOpen: boolean;
   commandPaletteOpen: boolean;
   settingsOpen: boolean;
+  chatOpen: boolean;
   pendingInsightAccountId: string | null;
   setSelectedAccount: (id: string | null) => void;
   setHoveredAccount: (id: string | null) => void;
@@ -15,6 +16,7 @@ interface UiStore {
   closeDetailPanel: () => void;
   setCommandPaletteOpen: (open: boolean) => void;
   setSettingsOpen: (open: boolean) => void;
+  setChatOpen: (open: boolean) => void;
   requestInsight: (accountId: string) => void;
   clearPendingInsight: () => void;
 }
@@ -26,6 +28,7 @@ export const useUiStore = create<UiStore>((set) => ({
   detailPanelOpen: false,
   commandPaletteOpen: false,
   settingsOpen: false,
+  chatOpen: false,
   pendingInsightAccountId: null,
   setSelectedAccount: (id) => set({ selectedAccountId: id }),
   setHoveredAccount: (id) => set({ hoveredAccountId: id }),
@@ -35,6 +38,7 @@ export const useUiStore = create<UiStore>((set) => ({
   closeDetailPanel: () => set({ detailPanelOpen: false }),
   setCommandPaletteOpen: (open) => set({ commandPaletteOpen: open }),
   setSettingsOpen: (open) => set({ settingsOpen: open }),
+  setChatOpen: (open) => set({ chatOpen: open }),
   requestInsight: (accountId) =>
     set({
       selectedAccountId: accountId,

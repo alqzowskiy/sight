@@ -661,98 +661,476 @@
         "balance": 1043543.62,
         "p10": 977030.48,
         "p90": 1110056.76,
-        "isHistorical": false
+        "isHistorical": false,
+        "shap": [
+          {
+            "feature": "rolling_mean_30",
+            "label": "monthly baseline",
+            "impact": 442600.29
+          },
+          {
+            "feature": "balance_lag_1",
+            "label": "yesterday's balance",
+            "impact": -317635.57
+          },
+          {
+            "feature": "balance_lag_14",
+            "label": "two-week lag",
+            "impact": -294338.91
+          },
+          {
+            "feature": "type_operational",
+            "label": "type_operational",
+            "impact": -243449.03
+          },
+          {
+            "feature": "balance_lag_3",
+            "label": "3-day lag",
+            "impact": -165023.95
+          }
+        ]
       },
       {
         "date": "2026-05-21",
         "balance": 1014455.25,
         "p10": 947942.11,
         "p90": 1080968.39,
-        "isHistorical": false
+        "isHistorical": false,
+        "shap": [
+          {
+            "feature": "rolling_mean_30",
+            "label": "monthly baseline",
+            "impact": 443047.41
+          },
+          {
+            "feature": "balance_lag_1",
+            "label": "yesterday's balance",
+            "impact": -318028.64
+          },
+          {
+            "feature": "balance_lag_14",
+            "label": "two-week lag",
+            "impact": -294760.49
+          },
+          {
+            "feature": "type_operational",
+            "label": "type_operational",
+            "impact": -243413.56
+          },
+          {
+            "feature": "balance_lag_3",
+            "label": "3-day lag",
+            "impact": -164870.18
+          }
+        ]
       },
       {
         "date": "2026-05-22",
         "balance": 963550.75,
         "p10": 897037.61,
         "p90": 1030063.89,
-        "isHistorical": false
+        "isHistorical": false,
+        "shap": [
+          {
+            "feature": "rolling_mean_30",
+            "label": "monthly baseline",
+            "impact": 440949.37
+          },
+          {
+            "feature": "balance_lag_1",
+            "label": "yesterday's balance",
+            "impact": -318268.58
+          },
+          {
+            "feature": "balance_lag_14",
+            "label": "two-week lag",
+            "impact": -296770.94
+          },
+          {
+            "feature": "type_operational",
+            "label": "type_operational",
+            "impact": -243615.84
+          },
+          {
+            "feature": "balance_lag_3",
+            "label": "3-day lag",
+            "impact": -165052.6
+          }
+        ]
       },
       {
         "date": "2026-05-23",
         "balance": 901738.06,
         "p10": 835224.92,
         "p90": 968251.2,
-        "isHistorical": false
+        "isHistorical": false,
+        "shap": [
+          {
+            "feature": "rolling_mean_30",
+            "label": "monthly baseline",
+            "impact": 440737.48
+          },
+          {
+            "feature": "balance_lag_1",
+            "label": "yesterday's balance",
+            "impact": -318613.19
+          },
+          {
+            "feature": "balance_lag_14",
+            "label": "two-week lag",
+            "impact": -297211.26
+          },
+          {
+            "feature": "type_operational",
+            "label": "type_operational",
+            "impact": -244370.44
+          },
+          {
+            "feature": "balance_lag_3",
+            "label": "3-day lag",
+            "impact": -165058.65
+          }
+        ]
       },
       {
         "date": "2026-05-24",
         "balance": 898102.0,
         "p10": 831588.86,
         "p90": 964615.14,
-        "isHistorical": false
+        "isHistorical": false,
+        "shap": [
+          {
+            "feature": "rolling_mean_30",
+            "label": "monthly baseline",
+            "impact": 440301.71
+          },
+          {
+            "feature": "balance_lag_1",
+            "label": "yesterday's balance",
+            "impact": -318090.46
+          },
+          {
+            "feature": "balance_lag_14",
+            "label": "two-week lag",
+            "impact": -297591.1
+          },
+          {
+            "feature": "type_operational",
+            "label": "type_operational",
+            "impact": -244411.32
+          },
+          {
+            "feature": "balance_lag_3",
+            "label": "3-day lag",
+            "impact": -165450.41
+          }
+        ]
       },
       {
         "date": "2026-05-25",
         "balance": 938098.44,
         "p10": 871585.3,
         "p90": 1004611.58,
-        "isHistorical": false
+        "isHistorical": false,
+        "shap": [
+          {
+            "feature": "rolling_mean_30",
+            "label": "monthly baseline",
+            "impact": 441066.5
+          },
+          {
+            "feature": "balance_lag_1",
+            "label": "yesterday's balance",
+            "impact": -318261.53
+          },
+          {
+            "feature": "balance_lag_14",
+            "label": "two-week lag",
+            "impact": -296200.62
+          },
+          {
+            "feature": "type_operational",
+            "label": "type_operational",
+            "impact": -244322.24
+          },
+          {
+            "feature": "balance_lag_3",
+            "label": "3-day lag",
+            "impact": -165086.44
+          }
+        ]
       },
       {
         "date": "2026-05-26",
         "balance": 974458.81,
         "p10": 907945.67,
         "p90": 1040971.95,
-        "isHistorical": false
+        "isHistorical": false,
+        "shap": [
+          {
+            "feature": "rolling_mean_30",
+            "label": "monthly baseline",
+            "impact": 442332.58
+          },
+          {
+            "feature": "balance_lag_1",
+            "label": "yesterday's balance",
+            "impact": -317790.79
+          },
+          {
+            "feature": "balance_lag_14",
+            "label": "two-week lag",
+            "impact": -296081.82
+          },
+          {
+            "feature": "type_operational",
+            "label": "type_operational",
+            "impact": -244309.42
+          },
+          {
+            "feature": "balance_lag_3",
+            "label": "3-day lag",
+            "impact": -165148.22
+          }
+        ]
       },
       {
         "date": "2026-05-27",
         "balance": 978094.88,
         "p10": 911581.74,
         "p90": 1044608.02,
-        "isHistorical": false
+        "isHistorical": false,
+        "shap": [
+          {
+            "feature": "rolling_mean_30",
+            "label": "monthly baseline",
+            "impact": 442214.57
+          },
+          {
+            "feature": "balance_lag_1",
+            "label": "yesterday's balance",
+            "impact": -318557.79
+          },
+          {
+            "feature": "balance_lag_14",
+            "label": "two-week lag",
+            "impact": -296099.43
+          },
+          {
+            "feature": "type_operational",
+            "label": "type_operational",
+            "impact": -243856.17
+          },
+          {
+            "feature": "balance_lag_3",
+            "label": "3-day lag",
+            "impact": -165044.17
+          }
+        ]
       },
       {
         "date": "2026-05-28",
         "balance": 941734.5,
         "p10": 875221.36,
         "p90": 1008247.64,
-        "isHistorical": false
+        "isHistorical": false,
+        "shap": [
+          {
+            "feature": "rolling_mean_30",
+            "label": "monthly baseline",
+            "impact": 442210.25
+          },
+          {
+            "feature": "balance_lag_1",
+            "label": "yesterday's balance",
+            "impact": -318599.2
+          },
+          {
+            "feature": "balance_lag_14",
+            "label": "two-week lag",
+            "impact": -296425.32
+          },
+          {
+            "feature": "type_operational",
+            "label": "type_operational",
+            "impact": -243815.97
+          },
+          {
+            "feature": "balance_lag_3",
+            "label": "3-day lag",
+            "impact": -164812.37
+          }
+        ]
       },
       {
         "date": "2026-05-29",
         "balance": 901738.06,
         "p10": 835224.92,
         "p90": 968251.2,
-        "isHistorical": false
+        "isHistorical": false,
+        "shap": [
+          {
+            "feature": "rolling_mean_30",
+            "label": "monthly baseline",
+            "impact": 440612.13
+          },
+          {
+            "feature": "balance_lag_1",
+            "label": "yesterday's balance",
+            "impact": -318571.83
+          },
+          {
+            "feature": "balance_lag_14",
+            "label": "two-week lag",
+            "impact": -298085.05
+          },
+          {
+            "feature": "type_operational",
+            "label": "type_operational",
+            "impact": -243813.65
+          },
+          {
+            "feature": "balance_lag_3",
+            "label": "3-day lag",
+            "impact": -165095.31
+          }
+        ]
       },
       {
         "date": "2026-05-30",
         "balance": 872649.69,
         "p10": 806136.55,
         "p90": 939162.83,
-        "isHistorical": false
+        "isHistorical": false,
+        "shap": [
+          {
+            "feature": "rolling_mean_30",
+            "label": "monthly baseline",
+            "impact": 438937.34
+          },
+          {
+            "feature": "balance_lag_1",
+            "label": "yesterday's balance",
+            "impact": -319127.31
+          },
+          {
+            "feature": "balance_lag_14",
+            "label": "two-week lag",
+            "impact": -298452.51
+          },
+          {
+            "feature": "type_operational",
+            "label": "type_operational",
+            "impact": -244944.34
+          },
+          {
+            "feature": "balance_lag_3",
+            "label": "3-day lag",
+            "impact": -165079.45
+          }
+        ]
       },
       {
         "date": "2026-05-31",
         "balance": 865377.62,
         "p10": 798864.48,
         "p90": 931890.76,
-        "isHistorical": false
+        "isHistorical": false,
+        "shap": [
+          {
+            "feature": "rolling_mean_30",
+            "label": "monthly baseline",
+            "impact": 438661.59
+          },
+          {
+            "feature": "balance_lag_1",
+            "label": "yesterday's balance",
+            "impact": -318710.38
+          },
+          {
+            "feature": "balance_lag_14",
+            "label": "two-week lag",
+            "impact": -298538.72
+          },
+          {
+            "feature": "type_operational",
+            "label": "type_operational",
+            "impact": -245096.75
+          },
+          {
+            "feature": "balance_lag_3",
+            "label": "3-day lag",
+            "impact": -165211.54
+          }
+        ]
       },
       {
         "date": "2026-06-01",
         "balance": 905374.12,
         "p10": 838860.98,
         "p90": 971887.26,
-        "isHistorical": false
+        "isHistorical": false,
+        "shap": [
+          {
+            "feature": "rolling_mean_30",
+            "label": "monthly baseline",
+            "impact": 440045.6
+          },
+          {
+            "feature": "balance_lag_1",
+            "label": "yesterday's balance",
+            "impact": -318767.36
+          },
+          {
+            "feature": "balance_lag_14",
+            "label": "two-week lag",
+            "impact": -296807.71
+          },
+          {
+            "feature": "type_operational",
+            "label": "type_operational",
+            "impact": -245077.28
+          },
+          {
+            "feature": "balance_lag_3",
+            "label": "3-day lag",
+            "impact": -165366.46
+          }
+        ]
       },
       {
         "date": "2026-06-02",
         "balance": 941734.5,
         "p10": 875221.36,
         "p90": 1008247.64,
-        "isHistorical": false
+        "isHistorical": false,
+        "shap": [
+          {
+            "feature": "rolling_mean_30",
+            "label": "monthly baseline",
+            "impact": 440449.86
+          },
+          {
+            "feature": "balance_lag_1",
+            "label": "yesterday's balance",
+            "impact": -318175.74
+          },
+          {
+            "feature": "balance_lag_14",
+            "label": "two-week lag",
+            "impact": -296150.83
+          },
+          {
+            "feature": "type_operational",
+            "label": "type_operational",
+            "impact": -245156.88
+          },
+          {
+            "feature": "balance_lag_3",
+            "label": "3-day lag",
+            "impact": -165706.7
+          }
+        ]
       }
     ],
     "eur-paris": [
@@ -1391,98 +1769,476 @@
         "balance": 846186.69,
         "p10": 795764.14,
         "p90": 896609.24,
-        "isHistorical": false
+        "isHistorical": false,
+        "shap": [
+          {
+            "feature": "balance_lag_1",
+            "label": "yesterday's balance",
+            "impact": -320302.43
+          },
+          {
+            "feature": "balance_lag_14",
+            "label": "two-week lag",
+            "impact": -223975.59
+          },
+          {
+            "feature": "type_operational",
+            "label": "type_operational",
+            "impact": -173474.77
+          },
+          {
+            "feature": "balance_lag_3",
+            "label": "3-day lag",
+            "impact": -129310.49
+          },
+          {
+            "feature": "currency_USD",
+            "label": "currency_USD",
+            "impact": 88560.18
+          }
+        ]
       },
       {
         "date": "2026-05-21",
         "balance": 825831.62,
         "p10": 775409.07,
         "p90": 876254.17,
-        "isHistorical": false
+        "isHistorical": false,
+        "shap": [
+          {
+            "feature": "balance_lag_1",
+            "label": "yesterday's balance",
+            "impact": -320602.73
+          },
+          {
+            "feature": "balance_lag_14",
+            "label": "two-week lag",
+            "impact": -224393.27
+          },
+          {
+            "feature": "type_operational",
+            "label": "type_operational",
+            "impact": -173439.3
+          },
+          {
+            "feature": "balance_lag_3",
+            "label": "3-day lag",
+            "impact": -129158.78
+          },
+          {
+            "feature": "currency_USD",
+            "label": "currency_USD",
+            "impact": 88567.48
+          }
+        ]
       },
       {
         "date": "2026-05-22",
         "balance": 790937.31,
         "p10": 740514.76,
         "p90": 841359.86,
-        "isHistorical": false
+        "isHistorical": false,
+        "shap": [
+          {
+            "feature": "balance_lag_1",
+            "label": "yesterday's balance",
+            "impact": -320565.24
+          },
+          {
+            "feature": "balance_lag_14",
+            "label": "two-week lag",
+            "impact": -224926.69
+          },
+          {
+            "feature": "type_operational",
+            "label": "type_operational",
+            "impact": -173588.46
+          },
+          {
+            "feature": "balance_lag_3",
+            "label": "3-day lag",
+            "impact": -129120.78
+          },
+          {
+            "feature": "currency_USD",
+            "label": "currency_USD",
+            "impact": 88567.48
+          }
+        ]
       },
       {
         "date": "2026-05-23",
         "balance": 744411.62,
         "p10": 693989.07,
         "p90": 794834.17,
-        "isHistorical": false
+        "isHistorical": false,
+        "shap": [
+          {
+            "feature": "balance_lag_1",
+            "label": "yesterday's balance",
+            "impact": -320497.01
+          },
+          {
+            "feature": "balance_lag_14",
+            "label": "two-week lag",
+            "impact": -225319.59
+          },
+          {
+            "feature": "type_operational",
+            "label": "type_operational",
+            "impact": -174314.0
+          },
+          {
+            "feature": "balance_lag_3",
+            "label": "3-day lag",
+            "impact": -129126.29
+          },
+          {
+            "feature": "currency_USD",
+            "label": "currency_USD",
+            "impact": 88570.71
+          }
+        ]
       },
       {
         "date": "2026-05-24",
         "balance": 744411.62,
         "p10": 693989.07,
         "p90": 794834.17,
-        "isHistorical": false
+        "isHistorical": false,
+        "shap": [
+          {
+            "feature": "balance_lag_1",
+            "label": "yesterday's balance",
+            "impact": -320385.18
+          },
+          {
+            "feature": "balance_lag_14",
+            "label": "two-week lag",
+            "impact": -225669.45
+          },
+          {
+            "feature": "type_operational",
+            "label": "type_operational",
+            "impact": -174288.07
+          },
+          {
+            "feature": "balance_lag_3",
+            "label": "3-day lag",
+            "impact": -129361.73
+          },
+          {
+            "feature": "currency_USD",
+            "label": "currency_USD",
+            "impact": 88383.84
+          }
+        ]
       },
       {
         "date": "2026-05-25",
         "balance": 785121.62,
         "p10": 734699.07,
         "p90": 835544.17,
-        "isHistorical": false
+        "isHistorical": false,
+        "shap": [
+          {
+            "feature": "balance_lag_1",
+            "label": "yesterday's balance",
+            "impact": -320385.06
+          },
+          {
+            "feature": "balance_lag_14",
+            "label": "two-week lag",
+            "impact": -225800.37
+          },
+          {
+            "feature": "type_operational",
+            "label": "type_operational",
+            "impact": -174243.56
+          },
+          {
+            "feature": "balance_lag_3",
+            "label": "3-day lag",
+            "impact": -129496.4
+          },
+          {
+            "feature": "currency_USD",
+            "label": "currency_USD",
+            "impact": 88604.79
+          }
+        ]
       },
       {
         "date": "2026-05-26",
         "balance": 802568.75,
         "p10": 752146.2,
         "p90": 852991.3,
-        "isHistorical": false
+        "isHistorical": false,
+        "shap": [
+          {
+            "feature": "balance_lag_1",
+            "label": "yesterday's balance",
+            "impact": -320327.6
+          },
+          {
+            "feature": "balance_lag_14",
+            "label": "two-week lag",
+            "impact": -225656.67
+          },
+          {
+            "feature": "type_operational",
+            "label": "type_operational",
+            "impact": -174235.19
+          },
+          {
+            "feature": "balance_lag_3",
+            "label": "3-day lag",
+            "impact": -129551.4
+          },
+          {
+            "feature": "currency_USD",
+            "label": "currency_USD",
+            "impact": 88602.72
+          }
+        ]
       },
       {
         "date": "2026-05-27",
         "balance": 773490.19,
         "p10": 723067.64,
         "p90": 823912.74,
-        "isHistorical": false
+        "isHistorical": false,
+        "shap": [
+          {
+            "feature": "balance_lag_1",
+            "label": "yesterday's balance",
+            "impact": -320540.12
+          },
+          {
+            "feature": "balance_lag_14",
+            "label": "two-week lag",
+            "impact": -225689.77
+          },
+          {
+            "feature": "type_operational",
+            "label": "type_operational",
+            "impact": -173814.38
+          },
+          {
+            "feature": "balance_lag_3",
+            "label": "3-day lag",
+            "impact": -129481.75
+          },
+          {
+            "feature": "currency_USD",
+            "label": "currency_USD",
+            "impact": 88603.82
+          }
+        ]
       },
       {
         "date": "2026-05-28",
         "balance": 779305.94,
         "p10": 728883.39,
         "p90": 829728.49,
-        "isHistorical": false
+        "isHistorical": false,
+        "shap": [
+          {
+            "feature": "balance_lag_1",
+            "label": "yesterday's balance",
+            "impact": -320600.73
+          },
+          {
+            "feature": "balance_lag_14",
+            "label": "two-week lag",
+            "impact": -226054.62
+          },
+          {
+            "feature": "type_operational",
+            "label": "type_operational",
+            "impact": -173796.21
+          },
+          {
+            "feature": "balance_lag_3",
+            "label": "3-day lag",
+            "impact": -129204.49
+          },
+          {
+            "feature": "currency_USD",
+            "label": "currency_USD",
+            "impact": 88913.81
+          }
+        ]
       },
       {
         "date": "2026-05-29",
         "balance": 732780.19,
         "p10": 682357.64,
         "p90": 783202.74,
-        "isHistorical": false
+        "isHistorical": false,
+        "shap": [
+          {
+            "feature": "balance_lag_1",
+            "label": "yesterday's balance",
+            "impact": -320596.36
+          },
+          {
+            "feature": "balance_lag_14",
+            "label": "two-week lag",
+            "impact": -226496.19
+          },
+          {
+            "feature": "type_operational",
+            "label": "type_operational",
+            "impact": -173850.82
+          },
+          {
+            "feature": "balance_lag_3",
+            "label": "3-day lag",
+            "impact": -129138.0
+          },
+          {
+            "feature": "currency_USD",
+            "label": "currency_USD",
+            "impact": 88883.1
+          }
+        ]
       },
       {
         "date": "2026-05-30",
         "balance": 709517.38,
         "p10": 659094.83,
         "p90": 759939.93,
-        "isHistorical": false
+        "isHistorical": false,
+        "shap": [
+          {
+            "feature": "balance_lag_1",
+            "label": "yesterday's balance",
+            "impact": -320662.73
+          },
+          {
+            "feature": "balance_lag_14",
+            "label": "two-week lag",
+            "impact": -227002.24
+          },
+          {
+            "feature": "type_operational",
+            "label": "type_operational",
+            "impact": -175137.16
+          },
+          {
+            "feature": "balance_lag_3",
+            "label": "3-day lag",
+            "impact": -129129.89
+          },
+          {
+            "feature": "currency_USD",
+            "label": "currency_USD",
+            "impact": 88740.01
+          }
+        ]
       },
       {
         "date": "2026-05-31",
         "balance": 715333.06,
         "p10": 664910.51,
         "p90": 765755.61,
-        "isHistorical": false
+        "isHistorical": false,
+        "shap": [
+          {
+            "feature": "balance_lag_1",
+            "label": "yesterday's balance",
+            "impact": -320683.66
+          },
+          {
+            "feature": "balance_lag_14",
+            "label": "two-week lag",
+            "impact": -226944.77
+          },
+          {
+            "feature": "type_operational",
+            "label": "type_operational",
+            "impact": -175318.11
+          },
+          {
+            "feature": "balance_lag_3",
+            "label": "3-day lag",
+            "impact": -129400.28
+          },
+          {
+            "feature": "currency_USD",
+            "label": "currency_USD",
+            "impact": 88284.78
+          }
+        ]
       },
       {
         "date": "2026-06-01",
         "balance": 747319.5,
         "p10": 696896.95,
         "p90": 797742.05,
-        "isHistorical": false
+        "isHistorical": false,
+        "shap": [
+          {
+            "feature": "balance_lag_1",
+            "label": "yesterday's balance",
+            "impact": -320739.29
+          },
+          {
+            "feature": "balance_lag_14",
+            "label": "two-week lag",
+            "impact": -226473.04
+          },
+          {
+            "feature": "type_operational",
+            "label": "type_operational",
+            "impact": -175309.66
+          },
+          {
+            "feature": "balance_lag_3",
+            "label": "3-day lag",
+            "impact": -129794.1
+          },
+          {
+            "feature": "currency_USD",
+            "label": "currency_USD",
+            "impact": 88264.13
+          }
+        ]
       },
       {
         "date": "2026-06-02",
         "balance": 764766.62,
         "p10": 714344.07,
         "p90": 815189.17,
-        "isHistorical": false
+        "isHistorical": false,
+        "shap": [
+          {
+            "feature": "balance_lag_1",
+            "label": "yesterday's balance",
+            "impact": -320565.4
+          },
+          {
+            "feature": "balance_lag_14",
+            "label": "two-week lag",
+            "impact": -225827.44
+          },
+          {
+            "feature": "type_operational",
+            "label": "type_operational",
+            "impact": -175389.26
+          },
+          {
+            "feature": "balance_lag_3",
+            "label": "3-day lag",
+            "impact": -130118.69
+          },
+          {
+            "feature": "currency_USD",
+            "label": "currency_USD",
+            "impact": 88262.71
+          }
+        ]
       }
     ],
     "usd-nyc": [
@@ -2121,98 +2877,476 @@
         "balance": 579336.7,
         "p10": 485525.88,
         "p90": 673147.52,
-        "isHistorical": false
+        "isHistorical": false,
+        "shap": [
+          {
+            "feature": "rolling_mean_30",
+            "label": "monthly baseline",
+            "impact": -413995.12
+          },
+          {
+            "feature": "balance_lag_14",
+            "label": "two-week lag",
+            "impact": -187126.23
+          },
+          {
+            "feature": "currency_USD",
+            "label": "currency_USD",
+            "impact": -99463.11
+          },
+          {
+            "feature": "type_operational",
+            "label": "type_operational",
+            "impact": -67066.97
+          },
+          {
+            "feature": "balance_lag_1",
+            "label": "yesterday's balance",
+            "impact": -58639.92
+          }
+        ]
       },
       {
         "date": "2026-05-21",
         "balance": 520237.03,
         "p10": 426426.21,
         "p90": 614047.85,
-        "isHistorical": false
+        "isHistorical": false,
+        "shap": [
+          {
+            "feature": "rolling_mean_30",
+            "label": "monthly baseline",
+            "impact": -414582.91
+          },
+          {
+            "feature": "balance_lag_14",
+            "label": "two-week lag",
+            "impact": -187776.02
+          },
+          {
+            "feature": "currency_USD",
+            "label": "currency_USD",
+            "impact": -99464.98
+          },
+          {
+            "feature": "type_operational",
+            "label": "type_operational",
+            "impact": -67142.95
+          },
+          {
+            "feature": "balance_lag_1",
+            "label": "yesterday's balance",
+            "impact": -58925.46
+          }
+        ]
       },
       {
         "date": "2026-05-22",
         "balance": 464604.13,
         "p10": 370793.31,
         "p90": 558414.95,
-        "isHistorical": false
+        "isHistorical": false,
+        "shap": [
+          {
+            "feature": "rolling_mean_30",
+            "label": "monthly baseline",
+            "impact": -414237.45
+          },
+          {
+            "feature": "balance_lag_14",
+            "label": "two-week lag",
+            "impact": -187572.62
+          },
+          {
+            "feature": "currency_USD",
+            "label": "currency_USD",
+            "impact": -99464.98
+          },
+          {
+            "feature": "type_operational",
+            "label": "type_operational",
+            "impact": -67525.4
+          },
+          {
+            "feature": "balance_lag_1",
+            "label": "yesterday's balance",
+            "impact": -58635.64
+          }
+        ]
       },
       {
         "date": "2026-05-23",
         "balance": 390730.83,
         "p10": 296920.01,
         "p90": 484541.65,
-        "isHistorical": false
+        "isHistorical": false,
+        "shap": [
+          {
+            "feature": "rolling_mean_30",
+            "label": "monthly baseline",
+            "impact": -414445.85
+          },
+          {
+            "feature": "balance_lag_14",
+            "label": "two-week lag",
+            "impact": -187735.03
+          },
+          {
+            "feature": "currency_USD",
+            "label": "currency_USD",
+            "impact": -99447.46
+          },
+          {
+            "feature": "type_operational",
+            "label": "type_operational",
+            "impact": -68368.68
+          },
+          {
+            "feature": "balance_lag_1",
+            "label": "yesterday's balance",
+            "impact": -58534.65
+          }
+        ]
       },
       {
         "date": "2026-05-24",
         "balance": 391817.3,
         "p10": 298006.48,
         "p90": 485628.12,
-        "isHistorical": false
+        "isHistorical": false,
+        "shap": [
+          {
+            "feature": "rolling_mean_30",
+            "label": "monthly baseline",
+            "impact": -413749.59
+          },
+          {
+            "feature": "balance_lag_14",
+            "label": "two-week lag",
+            "impact": -187566.93
+          },
+          {
+            "feature": "currency_USD",
+            "label": "currency_USD",
+            "impact": -99366.04
+          },
+          {
+            "feature": "type_operational",
+            "label": "type_operational",
+            "impact": -68340.24
+          },
+          {
+            "feature": "balance_lag_1",
+            "label": "yesterday's balance",
+            "impact": -58008.47
+          }
+        ]
       },
       {
         "date": "2026-05-25",
         "balance": 437367.35,
         "p10": 343556.53,
         "p90": 531178.17,
-        "isHistorical": false
+        "isHistorical": false,
+        "shap": [
+          {
+            "feature": "rolling_mean_30",
+            "label": "monthly baseline",
+            "impact": -412767.91
+          },
+          {
+            "feature": "balance_lag_14",
+            "label": "two-week lag",
+            "impact": -188321.5
+          },
+          {
+            "feature": "currency_USD",
+            "label": "currency_USD",
+            "impact": -99503.43
+          },
+          {
+            "feature": "type_operational",
+            "label": "type_operational",
+            "impact": -68276.11
+          },
+          {
+            "feature": "balance_lag_1",
+            "label": "yesterday's balance",
+            "impact": -58152.5
+          }
+        ]
       },
       {
         "date": "2026-05-26",
         "balance": 491509.47,
         "p10": 397698.65,
         "p90": 585320.29,
-        "isHistorical": false
+        "isHistorical": false,
+        "shap": [
+          {
+            "feature": "rolling_mean_30",
+            "label": "monthly baseline",
+            "impact": -414092.32
+          },
+          {
+            "feature": "balance_lag_14",
+            "label": "two-week lag",
+            "impact": -188595.72
+          },
+          {
+            "feature": "currency_USD",
+            "label": "currency_USD",
+            "impact": -99502.0
+          },
+          {
+            "feature": "type_operational",
+            "label": "type_operational",
+            "impact": -68312.46
+          },
+          {
+            "feature": "balance_lag_1",
+            "label": "yesterday's balance",
+            "impact": -57949.41
+          }
+        ]
       },
       {
         "date": "2026-05-27",
         "balance": 511662.44,
         "p10": 417851.62,
         "p90": 605473.26,
-        "isHistorical": false
+        "isHistorical": false,
+        "shap": [
+          {
+            "feature": "rolling_mean_30",
+            "label": "monthly baseline",
+            "impact": -414366.02
+          },
+          {
+            "feature": "balance_lag_14",
+            "label": "two-week lag",
+            "impact": -188817.75
+          },
+          {
+            "feature": "currency_USD",
+            "label": "currency_USD",
+            "impact": -99505.35
+          },
+          {
+            "feature": "type_operational",
+            "label": "type_operational",
+            "impact": -67832.96
+          },
+          {
+            "feature": "balance_lag_1",
+            "label": "yesterday's balance",
+            "impact": -58418.89
+          }
+        ]
       },
       {
         "date": "2026-05-28",
         "balance": 463251.81,
         "p10": 369440.99,
         "p90": 557062.63,
-        "isHistorical": false
+        "isHistorical": false,
+        "shap": [
+          {
+            "feature": "rolling_mean_30",
+            "label": "monthly baseline",
+            "impact": -414922.44
+          },
+          {
+            "feature": "balance_lag_14",
+            "label": "two-week lag",
+            "impact": -189241.27
+          },
+          {
+            "feature": "currency_USD",
+            "label": "currency_USD",
+            "impact": -99568.62
+          },
+          {
+            "feature": "type_operational",
+            "label": "type_operational",
+            "impact": -67877.57
+          },
+          {
+            "feature": "balance_lag_1",
+            "label": "yesterday's balance",
+            "impact": -58553.14
+          }
+        ]
       },
       {
         "date": "2026-05-29",
         "balance": 407618.94,
         "p10": 313808.12,
         "p90": 501429.76,
-        "isHistorical": false
+        "isHistorical": false,
+        "shap": [
+          {
+            "feature": "rolling_mean_30",
+            "label": "monthly baseline",
+            "impact": -415853.19
+          },
+          {
+            "feature": "balance_lag_14",
+            "label": "two-week lag",
+            "impact": -188193.42
+          },
+          {
+            "feature": "currency_USD",
+            "label": "currency_USD",
+            "impact": -99628.45
+          },
+          {
+            "feature": "type_operational",
+            "label": "type_operational",
+            "impact": -67951.89
+          },
+          {
+            "feature": "balance_lag_1",
+            "label": "yesterday's balance",
+            "impact": -58598.45
+          }
+        ]
       },
       {
         "date": "2026-05-30",
         "balance": 372226.28,
         "p10": 278415.46,
         "p90": 466037.1,
-        "isHistorical": false
+        "isHistorical": false,
+        "shap": [
+          {
+            "feature": "rolling_mean_30",
+            "label": "monthly baseline",
+            "impact": -413765.91
+          },
+          {
+            "feature": "balance_lag_14",
+            "label": "two-week lag",
+            "impact": -188536.87
+          },
+          {
+            "feature": "currency_USD",
+            "label": "currency_USD",
+            "impact": -99590.24
+          },
+          {
+            "feature": "type_operational",
+            "label": "type_operational",
+            "impact": -68817.23
+          },
+          {
+            "feature": "balance_lag_1",
+            "label": "yesterday's balance",
+            "impact": -58451.09
+          }
+        ]
       },
       {
         "date": "2026-05-31",
         "balance": 364761.49,
         "p10": 270950.67,
         "p90": 458572.31,
-        "isHistorical": false
+        "isHistorical": false,
+        "shap": [
+          {
+            "feature": "rolling_mean_30",
+            "label": "monthly baseline",
+            "impact": -413027.26
+          },
+          {
+            "feature": "balance_lag_14",
+            "label": "two-week lag",
+            "impact": -188605.18
+          },
+          {
+            "feature": "currency_USD",
+            "label": "currency_USD",
+            "impact": -99592.8
+          },
+          {
+            "feature": "type_operational",
+            "label": "type_operational",
+            "impact": -69107.25
+          },
+          {
+            "feature": "balance_lag_1",
+            "label": "yesterday's balance",
+            "impact": -58169.1
+          }
+        ]
       },
       {
         "date": "2026-06-01",
         "balance": 443019.3,
         "p10": 349208.48,
         "p90": 536830.12,
-        "isHistorical": false
+        "isHistorical": false,
+        "shap": [
+          {
+            "feature": "rolling_mean_30",
+            "label": "monthly baseline",
+            "impact": -411484.53
+          },
+          {
+            "feature": "balance_lag_14",
+            "label": "two-week lag",
+            "impact": -189680.64
+          },
+          {
+            "feature": "currency_USD",
+            "label": "currency_USD",
+            "impact": -99609.67
+          },
+          {
+            "feature": "type_operational",
+            "label": "type_operational",
+            "impact": -69095.29
+          },
+          {
+            "feature": "balance_lag_1",
+            "label": "yesterday's balance",
+            "impact": -58236.14
+          }
+        ]
       },
       {
         "date": "2026-06-02",
         "balance": 470867.1,
         "p10": 377056.28,
         "p90": 564677.92,
-        "isHistorical": false
+        "isHistorical": false,
+        "shap": [
+          {
+            "feature": "rolling_mean_30",
+            "label": "monthly baseline",
+            "impact": -413143.11
+          },
+          {
+            "feature": "balance_lag_14",
+            "label": "two-week lag",
+            "impact": -189350.63
+          },
+          {
+            "feature": "currency_USD",
+            "label": "currency_USD",
+            "impact": -99606.37
+          },
+          {
+            "feature": "type_operational",
+            "label": "type_operational",
+            "impact": -69143.42
+          },
+          {
+            "feature": "balance_lag_1",
+            "label": "yesterday's balance",
+            "impact": -58272.85
+          }
+        ]
       }
     ],
     "usd-sf": [
@@ -2851,98 +3985,476 @@
         "balance": 713079.44,
         "p10": 676847.49,
         "p90": 749311.39,
-        "isHistorical": false
+        "isHistorical": false,
+        "shap": [
+          {
+            "feature": "rolling_mean_30",
+            "label": "monthly baseline",
+            "impact": -227628.2
+          },
+          {
+            "feature": "balance_lag_14",
+            "label": "two-week lag",
+            "impact": -223484.81
+          },
+          {
+            "feature": "currency_USD",
+            "label": "currency_USD",
+            "impact": -108946.7
+          },
+          {
+            "feature": "type_operational",
+            "label": "type_operational",
+            "impact": -70278.67
+          },
+          {
+            "feature": "rolling_mean_14",
+            "label": "recent 14-day average",
+            "impact": -63295.87
+          }
+        ]
       },
       {
         "date": "2026-05-21",
         "balance": 693133.19,
         "p10": 656901.24,
         "p90": 729365.14,
-        "isHistorical": false
+        "isHistorical": false,
+        "shap": [
+          {
+            "feature": "rolling_mean_30",
+            "label": "monthly baseline",
+            "impact": -227515.15
+          },
+          {
+            "feature": "balance_lag_14",
+            "label": "two-week lag",
+            "impact": -224054.41
+          },
+          {
+            "feature": "currency_USD",
+            "label": "currency_USD",
+            "impact": -108957.46
+          },
+          {
+            "feature": "type_operational",
+            "label": "type_operational",
+            "impact": -70368.75
+          },
+          {
+            "feature": "rolling_mean_14",
+            "label": "recent 14-day average",
+            "impact": -63184.68
+          }
+        ]
       },
       {
         "date": "2026-05-22",
         "balance": 673186.94,
         "p10": 636954.99,
         "p90": 709418.89,
-        "isHistorical": false
+        "isHistorical": false,
+        "shap": [
+          {
+            "feature": "rolling_mean_30",
+            "label": "monthly baseline",
+            "impact": -227673.46
+          },
+          {
+            "feature": "balance_lag_14",
+            "label": "two-week lag",
+            "impact": -224161.15
+          },
+          {
+            "feature": "currency_USD",
+            "label": "currency_USD",
+            "impact": -108957.46
+          },
+          {
+            "feature": "type_operational",
+            "label": "type_operational",
+            "impact": -70553.99
+          },
+          {
+            "feature": "rolling_mean_14",
+            "label": "recent 14-day average",
+            "impact": -62928.88
+          }
+        ]
       },
       {
         "date": "2026-05-23",
         "balance": 638280.94,
         "p10": 602048.99,
         "p90": 674512.89,
-        "isHistorical": false
+        "isHistorical": false,
+        "shap": [
+          {
+            "feature": "rolling_mean_30",
+            "label": "monthly baseline",
+            "impact": -228082.88
+          },
+          {
+            "feature": "balance_lag_14",
+            "label": "two-week lag",
+            "impact": -224550.08
+          },
+          {
+            "feature": "currency_USD",
+            "label": "currency_USD",
+            "impact": -108950.58
+          },
+          {
+            "feature": "type_operational",
+            "label": "type_operational",
+            "impact": -71206.61
+          },
+          {
+            "feature": "rolling_mean_14",
+            "label": "recent 14-day average",
+            "impact": -63156.86
+          }
+        ]
       },
       {
         "date": "2026-05-24",
         "balance": 618334.69,
         "p10": 582102.74,
         "p90": 654566.64,
-        "isHistorical": false
+        "isHistorical": false,
+        "shap": [
+          {
+            "feature": "rolling_mean_30",
+            "label": "monthly baseline",
+            "impact": -228027.79
+          },
+          {
+            "feature": "balance_lag_14",
+            "label": "two-week lag",
+            "impact": -224507.14
+          },
+          {
+            "feature": "currency_USD",
+            "label": "currency_USD",
+            "impact": -108922.78
+          },
+          {
+            "feature": "type_operational",
+            "label": "type_operational",
+            "impact": -71168.67
+          },
+          {
+            "feature": "rolling_mean_14",
+            "label": "recent 14-day average",
+            "impact": -63043.61
+          }
+        ]
       },
       {
         "date": "2026-05-25",
         "balance": 645760.75,
         "p10": 609528.8,
         "p90": 681992.7,
-        "isHistorical": false
+        "isHistorical": false,
+        "shap": [
+          {
+            "feature": "rolling_mean_30",
+            "label": "monthly baseline",
+            "impact": -227608.55
+          },
+          {
+            "feature": "balance_lag_14",
+            "label": "two-week lag",
+            "impact": -224560.57
+          },
+          {
+            "feature": "currency_USD",
+            "label": "currency_USD",
+            "impact": -109060.39
+          },
+          {
+            "feature": "type_operational",
+            "label": "type_operational",
+            "impact": -71090.14
+          },
+          {
+            "feature": "rolling_mean_14",
+            "label": "recent 14-day average",
+            "impact": -63039.48
+          }
+        ]
       },
       {
         "date": "2026-05-26",
         "balance": 668200.38,
         "p10": 631968.43,
         "p90": 704432.33,
-        "isHistorical": false
+        "isHistorical": false,
+        "shap": [
+          {
+            "feature": "rolling_mean_30",
+            "label": "monthly baseline",
+            "impact": -228233.98
+          },
+          {
+            "feature": "balance_lag_14",
+            "label": "two-week lag",
+            "impact": -224708.38
+          },
+          {
+            "feature": "currency_USD",
+            "label": "currency_USD",
+            "impact": -109074.22
+          },
+          {
+            "feature": "type_operational",
+            "label": "type_operational",
+            "impact": -71131.3
+          },
+          {
+            "feature": "rolling_mean_14",
+            "label": "recent 14-day average",
+            "impact": -63059.13
+          }
+        ]
       },
       {
         "date": "2026-05-27",
         "balance": 678173.5,
         "p10": 641941.55,
         "p90": 714405.45,
-        "isHistorical": false
+        "isHistorical": false,
+        "shap": [
+          {
+            "feature": "rolling_mean_30",
+            "label": "monthly baseline",
+            "impact": -228726.82
+          },
+          {
+            "feature": "balance_lag_14",
+            "label": "two-week lag",
+            "impact": -224827.33
+          },
+          {
+            "feature": "currency_USD",
+            "label": "currency_USD",
+            "impact": -109075.15
+          },
+          {
+            "feature": "type_operational",
+            "label": "type_operational",
+            "impact": -70751.91
+          },
+          {
+            "feature": "rolling_mean_14",
+            "label": "recent 14-day average",
+            "impact": -63045.32
+          }
+        ]
       },
       {
         "date": "2026-05-28",
         "balance": 650747.38,
         "p10": 614515.43,
         "p90": 686979.33,
-        "isHistorical": false
+        "isHistorical": false,
+        "shap": [
+          {
+            "feature": "rolling_mean_30",
+            "label": "monthly baseline",
+            "impact": -229428.08
+          },
+          {
+            "feature": "balance_lag_14",
+            "label": "two-week lag",
+            "impact": -225105.25
+          },
+          {
+            "feature": "currency_USD",
+            "label": "currency_USD",
+            "impact": -109420.2
+          },
+          {
+            "feature": "type_operational",
+            "label": "type_operational",
+            "impact": -70781.86
+          },
+          {
+            "feature": "rolling_mean_14",
+            "label": "recent 14-day average",
+            "impact": -63051.62
+          }
+        ]
       },
       {
         "date": "2026-05-29",
         "balance": 633294.38,
         "p10": 597062.43,
         "p90": 669526.33,
-        "isHistorical": false
+        "isHistorical": false,
+        "shap": [
+          {
+            "feature": "rolling_mean_30",
+            "label": "monthly baseline",
+            "impact": -228859.2
+          },
+          {
+            "feature": "balance_lag_14",
+            "label": "two-week lag",
+            "impact": -225331.6
+          },
+          {
+            "feature": "currency_USD",
+            "label": "currency_USD",
+            "impact": -109436.11
+          },
+          {
+            "feature": "type_operational",
+            "label": "type_operational",
+            "impact": -70762.69
+          },
+          {
+            "feature": "rolling_mean_14",
+            "label": "recent 14-day average",
+            "impact": -63037.87
+          }
+        ]
       },
       {
         "date": "2026-05-30",
         "balance": 613348.12,
         "p10": 577116.17,
         "p90": 649580.07,
-        "isHistorical": false
+        "isHistorical": false,
+        "shap": [
+          {
+            "feature": "rolling_mean_30",
+            "label": "monthly baseline",
+            "impact": -227877.38
+          },
+          {
+            "feature": "balance_lag_14",
+            "label": "two-week lag",
+            "impact": -225783.08
+          },
+          {
+            "feature": "currency_USD",
+            "label": "currency_USD",
+            "impact": -109430.7
+          },
+          {
+            "feature": "type_operational",
+            "label": "type_operational",
+            "impact": -71493.82
+          },
+          {
+            "feature": "rolling_mean_14",
+            "label": "recent 14-day average",
+            "impact": -63258.08
+          }
+        ]
       },
       {
         "date": "2026-05-31",
         "balance": 595895.12,
         "p10": 559663.17,
         "p90": 632127.07,
-        "isHistorical": false
+        "isHistorical": false,
+        "shap": [
+          {
+            "feature": "rolling_mean_30",
+            "label": "monthly baseline",
+            "impact": -227937.23
+          },
+          {
+            "feature": "balance_lag_14",
+            "label": "two-week lag",
+            "impact": -225678.65
+          },
+          {
+            "feature": "currency_USD",
+            "label": "currency_USD",
+            "impact": -109090.83
+          },
+          {
+            "feature": "type_operational",
+            "label": "type_operational",
+            "impact": -71662.18
+          },
+          {
+            "feature": "rolling_mean_14",
+            "label": "recent 14-day average",
+            "impact": -63316.19
+          }
+        ]
       },
       {
         "date": "2026-06-01",
         "balance": 620828.0,
         "p10": 584596.05,
         "p90": 657059.95,
-        "isHistorical": false
+        "isHistorical": false,
+        "shap": [
+          {
+            "feature": "rolling_mean_30",
+            "label": "monthly baseline",
+            "impact": -227655.95
+          },
+          {
+            "feature": "balance_lag_14",
+            "label": "two-week lag",
+            "impact": -225983.4
+          },
+          {
+            "feature": "currency_USD",
+            "label": "currency_USD",
+            "impact": -109070.93
+          },
+          {
+            "feature": "type_operational",
+            "label": "type_operational",
+            "impact": -71651.39
+          },
+          {
+            "feature": "rolling_mean_14",
+            "label": "recent 14-day average",
+            "impact": -63295.19
+          }
+        ]
       },
       {
         "date": "2026-06-02",
         "balance": 650747.38,
         "p10": 614515.43,
         "p90": 686979.33,
-        "isHistorical": false
+        "isHistorical": false,
+        "shap": [
+          {
+            "feature": "rolling_mean_30",
+            "label": "monthly baseline",
+            "impact": -227625.54
+          },
+          {
+            "feature": "balance_lag_14",
+            "label": "two-week lag",
+            "impact": -225527.39
+          },
+          {
+            "feature": "currency_USD",
+            "label": "currency_USD",
+            "impact": -109070.67
+          },
+          {
+            "feature": "type_operational",
+            "label": "type_operational",
+            "impact": -71699.94
+          },
+          {
+            "feature": "rolling_mean_14",
+            "label": "recent 14-day average",
+            "impact": -63124.05
+          }
+        ]
       }
     ],
     "gbp-london": [
@@ -3581,98 +5093,476 @@
         "balance": 518135.19,
         "p10": 488296.56,
         "p90": 547973.82,
-        "isHistorical": false
+        "isHistorical": false,
+        "shap": [
+          {
+            "feature": "rolling_mean_30",
+            "label": "monthly baseline",
+            "impact": -564904.73
+          },
+          {
+            "feature": "balance_lag_14",
+            "label": "two-week lag",
+            "impact": -171034.63
+          },
+          {
+            "feature": "balance_lag_1",
+            "label": "yesterday's balance",
+            "impact": -97710.01
+          },
+          {
+            "feature": "rolling_mean_14",
+            "label": "recent 14-day average",
+            "impact": -71085.92
+          },
+          {
+            "feature": "type_operational",
+            "label": "type_operational",
+            "impact": -63306.4
+          }
+        ]
       },
       {
         "date": "2026-05-21",
         "balance": 501943.44,
         "p10": 472104.81,
         "p90": 531782.07,
-        "isHistorical": false
+        "isHistorical": false,
+        "shap": [
+          {
+            "feature": "rolling_mean_30",
+            "label": "monthly baseline",
+            "impact": -564843.63
+          },
+          {
+            "feature": "balance_lag_14",
+            "label": "two-week lag",
+            "impact": -171538.55
+          },
+          {
+            "feature": "balance_lag_1",
+            "label": "yesterday's balance",
+            "impact": -97780.15
+          },
+          {
+            "feature": "rolling_mean_14",
+            "label": "recent 14-day average",
+            "impact": -71003.15
+          },
+          {
+            "feature": "type_operational",
+            "label": "type_operational",
+            "impact": -63396.48
+          }
+        ]
       },
       {
         "date": "2026-05-22",
         "balance": 487550.81,
         "p10": 457712.18,
         "p90": 517389.44,
-        "isHistorical": false
+        "isHistorical": false,
+        "shap": [
+          {
+            "feature": "rolling_mean_30",
+            "label": "monthly baseline",
+            "impact": -564189.86
+          },
+          {
+            "feature": "balance_lag_14",
+            "label": "two-week lag",
+            "impact": -171019.66
+          },
+          {
+            "feature": "balance_lag_1",
+            "label": "yesterday's balance",
+            "impact": -97748.61
+          },
+          {
+            "feature": "rolling_mean_14",
+            "label": "recent 14-day average",
+            "impact": -70720.18
+          },
+          {
+            "feature": "type_operational",
+            "label": "type_operational",
+            "impact": -63889.47
+          }
+        ]
       },
       {
         "date": "2026-05-23",
         "balance": 453368.25,
         "p10": 423529.62,
         "p90": 483206.88,
-        "isHistorical": false
+        "isHistorical": false,
+        "shap": [
+          {
+            "feature": "rolling_mean_30",
+            "label": "monthly baseline",
+            "impact": -563640.62
+          },
+          {
+            "feature": "balance_lag_14",
+            "label": "two-week lag",
+            "impact": -171178.85
+          },
+          {
+            "feature": "balance_lag_1",
+            "label": "yesterday's balance",
+            "impact": -97699.88
+          },
+          {
+            "feature": "rolling_mean_14",
+            "label": "recent 14-day average",
+            "impact": -71455.0
+          },
+          {
+            "feature": "type_operational",
+            "label": "type_operational",
+            "impact": -65114.15
+          }
+        ]
       },
       {
         "date": "2026-05-24",
         "balance": 455167.31,
         "p10": 425328.68,
         "p90": 485005.94,
-        "isHistorical": false
+        "isHistorical": false,
+        "shap": [
+          {
+            "feature": "rolling_mean_30",
+            "label": "monthly baseline",
+            "impact": -563488.89
+          },
+          {
+            "feature": "balance_lag_14",
+            "label": "two-week lag",
+            "impact": -171028.64
+          },
+          {
+            "feature": "balance_lag_1",
+            "label": "yesterday's balance",
+            "impact": -97481.24
+          },
+          {
+            "feature": "rolling_mean_14",
+            "label": "recent 14-day average",
+            "impact": -71499.37
+          },
+          {
+            "feature": "type_operational",
+            "label": "type_operational",
+            "impact": -65085.75
+          }
+        ]
       },
       {
         "date": "2026-05-25",
         "balance": 474957.22,
         "p10": 445118.59,
         "p90": 504795.85,
-        "isHistorical": false
+        "isHistorical": false,
+        "shap": [
+          {
+            "feature": "rolling_mean_30",
+            "label": "monthly baseline",
+            "impact": -563004.37
+          },
+          {
+            "feature": "balance_lag_14",
+            "label": "two-week lag",
+            "impact": -171830.15
+          },
+          {
+            "feature": "balance_lag_1",
+            "label": "yesterday's balance",
+            "impact": -97473.41
+          },
+          {
+            "feature": "rolling_mean_14",
+            "label": "recent 14-day average",
+            "impact": -71554.26
+          },
+          {
+            "feature": "type_operational",
+            "label": "type_operational",
+            "impact": -65056.01
+          }
+        ]
       },
       {
         "date": "2026-05-26",
         "balance": 485751.72,
         "p10": 455913.09,
         "p90": 515590.35,
-        "isHistorical": false
+        "isHistorical": false,
+        "shap": [
+          {
+            "feature": "rolling_mean_30",
+            "label": "monthly baseline",
+            "impact": -564116.52
+          },
+          {
+            "feature": "balance_lag_14",
+            "label": "two-week lag",
+            "impact": -171888.32
+          },
+          {
+            "feature": "balance_lag_1",
+            "label": "yesterday's balance",
+            "impact": -97493.56
+          },
+          {
+            "feature": "rolling_mean_14",
+            "label": "recent 14-day average",
+            "impact": -71579.92
+          },
+          {
+            "feature": "type_operational",
+            "label": "type_operational",
+            "impact": -65056.74
+          }
+        ]
       },
       {
         "date": "2026-05-27",
         "balance": 485751.72,
         "p10": 455913.09,
         "p90": 515590.35,
-        "isHistorical": false
+        "isHistorical": false,
+        "shap": [
+          {
+            "feature": "rolling_mean_30",
+            "label": "monthly baseline",
+            "impact": -564207.13
+          },
+          {
+            "feature": "balance_lag_14",
+            "label": "two-week lag",
+            "impact": -171998.38
+          },
+          {
+            "feature": "balance_lag_1",
+            "label": "yesterday's balance",
+            "impact": -97680.44
+          },
+          {
+            "feature": "rolling_mean_14",
+            "label": "recent 14-day average",
+            "impact": -71563.88
+          },
+          {
+            "feature": "type_operational",
+            "label": "type_operational",
+            "impact": -64189.79
+          }
+        ]
       },
       {
         "date": "2026-05-28",
         "balance": 471359.06,
         "p10": 441520.43,
         "p90": 501197.69,
-        "isHistorical": false
+        "isHistorical": false,
+        "shap": [
+          {
+            "feature": "rolling_mean_30",
+            "label": "monthly baseline",
+            "impact": -564501.23
+          },
+          {
+            "feature": "balance_lag_14",
+            "label": "two-week lag",
+            "impact": -172277.34
+          },
+          {
+            "feature": "balance_lag_1",
+            "label": "yesterday's balance",
+            "impact": -97689.54
+          },
+          {
+            "feature": "rolling_mean_14",
+            "label": "recent 14-day average",
+            "impact": -71554.62
+          },
+          {
+            "feature": "type_operational",
+            "label": "type_operational",
+            "impact": -64235.66
+          }
+        ]
       },
       {
         "date": "2026-05-29",
         "balance": 449770.09,
         "p10": 419931.46,
         "p90": 479608.72,
-        "isHistorical": false
+        "isHistorical": false,
+        "shap": [
+          {
+            "feature": "rolling_mean_30",
+            "label": "monthly baseline",
+            "impact": -564831.33
+          },
+          {
+            "feature": "balance_lag_14",
+            "label": "two-week lag",
+            "impact": -171282.0
+          },
+          {
+            "feature": "balance_lag_1",
+            "label": "yesterday's balance",
+            "impact": -97675.58
+          },
+          {
+            "feature": "rolling_mean_14",
+            "label": "recent 14-day average",
+            "impact": -71691.31
+          },
+          {
+            "feature": "type_operational",
+            "label": "type_operational",
+            "impact": -64129.6
+          }
+        ]
       },
       {
         "date": "2026-05-30",
         "balance": 429980.19,
         "p10": 400141.56,
         "p90": 459818.82,
-        "isHistorical": false
+        "isHistorical": false,
+        "shap": [
+          {
+            "feature": "rolling_mean_30",
+            "label": "monthly baseline",
+            "impact": -562722.59
+          },
+          {
+            "feature": "balance_lag_14",
+            "label": "two-week lag",
+            "impact": -171463.81
+          },
+          {
+            "feature": "balance_lag_1",
+            "label": "yesterday's balance",
+            "impact": -97678.34
+          },
+          {
+            "feature": "rolling_mean_14",
+            "label": "recent 14-day average",
+            "impact": -71823.85
+          },
+          {
+            "feature": "type_operational",
+            "label": "type_operational",
+            "impact": -65074.43
+          }
+        ]
       },
       {
         "date": "2026-05-31",
         "balance": 440774.69,
         "p10": 410936.06,
         "p90": 470613.32,
-        "isHistorical": false
+        "isHistorical": false,
+        "shap": [
+          {
+            "feature": "rolling_mean_30",
+            "label": "monthly baseline",
+            "impact": -561209.23
+          },
+          {
+            "feature": "balance_lag_14",
+            "label": "two-week lag",
+            "impact": -171402.37
+          },
+          {
+            "feature": "balance_lag_1",
+            "label": "yesterday's balance",
+            "impact": -97600.4
+          },
+          {
+            "feature": "rolling_mean_14",
+            "label": "recent 14-day average",
+            "impact": -71882.1
+          },
+          {
+            "feature": "type_operational",
+            "label": "type_operational",
+            "impact": -65259.04
+          }
+        ]
       },
       {
         "date": "2026-06-01",
         "balance": 460564.56,
         "p10": 430725.93,
         "p90": 490403.19,
-        "isHistorical": false
+        "isHistorical": false,
+        "shap": [
+          {
+            "feature": "rolling_mean_30",
+            "label": "monthly baseline",
+            "impact": -561083.59
+          },
+          {
+            "feature": "balance_lag_14",
+            "label": "two-week lag",
+            "impact": -172042.52
+          },
+          {
+            "feature": "balance_lag_1",
+            "label": "yesterday's balance",
+            "impact": -97507.34
+          },
+          {
+            "feature": "rolling_mean_14",
+            "label": "recent 14-day average",
+            "impact": -71863.26
+          },
+          {
+            "feature": "type_operational",
+            "label": "type_operational",
+            "impact": -65242.22
+          }
+        ]
       },
       {
         "date": "2026-06-02",
         "balance": 476756.31,
         "p10": 446917.68,
         "p90": 506594.94,
-        "isHistorical": false
+        "isHistorical": false,
+        "shap": [
+          {
+            "feature": "rolling_mean_30",
+            "label": "monthly baseline",
+            "impact": -561371.08
+          },
+          {
+            "feature": "balance_lag_14",
+            "label": "two-week lag",
+            "impact": -171677.69
+          },
+          {
+            "feature": "balance_lag_1",
+            "label": "yesterday's balance",
+            "impact": -97699.62
+          },
+          {
+            "feature": "rolling_mean_14",
+            "label": "recent 14-day average",
+            "impact": -71692.13
+          },
+          {
+            "feature": "type_operational",
+            "label": "type_operational",
+            "impact": -65290.76
+          }
+        ]
       }
     ],
     "sgd-singapore": [
@@ -4311,98 +6201,476 @@
         "balance": 1090177.0,
         "p10": 1033827.51,
         "p90": 1146526.49,
-        "isHistorical": false
+        "isHistorical": false,
+        "shap": [
+          {
+            "feature": "rolling_mean_30",
+            "label": "monthly baseline",
+            "impact": 498869.5
+          },
+          {
+            "feature": "balance_lag_14",
+            "label": "two-week lag",
+            "impact": -296674.09
+          },
+          {
+            "feature": "balance_lag_1",
+            "label": "yesterday's balance",
+            "impact": -294474.19
+          },
+          {
+            "feature": "type_operational",
+            "label": "type_operational",
+            "impact": -243964.57
+          },
+          {
+            "feature": "balance_lag_3",
+            "label": "3-day lag",
+            "impact": -165261.66
+          }
+        ]
       },
       {
         "date": "2026-05-21",
         "balance": 1059682.5,
         "p10": 1003333.01,
         "p90": 1116031.99,
-        "isHistorical": false
+        "isHistorical": false,
+        "shap": [
+          {
+            "feature": "rolling_mean_30",
+            "label": "monthly baseline",
+            "impact": 499315.33
+          },
+          {
+            "feature": "balance_lag_14",
+            "label": "two-week lag",
+            "impact": -297184.59
+          },
+          {
+            "feature": "balance_lag_1",
+            "label": "yesterday's balance",
+            "impact": -294768.92
+          },
+          {
+            "feature": "type_operational",
+            "label": "type_operational",
+            "impact": -243929.1
+          },
+          {
+            "feature": "balance_lag_3",
+            "label": "3-day lag",
+            "impact": -165108.19
+          }
+        ]
       },
       {
         "date": "2026-05-22",
         "balance": 1029188.06,
         "p10": 972838.57,
         "p90": 1085537.55,
-        "isHistorical": false
+        "isHistorical": false,
+        "shap": [
+          {
+            "feature": "rolling_mean_30",
+            "label": "monthly baseline",
+            "impact": 498387.77
+          },
+          {
+            "feature": "balance_lag_14",
+            "label": "two-week lag",
+            "impact": -298497.38
+          },
+          {
+            "feature": "balance_lag_1",
+            "label": "yesterday's balance",
+            "impact": -295038.73
+          },
+          {
+            "feature": "type_operational",
+            "label": "type_operational",
+            "impact": -244168.26
+          },
+          {
+            "feature": "balance_lag_3",
+            "label": "3-day lag",
+            "impact": -165181.75
+          }
+        ]
       },
       {
         "date": "2026-05-23",
         "balance": 960575.56,
         "p10": 904226.07,
         "p90": 1016925.05,
-        "isHistorical": false
+        "isHistorical": false,
+        "shap": [
+          {
+            "feature": "rolling_mean_30",
+            "label": "monthly baseline",
+            "impact": 498346.07
+          },
+          {
+            "feature": "balance_lag_14",
+            "label": "two-week lag",
+            "impact": -299181.37
+          },
+          {
+            "feature": "balance_lag_1",
+            "label": "yesterday's balance",
+            "impact": -295083.8
+          },
+          {
+            "feature": "type_operational",
+            "label": "type_operational",
+            "impact": -244892.23
+          },
+          {
+            "feature": "balance_lag_3",
+            "label": "3-day lag",
+            "impact": -165195.7
+          }
+        ]
       },
       {
         "date": "2026-05-24",
         "balance": 968199.12,
         "p10": 911849.63,
         "p90": 1024548.61,
-        "isHistorical": false
+        "isHistorical": false,
+        "shap": [
+          {
+            "feature": "rolling_mean_30",
+            "label": "monthly baseline",
+            "impact": 498433.95
+          },
+          {
+            "feature": "balance_lag_14",
+            "label": "two-week lag",
+            "impact": -298754.11
+          },
+          {
+            "feature": "balance_lag_1",
+            "label": "yesterday's balance",
+            "impact": -294244.23
+          },
+          {
+            "feature": "type_operational",
+            "label": "type_operational",
+            "impact": -244876.66
+          },
+          {
+            "feature": "balance_lag_3",
+            "label": "3-day lag",
+            "impact": -165416.19
+          }
+        ]
       },
       {
         "date": "2026-05-25",
         "balance": 1025376.25,
         "p10": 969026.76,
         "p90": 1081725.74,
-        "isHistorical": false
+        "isHistorical": false,
+        "shap": [
+          {
+            "feature": "rolling_mean_30",
+            "label": "monthly baseline",
+            "impact": 497875.09
+          },
+          {
+            "feature": "balance_lag_14",
+            "label": "two-week lag",
+            "impact": -297566.19
+          },
+          {
+            "feature": "balance_lag_1",
+            "label": "yesterday's balance",
+            "impact": -294431.6
+          },
+          {
+            "feature": "type_operational",
+            "label": "type_operational",
+            "impact": -244630.99
+          },
+          {
+            "feature": "balance_lag_3",
+            "label": "3-day lag",
+            "impact": -165454.96
+          }
+        ]
       },
       {
         "date": "2026-05-26",
         "balance": 1040623.5,
         "p10": 984274.01,
         "p90": 1096972.99,
-        "isHistorical": false
+        "isHistorical": false,
+        "shap": [
+          {
+            "feature": "rolling_mean_30",
+            "label": "monthly baseline",
+            "impact": 499061.53
+          },
+          {
+            "feature": "balance_lag_14",
+            "label": "two-week lag",
+            "impact": -296773.34
+          },
+          {
+            "feature": "balance_lag_1",
+            "label": "yesterday's balance",
+            "impact": -294340.87
+          },
+          {
+            "feature": "type_operational",
+            "label": "type_operational",
+            "impact": -244516.79
+          },
+          {
+            "feature": "balance_lag_3",
+            "label": "3-day lag",
+            "impact": -165532.55
+          }
+        ]
       },
       {
         "date": "2026-05-27",
         "balance": 1036811.69,
         "p10": 980462.2,
         "p90": 1093161.18,
-        "isHistorical": false
+        "isHistorical": false,
+        "shap": [
+          {
+            "feature": "rolling_mean_30",
+            "label": "monthly baseline",
+            "impact": 499035.6
+          },
+          {
+            "feature": "balance_lag_14",
+            "label": "two-week lag",
+            "impact": -296932.08
+          },
+          {
+            "feature": "balance_lag_1",
+            "label": "yesterday's balance",
+            "impact": -295135.71
+          },
+          {
+            "feature": "type_operational",
+            "label": "type_operational",
+            "impact": -244091.6
+          },
+          {
+            "feature": "balance_lag_3",
+            "label": "3-day lag",
+            "impact": -165431.02
+          }
+        ]
       },
       {
         "date": "2026-05-28",
         "balance": 1006317.25,
         "p10": 949967.76,
         "p90": 1062666.74,
-        "isHistorical": false
+        "isHistorical": false,
+        "shap": [
+          {
+            "feature": "rolling_mean_30",
+            "label": "monthly baseline",
+            "impact": 498575.58
+          },
+          {
+            "feature": "balance_lag_14",
+            "label": "two-week lag",
+            "impact": -297152.81
+          },
+          {
+            "feature": "balance_lag_1",
+            "label": "yesterday's balance",
+            "impact": -295145.07
+          },
+          {
+            "feature": "type_operational",
+            "label": "type_operational",
+            "impact": -243975.53
+          },
+          {
+            "feature": "balance_lag_3",
+            "label": "3-day lag",
+            "impact": -165193.21
+          }
+        ]
       },
       {
         "date": "2026-05-29",
         "balance": 991070.0,
         "p10": 934720.51,
         "p90": 1047419.49,
-        "isHistorical": false
+        "isHistorical": false,
+        "shap": [
+          {
+            "feature": "rolling_mean_30",
+            "label": "monthly baseline",
+            "impact": 497989.88
+          },
+          {
+            "feature": "balance_lag_14",
+            "label": "two-week lag",
+            "impact": -298768.64
+          },
+          {
+            "feature": "balance_lag_1",
+            "label": "yesterday's balance",
+            "impact": -295034.15
+          },
+          {
+            "feature": "type_operational",
+            "label": "type_operational",
+            "impact": -244069.31
+          },
+          {
+            "feature": "balance_lag_3",
+            "label": "3-day lag",
+            "impact": -165069.8
+          }
+        ]
       },
       {
         "date": "2026-05-30",
         "balance": 933892.88,
         "p10": 877543.39,
         "p90": 990242.37,
-        "isHistorical": false
+        "isHistorical": false,
+        "shap": [
+          {
+            "feature": "rolling_mean_30",
+            "label": "monthly baseline",
+            "impact": 496814.73
+          },
+          {
+            "feature": "balance_lag_14",
+            "label": "two-week lag",
+            "impact": -299328.94
+          },
+          {
+            "feature": "balance_lag_1",
+            "label": "yesterday's balance",
+            "impact": -295154.27
+          },
+          {
+            "feature": "type_operational",
+            "label": "type_operational",
+            "impact": -245322.69
+          },
+          {
+            "feature": "balance_lag_3",
+            "label": "3-day lag",
+            "impact": -165043.49
+          }
+        ]
       },
       {
         "date": "2026-05-31",
         "balance": 949140.12,
         "p10": 892790.63,
         "p90": 1005489.61,
-        "isHistorical": false
+        "isHistorical": false,
+        "shap": [
+          {
+            "feature": "rolling_mean_30",
+            "label": "monthly baseline",
+            "impact": 496815.12
+          },
+          {
+            "feature": "balance_lag_14",
+            "label": "two-week lag",
+            "impact": -299153.8
+          },
+          {
+            "feature": "balance_lag_1",
+            "label": "yesterday's balance",
+            "impact": -294733.16
+          },
+          {
+            "feature": "type_operational",
+            "label": "type_operational",
+            "impact": -245520.8
+          },
+          {
+            "feature": "balance_lag_3",
+            "label": "3-day lag",
+            "impact": -165168.66
+          }
+        ]
       },
       {
         "date": "2026-06-01",
         "balance": 987258.19,
         "p10": 930908.7,
         "p90": 1043607.68,
-        "isHistorical": false
+        "isHistorical": false,
+        "shap": [
+          {
+            "feature": "rolling_mean_30",
+            "label": "monthly baseline",
+            "impact": 496718.53
+          },
+          {
+            "feature": "balance_lag_14",
+            "label": "two-week lag",
+            "impact": -296979.59
+          },
+          {
+            "feature": "balance_lag_1",
+            "label": "yesterday's balance",
+            "impact": -294821.59
+          },
+          {
+            "feature": "type_operational",
+            "label": "type_operational",
+            "impact": -245499.26
+          },
+          {
+            "feature": "balance_lag_3",
+            "label": "3-day lag",
+            "impact": -165526.75
+          }
+        ]
       },
       {
         "date": "2026-06-02",
         "balance": 1006317.25,
         "p10": 949967.76,
         "p90": 1062666.74,
-        "isHistorical": false
+        "isHistorical": false,
+        "shap": [
+          {
+            "feature": "rolling_mean_30",
+            "label": "monthly baseline",
+            "impact": 497015.79
+          },
+          {
+            "feature": "balance_lag_14",
+            "label": "two-week lag",
+            "impact": -295661.84
+          },
+          {
+            "feature": "balance_lag_1",
+            "label": "yesterday's balance",
+            "impact": -294537.08
+          },
+          {
+            "feature": "type_operational",
+            "label": "type_operational",
+            "impact": -245388.81
+          },
+          {
+            "feature": "balance_lag_3",
+            "label": "3-day lag",
+            "impact": -165843.35
+          }
+        ]
       }
     ],
     "chf-zurich": [
@@ -5041,98 +7309,476 @@
         "balance": 412426.5,
         "p10": 388921.01,
         "p90": 435931.99,
-        "isHistorical": false
+        "isHistorical": false,
+        "shap": [
+          {
+            "feature": "rolling_mean_30",
+            "label": "monthly baseline",
+            "impact": -611139.63
+          },
+          {
+            "feature": "balance_lag_14",
+            "label": "two-week lag",
+            "impact": -171368.75
+          },
+          {
+            "feature": "balance_lag_1",
+            "label": "yesterday's balance",
+            "impact": -97825.17
+          },
+          {
+            "feature": "rolling_mean_14",
+            "label": "recent 14-day average",
+            "impact": -97811.33
+          },
+          {
+            "feature": "type_operational",
+            "label": "type_operational",
+            "impact": -61470.62
+          }
+        ]
       },
       {
         "date": "2026-05-21",
         "balance": 405216.25,
         "p10": 381710.76,
         "p90": 428721.74,
-        "isHistorical": false
+        "isHistorical": false,
+        "shap": [
+          {
+            "feature": "rolling_mean_30",
+            "label": "monthly baseline",
+            "impact": -612192.75
+          },
+          {
+            "feature": "balance_lag_14",
+            "label": "two-week lag",
+            "impact": -171946.44
+          },
+          {
+            "feature": "balance_lag_1",
+            "label": "yesterday's balance",
+            "impact": -97954.14
+          },
+          {
+            "feature": "rolling_mean_14",
+            "label": "recent 14-day average",
+            "impact": -97741.62
+          },
+          {
+            "feature": "type_operational",
+            "label": "type_operational",
+            "impact": -61560.7
+          }
+        ]
       },
       {
         "date": "2026-05-22",
         "balance": 385027.56,
         "p10": 361522.07,
         "p90": 408533.05,
-        "isHistorical": false
+        "isHistorical": false,
+        "shap": [
+          {
+            "feature": "rolling_mean_30",
+            "label": "monthly baseline",
+            "impact": -611002.55
+          },
+          {
+            "feature": "balance_lag_14",
+            "label": "two-week lag",
+            "impact": -171416.14
+          },
+          {
+            "feature": "balance_lag_1",
+            "label": "yesterday's balance",
+            "impact": -97738.19
+          },
+          {
+            "feature": "rolling_mean_14",
+            "label": "recent 14-day average",
+            "impact": -97458.64
+          },
+          {
+            "feature": "type_operational",
+            "label": "type_operational",
+            "impact": -61865.91
+          }
+        ]
       },
       {
         "date": "2026-05-23",
         "balance": 361954.75,
         "p10": 338449.26,
         "p90": 385460.24,
-        "isHistorical": false
+        "isHistorical": false,
+        "shap": [
+          {
+            "feature": "rolling_mean_30",
+            "label": "monthly baseline",
+            "impact": -610547.84
+          },
+          {
+            "feature": "balance_lag_14",
+            "label": "two-week lag",
+            "impact": -171598.99
+          },
+          {
+            "feature": "rolling_mean_14",
+            "label": "recent 14-day average",
+            "impact": -97866.17
+          },
+          {
+            "feature": "balance_lag_1",
+            "label": "yesterday's balance",
+            "impact": -97646.42
+          },
+          {
+            "feature": "type_operational",
+            "label": "type_operational",
+            "impact": -63090.59
+          }
+        ]
       },
       {
         "date": "2026-05-24",
         "balance": 357628.59,
         "p10": 334123.1,
         "p90": 381134.08,
-        "isHistorical": false
+        "isHistorical": false,
+        "shap": [
+          {
+            "feature": "rolling_mean_30",
+            "label": "monthly baseline",
+            "impact": -610626.05
+          },
+          {
+            "feature": "balance_lag_14",
+            "label": "two-week lag",
+            "impact": -171412.22
+          },
+          {
+            "feature": "rolling_mean_14",
+            "label": "recent 14-day average",
+            "impact": -97836.39
+          },
+          {
+            "feature": "balance_lag_1",
+            "label": "yesterday's balance",
+            "impact": -97406.56
+          },
+          {
+            "feature": "type_operational",
+            "label": "type_operational",
+            "impact": -63062.19
+          }
+        ]
       },
       {
         "date": "2026-05-25",
         "balance": 374933.19,
         "p10": 351427.7,
         "p90": 398438.68,
-        "isHistorical": false
+        "isHistorical": false,
+        "shap": [
+          {
+            "feature": "rolling_mean_30",
+            "label": "monthly baseline",
+            "impact": -610139.93
+          },
+          {
+            "feature": "balance_lag_14",
+            "label": "two-week lag",
+            "impact": -172153.36
+          },
+          {
+            "feature": "rolling_mean_14",
+            "label": "recent 14-day average",
+            "impact": -97836.71
+          },
+          {
+            "feature": "balance_lag_1",
+            "label": "yesterday's balance",
+            "impact": -97354.95
+          },
+          {
+            "feature": "type_operational",
+            "label": "type_operational",
+            "impact": -63032.45
+          }
+        ]
       },
       {
         "date": "2026-05-26",
         "balance": 386469.59,
         "p10": 362964.1,
         "p90": 409975.08,
-        "isHistorical": false
+        "isHistorical": false,
+        "shap": [
+          {
+            "feature": "rolling_mean_30",
+            "label": "monthly baseline",
+            "impact": -611115.53
+          },
+          {
+            "feature": "balance_lag_14",
+            "label": "two-week lag",
+            "impact": -172298.41
+          },
+          {
+            "feature": "rolling_mean_14",
+            "label": "recent 14-day average",
+            "impact": -97860.01
+          },
+          {
+            "feature": "balance_lag_1",
+            "label": "yesterday's balance",
+            "impact": -97461.1
+          },
+          {
+            "feature": "type_operational",
+            "label": "type_operational",
+            "impact": -63033.18
+          }
+        ]
       },
       {
         "date": "2026-05-27",
         "balance": 386469.59,
         "p10": 362964.1,
         "p90": 409975.08,
-        "isHistorical": false
+        "isHistorical": false,
+        "shap": [
+          {
+            "feature": "rolling_mean_30",
+            "label": "monthly baseline",
+            "impact": -611224.89
+          },
+          {
+            "feature": "balance_lag_14",
+            "label": "two-week lag",
+            "impact": -172402.74
+          },
+          {
+            "feature": "rolling_mean_14",
+            "label": "recent 14-day average",
+            "impact": -97845.54
+          },
+          {
+            "feature": "balance_lag_1",
+            "label": "yesterday's balance",
+            "impact": -97670.98
+          },
+          {
+            "feature": "type_operational",
+            "label": "type_operational",
+            "impact": -62219.61
+          }
+        ]
       },
       {
         "date": "2026-05-28",
         "balance": 383585.5,
         "p10": 360080.01,
         "p90": 407090.99,
-        "isHistorical": false
+        "isHistorical": false,
+        "shap": [
+          {
+            "feature": "rolling_mean_30",
+            "label": "monthly baseline",
+            "impact": -611509.88
+          },
+          {
+            "feature": "balance_lag_14",
+            "label": "two-week lag",
+            "impact": -172748.47
+          },
+          {
+            "feature": "rolling_mean_14",
+            "label": "recent 14-day average",
+            "impact": -97856.23
+          },
+          {
+            "feature": "balance_lag_1",
+            "label": "yesterday's balance",
+            "impact": -97645.0
+          },
+          {
+            "feature": "type_operational",
+            "label": "type_operational",
+            "impact": -62265.48
+          }
+        ]
       },
       {
         "date": "2026-05-29",
         "balance": 361954.75,
         "p10": 338449.26,
         "p90": 385460.24,
-        "isHistorical": false
+        "isHistorical": false,
+        "shap": [
+          {
+            "feature": "rolling_mean_30",
+            "label": "monthly baseline",
+            "impact": -611651.92
+          },
+          {
+            "feature": "balance_lag_14",
+            "label": "two-week lag",
+            "impact": -171611.23
+          },
+          {
+            "feature": "rolling_mean_14",
+            "label": "recent 14-day average",
+            "impact": -98004.93
+          },
+          {
+            "feature": "balance_lag_1",
+            "label": "yesterday's balance",
+            "impact": -97642.07
+          },
+          {
+            "feature": "type_operational",
+            "label": "type_operational",
+            "impact": -62159.42
+          }
+        ]
       },
       {
         "date": "2026-05-30",
         "balance": 351860.41,
         "p10": 328354.92,
         "p90": 375365.9,
-        "isHistorical": false
+        "isHistorical": false,
+        "shap": [
+          {
+            "feature": "rolling_mean_30",
+            "label": "monthly baseline",
+            "impact": -609902.34
+          },
+          {
+            "feature": "balance_lag_14",
+            "label": "two-week lag",
+            "impact": -171843.22
+          },
+          {
+            "feature": "rolling_mean_14",
+            "label": "recent 14-day average",
+            "impact": -98107.97
+          },
+          {
+            "feature": "balance_lag_1",
+            "label": "yesterday's balance",
+            "impact": -97464.22
+          },
+          {
+            "feature": "type_operational",
+            "label": "type_operational",
+            "impact": -63137.16
+          }
+        ]
       },
       {
         "date": "2026-05-31",
         "balance": 348976.28,
         "p10": 325470.79,
         "p90": 372481.77,
-        "isHistorical": false
+        "isHistorical": false,
+        "shap": [
+          {
+            "feature": "rolling_mean_30",
+            "label": "monthly baseline",
+            "impact": -608608.88
+          },
+          {
+            "feature": "balance_lag_14",
+            "label": "two-week lag",
+            "impact": -171831.76
+          },
+          {
+            "feature": "rolling_mean_14",
+            "label": "recent 14-day average",
+            "impact": -97971.83
+          },
+          {
+            "feature": "balance_lag_1",
+            "label": "yesterday's balance",
+            "impact": -97366.93
+          },
+          {
+            "feature": "type_operational",
+            "label": "type_operational",
+            "impact": -63321.78
+          }
+        ]
       },
       {
         "date": "2026-06-01",
         "balance": 364838.81,
         "p10": 341333.32,
         "p90": 388344.3,
-        "isHistorical": false
+        "isHistorical": false,
+        "shap": [
+          {
+            "feature": "rolling_mean_30",
+            "label": "monthly baseline",
+            "impact": -608814.87
+          },
+          {
+            "feature": "balance_lag_14",
+            "label": "two-week lag",
+            "impact": -172649.2
+          },
+          {
+            "feature": "rolling_mean_14",
+            "label": "recent 14-day average",
+            "impact": -97955.54
+          },
+          {
+            "feature": "balance_lag_1",
+            "label": "yesterday's balance",
+            "impact": -97316.19
+          },
+          {
+            "feature": "type_operational",
+            "label": "type_operational",
+            "impact": -63308.05
+          }
+        ]
       },
       {
         "date": "2026-06-02",
         "balance": 379259.38,
         "p10": 355753.89,
         "p90": 402764.87,
-        "isHistorical": false
+        "isHistorical": false,
+        "shap": [
+          {
+            "feature": "rolling_mean_30",
+            "label": "monthly baseline",
+            "impact": -609136.66
+          },
+          {
+            "feature": "balance_lag_14",
+            "label": "two-week lag",
+            "impact": -172216.44
+          },
+          {
+            "feature": "rolling_mean_14",
+            "label": "recent 14-day average",
+            "impact": -97958.22
+          },
+          {
+            "feature": "balance_lag_1",
+            "label": "yesterday's balance",
+            "impact": -97669.8
+          },
+          {
+            "feature": "type_operational",
+            "label": "type_operational",
+            "impact": -63356.59
+          }
+        ]
       }
     ],
     "visa-eur": [
@@ -5771,98 +8417,476 @@
         "balance": 329484.47,
         "p10": 263104.57,
         "p90": 395864.37,
-        "isHistorical": false
+        "isHistorical": false,
+        "shap": [
+          {
+            "feature": "rolling_mean_30",
+            "label": "monthly baseline",
+            "impact": -741169.94
+          },
+          {
+            "feature": "balance_lag_14",
+            "label": "two-week lag",
+            "impact": -173940.69
+          },
+          {
+            "feature": "rolling_mean_14",
+            "label": "recent 14-day average",
+            "impact": -164736.76
+          },
+          {
+            "feature": "type_operational",
+            "label": "type_operational",
+            "impact": 103799.41
+          },
+          {
+            "feature": "balance_lag_1",
+            "label": "yesterday's balance",
+            "impact": -103031.42
+          }
+        ]
       },
       {
         "date": "2026-05-21",
         "balance": 274194.25,
         "p10": 207814.35,
         "p90": 340574.15,
-        "isHistorical": false
+        "isHistorical": false,
+        "shap": [
+          {
+            "feature": "rolling_mean_30",
+            "label": "monthly baseline",
+            "impact": -741912.58
+          },
+          {
+            "feature": "balance_lag_14",
+            "label": "two-week lag",
+            "impact": -175061.9
+          },
+          {
+            "feature": "rolling_mean_14",
+            "label": "recent 14-day average",
+            "impact": -164971.53
+          },
+          {
+            "feature": "type_operational",
+            "label": "type_operational",
+            "impact": 103968.41
+          },
+          {
+            "feature": "balance_lag_1",
+            "label": "yesterday's balance",
+            "impact": -103208.28
+          }
+        ]
       },
       {
         "date": "2026-05-22",
         "balance": 255011.94,
         "p10": 188632.04,
         "p90": 321391.84,
-        "isHistorical": false
+        "isHistorical": false,
+        "shap": [
+          {
+            "feature": "rolling_mean_30",
+            "label": "monthly baseline",
+            "impact": -741276.06
+          },
+          {
+            "feature": "balance_lag_14",
+            "label": "two-week lag",
+            "impact": -174152.25
+          },
+          {
+            "feature": "rolling_mean_14",
+            "label": "recent 14-day average",
+            "impact": -164949.81
+          },
+          {
+            "feature": "type_operational",
+            "label": "type_operational",
+            "impact": 104466.08
+          },
+          {
+            "feature": "balance_lag_1",
+            "label": "yesterday's balance",
+            "impact": -102994.12
+          }
+        ]
       },
       {
         "date": "2026-05-23",
         "balance": 259525.44,
         "p10": 193145.54,
         "p90": 325905.34,
-        "isHistorical": false
+        "isHistorical": false,
+        "shap": [
+          {
+            "feature": "rolling_mean_30",
+            "label": "monthly baseline",
+            "impact": -739747.09
+          },
+          {
+            "feature": "balance_lag_14",
+            "label": "two-week lag",
+            "impact": -173929.66
+          },
+          {
+            "feature": "rolling_mean_14",
+            "label": "recent 14-day average",
+            "impact": -164106.42
+          },
+          {
+            "feature": "type_operational",
+            "label": "type_operational",
+            "impact": 106517.01
+          },
+          {
+            "feature": "balance_lag_1",
+            "label": "yesterday's balance",
+            "impact": -102314.29
+          }
+        ]
       },
       {
         "date": "2026-05-24",
         "balance": 311430.5,
         "p10": 245050.6,
         "p90": 377810.4,
-        "isHistorical": false
+        "isHistorical": false,
+        "shap": [
+          {
+            "feature": "rolling_mean_30",
+            "label": "monthly baseline",
+            "impact": -738964.89
+          },
+          {
+            "feature": "balance_lag_14",
+            "label": "two-week lag",
+            "impact": -173790.25
+          },
+          {
+            "feature": "rolling_mean_14",
+            "label": "recent 14-day average",
+            "impact": -164266.96
+          },
+          {
+            "feature": "type_operational",
+            "label": "type_operational",
+            "impact": 106475.66
+          },
+          {
+            "feature": "balance_lag_1",
+            "label": "yesterday's balance",
+            "impact": -102196.68
+          }
+        ]
       },
       {
         "date": "2026-05-25",
         "balance": 349795.12,
         "p10": 283415.22,
         "p90": 416175.02,
-        "isHistorical": false
+        "isHistorical": false,
+        "shap": [
+          {
+            "feature": "rolling_mean_30",
+            "label": "monthly baseline",
+            "impact": -738199.21
+          },
+          {
+            "feature": "balance_lag_14",
+            "label": "two-week lag",
+            "impact": -174234.3
+          },
+          {
+            "feature": "rolling_mean_14",
+            "label": "recent 14-day average",
+            "impact": -164494.49
+          },
+          {
+            "feature": "type_operational",
+            "label": "type_operational",
+            "impact": 106268.3
+          },
+          {
+            "feature": "balance_lag_1",
+            "label": "yesterday's balance",
+            "impact": -101868.28
+          }
+        ]
       },
       {
         "date": "2026-05-26",
         "balance": 324971.0,
         "p10": 258591.1,
         "p90": 391350.9,
-        "isHistorical": false
+        "isHistorical": false,
+        "shap": [
+          {
+            "feature": "rolling_mean_30",
+            "label": "monthly baseline",
+            "impact": -739479.96
+          },
+          {
+            "feature": "balance_lag_14",
+            "label": "two-week lag",
+            "impact": -174430.57
+          },
+          {
+            "feature": "rolling_mean_14",
+            "label": "recent 14-day average",
+            "impact": -164994.27
+          },
+          {
+            "feature": "type_operational",
+            "label": "type_operational",
+            "impact": 106351.99
+          },
+          {
+            "feature": "balance_lag_1",
+            "label": "yesterday's balance",
+            "impact": -102552.77
+          }
+        ]
       },
       {
         "date": "2026-05-27",
         "balance": 267424.03,
         "p10": 201044.13,
         "p90": 333803.93,
-        "isHistorical": false
+        "isHistorical": false,
+        "shap": [
+          {
+            "feature": "rolling_mean_30",
+            "label": "monthly baseline",
+            "impact": -739676.21
+          },
+          {
+            "feature": "balance_lag_14",
+            "label": "two-week lag",
+            "impact": -174898.74
+          },
+          {
+            "feature": "rolling_mean_14",
+            "label": "recent 14-day average",
+            "impact": -164880.46
+          },
+          {
+            "feature": "type_operational",
+            "label": "type_operational",
+            "impact": 105101.92
+          },
+          {
+            "feature": "balance_lag_1",
+            "label": "yesterday's balance",
+            "impact": -103258.86
+          }
+        ]
       },
       {
         "date": "2026-05-28",
         "balance": 230187.77,
         "p10": 163807.87,
         "p90": 296567.67,
-        "isHistorical": false
+        "isHistorical": false,
+        "shap": [
+          {
+            "feature": "rolling_mean_30",
+            "label": "monthly baseline",
+            "impact": -739997.06
+          },
+          {
+            "feature": "balance_lag_14",
+            "label": "two-week lag",
+            "impact": -175225.88
+          },
+          {
+            "feature": "rolling_mean_14",
+            "label": "recent 14-day average",
+            "impact": -164892.45
+          },
+          {
+            "feature": "type_operational",
+            "label": "type_operational",
+            "impact": 105167.25
+          },
+          {
+            "feature": "balance_lag_1",
+            "label": "yesterday's balance",
+            "impact": -102978.84
+          }
+        ]
       },
       {
         "date": "2026-05-29",
         "balance": 216647.3,
         "p10": 150267.4,
         "p90": 283027.2,
-        "isHistorical": false
+        "isHistorical": false,
+        "shap": [
+          {
+            "feature": "rolling_mean_30",
+            "label": "monthly baseline",
+            "impact": -739906.27
+          },
+          {
+            "feature": "balance_lag_14",
+            "label": "two-week lag",
+            "impact": -173951.83
+          },
+          {
+            "feature": "rolling_mean_14",
+            "label": "recent 14-day average",
+            "impact": -164929.29
+          },
+          {
+            "feature": "type_operational",
+            "label": "type_operational",
+            "impact": 105137.2
+          },
+          {
+            "feature": "balance_lag_1",
+            "label": "yesterday's balance",
+            "impact": -103024.15
+          }
+        ]
       },
       {
         "date": "2026-05-30",
         "balance": 224545.91,
         "p10": 158166.01,
         "p90": 290925.81,
-        "isHistorical": false
+        "isHistorical": false,
+        "shap": [
+          {
+            "feature": "rolling_mean_30",
+            "label": "monthly baseline",
+            "impact": -738233.89
+          },
+          {
+            "feature": "balance_lag_14",
+            "label": "two-week lag",
+            "impact": -173817.12
+          },
+          {
+            "feature": "rolling_mean_14",
+            "label": "recent 14-day average",
+            "impact": -164268.9
+          },
+          {
+            "feature": "type_operational",
+            "label": "type_operational",
+            "impact": 106893.39
+          },
+          {
+            "feature": "balance_lag_1",
+            "label": "yesterday's balance",
+            "impact": -102708.93
+          }
+        ]
       },
       {
         "date": "2026-05-31",
         "balance": 289991.44,
         "p10": 223611.54,
         "p90": 356371.34,
-        "isHistorical": false
+        "isHistorical": false,
+        "shap": [
+          {
+            "feature": "rolling_mean_30",
+            "label": "monthly baseline",
+            "impact": -737445.64
+          },
+          {
+            "feature": "balance_lag_14",
+            "label": "two-week lag",
+            "impact": -173635.53
+          },
+          {
+            "feature": "rolling_mean_14",
+            "label": "recent 14-day average",
+            "impact": -164220.8
+          },
+          {
+            "feature": "type_operational",
+            "label": "type_operational",
+            "impact": 107415.06
+          },
+          {
+            "feature": "balance_lag_1",
+            "label": "yesterday's balance",
+            "impact": -102199.33
+          }
+        ]
       },
       {
         "date": "2026-06-01",
         "balance": 347538.41,
         "p10": 281158.51,
         "p90": 413918.31,
-        "isHistorical": false
+        "isHistorical": false,
+        "shap": [
+          {
+            "feature": "rolling_mean_30",
+            "label": "monthly baseline",
+            "impact": -737167.95
+          },
+          {
+            "feature": "balance_lag_14",
+            "label": "two-week lag",
+            "impact": -174282.64
+          },
+          {
+            "feature": "rolling_mean_14",
+            "label": "recent 14-day average",
+            "impact": -164130.43
+          },
+          {
+            "feature": "type_operational",
+            "label": "type_operational",
+            "impact": 107414.93
+          },
+          {
+            "feature": "balance_lag_1",
+            "label": "yesterday's balance",
+            "impact": -101987.35
+          }
+        ]
       },
       {
         "date": "2026-06-02",
         "balance": 318200.72,
         "p10": 251820.82,
         "p90": 384580.62,
-        "isHistorical": false
+        "isHistorical": false,
+        "shap": [
+          {
+            "feature": "rolling_mean_30",
+            "label": "monthly baseline",
+            "impact": -737498.61
+          },
+          {
+            "feature": "balance_lag_14",
+            "label": "two-week lag",
+            "impact": -173743.82
+          },
+          {
+            "feature": "rolling_mean_14",
+            "label": "recent 14-day average",
+            "impact": -164787.75
+          },
+          {
+            "feature": "type_operational",
+            "label": "type_operational",
+            "impact": 107527.7
+          },
+          {
+            "feature": "balance_lag_1",
+            "label": "yesterday's balance",
+            "impact": -102604.88
+          }
+        ]
       }
     ],
     "mc-usd": [
@@ -6501,98 +9525,476 @@
         "balance": 290309.16,
         "p10": 244175.84,
         "p90": 336442.48,
-        "isHistorical": false
+        "isHistorical": false,
+        "shap": [
+          {
+            "feature": "rolling_mean_30",
+            "label": "monthly baseline",
+            "impact": -674723.53
+          },
+          {
+            "feature": "balance_lag_14",
+            "label": "two-week lag",
+            "impact": -172533.88
+          },
+          {
+            "feature": "rolling_mean_14",
+            "label": "recent 14-day average",
+            "impact": -170279.25
+          },
+          {
+            "feature": "currency_USD",
+            "label": "currency_USD",
+            "impact": -107059.91
+          },
+          {
+            "feature": "type_operational",
+            "label": "type_operational",
+            "impact": 102123.66
+          }
+        ]
       },
       {
         "date": "2026-05-21",
         "balance": 263557.12,
         "p10": 217423.8,
         "p90": 309690.44,
-        "isHistorical": false
+        "isHistorical": false,
+        "shap": [
+          {
+            "feature": "rolling_mean_30",
+            "label": "monthly baseline",
+            "impact": -676300.55
+          },
+          {
+            "feature": "balance_lag_14",
+            "label": "two-week lag",
+            "impact": -173049.25
+          },
+          {
+            "feature": "rolling_mean_14",
+            "label": "recent 14-day average",
+            "impact": -170782.14
+          },
+          {
+            "feature": "currency_USD",
+            "label": "currency_USD",
+            "impact": -107061.78
+          },
+          {
+            "feature": "type_operational",
+            "label": "type_operational",
+            "impact": 102297.4
+          }
+        ]
       },
       {
         "date": "2026-05-22",
         "balance": 235814.25,
         "p10": 189680.93,
         "p90": 281947.57,
-        "isHistorical": false
+        "isHistorical": false,
+        "shap": [
+          {
+            "feature": "rolling_mean_30",
+            "label": "monthly baseline",
+            "impact": -676228.16
+          },
+          {
+            "feature": "balance_lag_14",
+            "label": "two-week lag",
+            "impact": -172057.6
+          },
+          {
+            "feature": "rolling_mean_14",
+            "label": "recent 14-day average",
+            "impact": -171198.89
+          },
+          {
+            "feature": "currency_USD",
+            "label": "currency_USD",
+            "impact": -107061.78
+          },
+          {
+            "feature": "type_operational",
+            "label": "type_operational",
+            "impact": 102784.41
+          }
+        ]
       },
       {
         "date": "2026-05-23",
         "balance": 225906.09,
         "p10": 179772.77,
         "p90": 272039.41,
-        "isHistorical": false
+        "isHistorical": false,
+        "shap": [
+          {
+            "feature": "rolling_mean_30",
+            "label": "monthly baseline",
+            "impact": -674856.3
+          },
+          {
+            "feature": "balance_lag_14",
+            "label": "two-week lag",
+            "impact": -172010.08
+          },
+          {
+            "feature": "rolling_mean_14",
+            "label": "recent 14-day average",
+            "impact": -170366.39
+          },
+          {
+            "feature": "currency_USD",
+            "label": "currency_USD",
+            "impact": -106739.58
+          },
+          {
+            "feature": "type_operational",
+            "label": "type_operational",
+            "impact": 104316.02
+          }
+        ]
       },
       {
         "date": "2026-05-24",
         "balance": 263557.12,
         "p10": 217423.8,
         "p90": 309690.44,
-        "isHistorical": false
+        "isHistorical": false,
+        "shap": [
+          {
+            "feature": "rolling_mean_30",
+            "label": "monthly baseline",
+            "impact": -675304.43
+          },
+          {
+            "feature": "balance_lag_14",
+            "label": "two-week lag",
+            "impact": -171475.54
+          },
+          {
+            "feature": "rolling_mean_14",
+            "label": "recent 14-day average",
+            "impact": -170173.15
+          },
+          {
+            "feature": "currency_USD",
+            "label": "currency_USD",
+            "impact": -106661.24
+          },
+          {
+            "feature": "type_operational",
+            "label": "type_operational",
+            "impact": 104371.77
+          }
+        ]
       },
       {
         "date": "2026-05-25",
         "balance": 331923.44,
         "p10": 285790.12,
         "p90": 378056.76,
-        "isHistorical": false
+        "isHistorical": false,
+        "shap": [
+          {
+            "feature": "rolling_mean_30",
+            "label": "monthly baseline",
+            "impact": -673600.82
+          },
+          {
+            "feature": "balance_lag_14",
+            "label": "two-week lag",
+            "impact": -172727.4
+          },
+          {
+            "feature": "rolling_mean_14",
+            "label": "recent 14-day average",
+            "impact": -170129.71
+          },
+          {
+            "feature": "currency_USD",
+            "label": "currency_USD",
+            "impact": -106769.08
+          },
+          {
+            "feature": "type_operational",
+            "label": "type_operational",
+            "impact": 104219.29
+          }
+        ]
       },
       {
         "date": "2026-05-26",
         "balance": 318052.0,
         "p10": 271918.68,
         "p90": 364185.32,
-        "isHistorical": false
+        "isHistorical": false,
+        "shap": [
+          {
+            "feature": "rolling_mean_30",
+            "label": "monthly baseline",
+            "impact": -673657.81
+          },
+          {
+            "feature": "balance_lag_14",
+            "label": "two-week lag",
+            "impact": -172638.09
+          },
+          {
+            "feature": "rolling_mean_14",
+            "label": "recent 14-day average",
+            "impact": -170186.72
+          },
+          {
+            "feature": "currency_USD",
+            "label": "currency_USD",
+            "impact": -106798.01
+          },
+          {
+            "feature": "type_operational",
+            "label": "type_operational",
+            "impact": 104279.95
+          }
+        ]
       },
       {
         "date": "2026-05-27",
         "balance": 268511.19,
         "p10": 222377.87,
         "p90": 314644.51,
-        "isHistorical": false
+        "isHistorical": false,
+        "shap": [
+          {
+            "feature": "rolling_mean_30",
+            "label": "monthly baseline",
+            "impact": -673071.42
+          },
+          {
+            "feature": "balance_lag_14",
+            "label": "two-week lag",
+            "impact": -172946.61
+          },
+          {
+            "feature": "rolling_mean_14",
+            "label": "recent 14-day average",
+            "impact": -169946.12
+          },
+          {
+            "feature": "currency_USD",
+            "label": "currency_USD",
+            "impact": -106798.28
+          },
+          {
+            "feature": "type_operational",
+            "label": "type_operational",
+            "impact": 103344.18
+          }
+        ]
       },
       {
         "date": "2026-05-28",
         "balance": 195190.8,
         "p10": 149057.48,
         "p90": 241324.12,
-        "isHistorical": false
+        "isHistorical": false,
+        "shap": [
+          {
+            "feature": "rolling_mean_30",
+            "label": "monthly baseline",
+            "impact": -673351.07
+          },
+          {
+            "feature": "balance_lag_14",
+            "label": "two-week lag",
+            "impact": -173760.24
+          },
+          {
+            "feature": "rolling_mean_14",
+            "label": "recent 14-day average",
+            "impact": -169911.71
+          },
+          {
+            "feature": "currency_USD",
+            "label": "currency_USD",
+            "impact": -106872.39
+          },
+          {
+            "feature": "type_operational",
+            "label": "type_operational",
+            "impact": 103310.44
+          }
+        ]
       },
       {
         "date": "2026-05-29",
         "balance": 171411.2,
         "p10": 125277.88,
         "p90": 217544.52,
-        "isHistorical": false
+        "isHistorical": false,
+        "shap": [
+          {
+            "feature": "rolling_mean_30",
+            "label": "monthly baseline",
+            "impact": -673961.91
+          },
+          {
+            "feature": "balance_lag_14",
+            "label": "two-week lag",
+            "impact": -172345.41
+          },
+          {
+            "feature": "rolling_mean_14",
+            "label": "recent 14-day average",
+            "impact": -170631.96
+          },
+          {
+            "feature": "currency_USD",
+            "label": "currency_USD",
+            "impact": -106873.35
+          },
+          {
+            "feature": "type_operational",
+            "label": "type_operational",
+            "impact": 103302.27
+          }
+        ]
       },
       {
         "date": "2026-05-30",
         "balance": 173392.84,
         "p10": 127259.52,
         "p90": 219526.16,
-        "isHistorical": false
+        "isHistorical": false,
+        "shap": [
+          {
+            "feature": "rolling_mean_30",
+            "label": "monthly baseline",
+            "impact": -672717.44
+          },
+          {
+            "feature": "balance_lag_14",
+            "label": "two-week lag",
+            "impact": -172347.06
+          },
+          {
+            "feature": "rolling_mean_14",
+            "label": "recent 14-day average",
+            "impact": -169982.93
+          },
+          {
+            "feature": "currency_USD",
+            "label": "currency_USD",
+            "impact": -106784.2
+          },
+          {
+            "feature": "type_operational",
+            "label": "type_operational",
+            "impact": 104217.37
+          }
+        ]
       },
       {
         "date": "2026-05-31",
         "balance": 251667.31,
         "p10": 205533.99,
         "p90": 297800.63,
-        "isHistorical": false
+        "isHistorical": false,
+        "shap": [
+          {
+            "feature": "rolling_mean_30",
+            "label": "monthly baseline",
+            "impact": -672300.58
+          },
+          {
+            "feature": "balance_lag_14",
+            "label": "two-week lag",
+            "impact": -171928.92
+          },
+          {
+            "feature": "rolling_mean_14",
+            "label": "recent 14-day average",
+            "impact": -169664.49
+          },
+          {
+            "feature": "currency_USD",
+            "label": "currency_USD",
+            "impact": -106803.3
+          },
+          {
+            "feature": "type_operational",
+            "label": "type_operational",
+            "impact": 104786.04
+          }
+        ]
       },
       {
         "date": "2026-06-01",
         "balance": 299226.5,
         "p10": 253093.18,
         "p90": 345359.82,
-        "isHistorical": false
+        "isHistorical": false,
+        "shap": [
+          {
+            "feature": "rolling_mean_30",
+            "label": "monthly baseline",
+            "impact": -671914.75
+          },
+          {
+            "feature": "balance_lag_14",
+            "label": "two-week lag",
+            "impact": -172863.17
+          },
+          {
+            "feature": "rolling_mean_14",
+            "label": "recent 14-day average",
+            "impact": -169698.56
+          },
+          {
+            "feature": "currency_USD",
+            "label": "currency_USD",
+            "impact": -106804.16
+          },
+          {
+            "feature": "type_operational",
+            "label": "type_operational",
+            "impact": 104792.62
+          }
+        ]
       },
       {
         "date": "2026-06-02",
         "balance": 287336.72,
         "p10": 241203.4,
         "p90": 333470.04,
-        "isHistorical": false
+        "isHistorical": false,
+        "shap": [
+          {
+            "feature": "rolling_mean_30",
+            "label": "monthly baseline",
+            "impact": -671609.66
+          },
+          {
+            "feature": "balance_lag_14",
+            "label": "two-week lag",
+            "impact": -175323.32
+          },
+          {
+            "feature": "rolling_mean_14",
+            "label": "recent 14-day average",
+            "impact": -170363.63
+          },
+          {
+            "feature": "currency_USD",
+            "label": "currency_USD",
+            "impact": -106818.48
+          },
+          {
+            "feature": "type_operational",
+            "label": "type_operational",
+            "impact": 104864.33
+          }
+        ]
       }
     ],
     "regulatory-reserve": [
@@ -7231,98 +10633,476 @@
         "balance": 8127328.39,
         "p10": 8105021.66,
         "p90": 8149635.12,
-        "isHistorical": false
+        "isHistorical": false,
+        "shap": [
+          {
+            "feature": "rolling_mean_30",
+            "label": "monthly baseline",
+            "impact": 1821404.82
+          },
+          {
+            "feature": "balance_lag_14",
+            "label": "two-week lag",
+            "impact": 1755099.02
+          },
+          {
+            "feature": "balance_lag_1",
+            "label": "yesterday's balance",
+            "impact": 939339.59
+          },
+          {
+            "feature": "currency_USD",
+            "label": "currency_USD",
+            "impact": 513990.7
+          },
+          {
+            "feature": "balance_lag_3",
+            "label": "3-day lag",
+            "impact": 463096.52
+          }
+        ]
       },
       {
         "date": "2026-05-21",
         "balance": 8120676.08,
         "p10": 8098369.35,
         "p90": 8142982.81,
-        "isHistorical": false
+        "isHistorical": false,
+        "shap": [
+          {
+            "feature": "rolling_mean_30",
+            "label": "monthly baseline",
+            "impact": 1823233.48
+          },
+          {
+            "feature": "balance_lag_14",
+            "label": "two-week lag",
+            "impact": 1756652.92
+          },
+          {
+            "feature": "balance_lag_1",
+            "label": "yesterday's balance",
+            "impact": 939133.8
+          },
+          {
+            "feature": "currency_USD",
+            "label": "currency_USD",
+            "impact": 513994.13
+          },
+          {
+            "feature": "balance_lag_3",
+            "label": "3-day lag",
+            "impact": 463656.1
+          }
+        ]
       },
       {
         "date": "2026-05-22",
         "balance": 8112469.9,
         "p10": 8090163.17,
         "p90": 8134776.63,
-        "isHistorical": false
+        "isHistorical": false,
+        "shap": [
+          {
+            "feature": "rolling_mean_30",
+            "label": "monthly baseline",
+            "impact": 1824791.74
+          },
+          {
+            "feature": "balance_lag_14",
+            "label": "two-week lag",
+            "impact": 1759894.56
+          },
+          {
+            "feature": "balance_lag_1",
+            "label": "yesterday's balance",
+            "impact": 939083.46
+          },
+          {
+            "feature": "currency_USD",
+            "label": "currency_USD",
+            "impact": 513994.13
+          },
+          {
+            "feature": "balance_lag_3",
+            "label": "3-day lag",
+            "impact": 463807.89
+          }
+        ]
       },
       {
         "date": "2026-05-23",
         "balance": 8098608.81,
         "p10": 8076302.08,
         "p90": 8120915.54,
-        "isHistorical": false
+        "isHistorical": false,
+        "shap": [
+          {
+            "feature": "rolling_mean_30",
+            "label": "monthly baseline",
+            "impact": 1826059.89
+          },
+          {
+            "feature": "balance_lag_14",
+            "label": "two-week lag",
+            "impact": 1761582.0
+          },
+          {
+            "feature": "balance_lag_1",
+            "label": "yesterday's balance",
+            "impact": 939093.46
+          },
+          {
+            "feature": "currency_USD",
+            "label": "currency_USD",
+            "impact": 513990.2
+          },
+          {
+            "feature": "balance_lag_3",
+            "label": "3-day lag",
+            "impact": 463838.15
+          }
+        ]
       },
       {
         "date": "2026-05-24",
         "balance": 8103874.56,
         "p10": 8081567.83,
         "p90": 8126181.29,
-        "isHistorical": false
+        "isHistorical": false,
+        "shap": [
+          {
+            "feature": "rolling_mean_30",
+            "label": "monthly baseline",
+            "impact": 1825232.49
+          },
+          {
+            "feature": "balance_lag_14",
+            "label": "two-week lag",
+            "impact": 1761364.68
+          },
+          {
+            "feature": "balance_lag_1",
+            "label": "yesterday's balance",
+            "impact": 939646.85
+          },
+          {
+            "feature": "currency_USD",
+            "label": "currency_USD",
+            "impact": 513987.3
+          },
+          {
+            "feature": "balance_lag_3",
+            "label": "3-day lag",
+            "impact": 463723.42
+          }
+        ]
       },
       {
         "date": "2026-05-25",
         "balance": 8107725.51,
         "p10": 8085418.78,
         "p90": 8130032.24,
-        "isHistorical": false
+        "isHistorical": false,
+        "shap": [
+          {
+            "feature": "rolling_mean_30",
+            "label": "monthly baseline",
+            "impact": 1824135.28
+          },
+          {
+            "feature": "balance_lag_14",
+            "label": "two-week lag",
+            "impact": 1761633.47
+          },
+          {
+            "feature": "balance_lag_1",
+            "label": "yesterday's balance",
+            "impact": 939784.56
+          },
+          {
+            "feature": "currency_USD",
+            "label": "currency_USD",
+            "impact": 514076.77
+          },
+          {
+            "feature": "balance_lag_3",
+            "label": "3-day lag",
+            "impact": 462776.42
+          }
+        ]
       },
       {
         "date": "2026-05-26",
         "balance": 8126958.62,
         "p10": 8104651.89,
         "p90": 8149265.35,
-        "isHistorical": false
+        "isHistorical": false,
+        "shap": [
+          {
+            "feature": "rolling_mean_30",
+            "label": "monthly baseline",
+            "impact": 1824321.45
+          },
+          {
+            "feature": "balance_lag_14",
+            "label": "two-week lag",
+            "impact": 1762013.93
+          },
+          {
+            "feature": "balance_lag_1",
+            "label": "yesterday's balance",
+            "impact": 939720.94
+          },
+          {
+            "feature": "currency_USD",
+            "label": "currency_USD",
+            "impact": 514096.58
+          },
+          {
+            "feature": "balance_lag_3",
+            "label": "3-day lag",
+            "impact": 462501.71
+          }
+        ]
       },
       {
         "date": "2026-05-27",
         "balance": 8129267.3,
         "p10": 8106960.57,
         "p90": 8151574.03,
-        "isHistorical": false
+        "isHistorical": false,
+        "shap": [
+          {
+            "feature": "rolling_mean_30",
+            "label": "monthly baseline",
+            "impact": 1824961.81
+          },
+          {
+            "feature": "balance_lag_14",
+            "label": "two-week lag",
+            "impact": 1763098.89
+          },
+          {
+            "feature": "balance_lag_1",
+            "label": "yesterday's balance",
+            "impact": 938983.55
+          },
+          {
+            "feature": "currency_USD",
+            "label": "currency_USD",
+            "impact": 514088.08
+          },
+          {
+            "feature": "balance_lag_3",
+            "label": "3-day lag",
+            "impact": 462560.43
+          }
+        ]
       },
       {
         "date": "2026-05-28",
         "balance": 8122614.99,
         "p10": 8100308.26,
         "p90": 8144921.72,
-        "isHistorical": false
+        "isHistorical": false,
+        "shap": [
+          {
+            "feature": "rolling_mean_30",
+            "label": "monthly baseline",
+            "impact": 1826513.88
+          },
+          {
+            "feature": "balance_lag_14",
+            "label": "two-week lag",
+            "impact": 1764972.65
+          },
+          {
+            "feature": "balance_lag_1",
+            "label": "yesterday's balance",
+            "impact": 938690.04
+          },
+          {
+            "feature": "currency_USD",
+            "label": "currency_USD",
+            "impact": 514159.94
+          },
+          {
+            "feature": "balance_lag_3",
+            "label": "3-day lag",
+            "impact": 462868.88
+          }
+        ]
       },
       {
         "date": "2026-05-29",
         "balance": 8114408.81,
         "p10": 8092102.08,
         "p90": 8136715.54,
-        "isHistorical": false
+        "isHistorical": false,
+        "shap": [
+          {
+            "feature": "rolling_mean_30",
+            "label": "monthly baseline",
+            "impact": 1827719.95
+          },
+          {
+            "feature": "balance_lag_14",
+            "label": "two-week lag",
+            "impact": 1767373.87
+          },
+          {
+            "feature": "balance_lag_1",
+            "label": "yesterday's balance",
+            "impact": 938779.36
+          },
+          {
+            "feature": "currency_USD",
+            "label": "currency_USD",
+            "impact": 514151.57
+          },
+          {
+            "feature": "balance_lag_3",
+            "label": "3-day lag",
+            "impact": 463120.46
+          }
+        ]
       },
       {
         "date": "2026-05-30",
         "balance": 8100547.71,
         "p10": 8078240.98,
         "p90": 8122854.44,
-        "isHistorical": false
+        "isHistorical": false,
+        "shap": [
+          {
+            "feature": "rolling_mean_30",
+            "label": "monthly baseline",
+            "impact": 1828019.49
+          },
+          {
+            "feature": "balance_lag_14",
+            "label": "two-week lag",
+            "impact": 1769437.52
+          },
+          {
+            "feature": "balance_lag_1",
+            "label": "yesterday's balance",
+            "impact": 938687.22
+          },
+          {
+            "feature": "currency_USD",
+            "label": "currency_USD",
+            "impact": 514148.68
+          },
+          {
+            "feature": "balance_lag_3",
+            "label": "3-day lag",
+            "impact": 463157.33
+          }
+        ]
       },
       {
         "date": "2026-05-31",
         "balance": 8105813.46,
         "p10": 8083506.73,
         "p90": 8128120.19,
-        "isHistorical": false
+        "isHistorical": false,
+        "shap": [
+          {
+            "feature": "rolling_mean_30",
+            "label": "monthly baseline",
+            "impact": 1826799.96
+          },
+          {
+            "feature": "balance_lag_14",
+            "label": "two-week lag",
+            "impact": 1769547.45
+          },
+          {
+            "feature": "balance_lag_1",
+            "label": "yesterday's balance",
+            "impact": 939842.99
+          },
+          {
+            "feature": "currency_USD",
+            "label": "currency_USD",
+            "impact": 514072.22
+          },
+          {
+            "feature": "balance_lag_3",
+            "label": "3-day lag",
+            "impact": 463226.56
+          }
+        ]
       },
       {
         "date": "2026-06-01",
         "balance": 8118851.65,
         "p10": 8096544.92,
         "p90": 8141158.38,
-        "isHistorical": false
+        "isHistorical": false,
+        "shap": [
+          {
+            "feature": "rolling_mean_30",
+            "label": "monthly baseline",
+            "impact": 1825804.56
+          },
+          {
+            "feature": "balance_lag_14",
+            "label": "two-week lag",
+            "impact": 1769773.88
+          },
+          {
+            "feature": "balance_lag_1",
+            "label": "yesterday's balance",
+            "impact": 939794.3
+          },
+          {
+            "feature": "currency_USD",
+            "label": "currency_USD",
+            "impact": 514066.18
+          },
+          {
+            "feature": "balance_lag_3",
+            "label": "3-day lag",
+            "impact": 462893.3
+          }
+        ]
       },
       {
         "date": "2026-06-02",
         "balance": 8128897.53,
         "p10": 8106590.8,
         "p90": 8151204.26,
-        "isHistorical": false
+        "isHistorical": false,
+        "shap": [
+          {
+            "feature": "rolling_mean_30",
+            "label": "monthly baseline",
+            "impact": 1823952.93
+          },
+          {
+            "feature": "balance_lag_14",
+            "label": "two-week lag",
+            "impact": 1767447.34
+          },
+          {
+            "feature": "balance_lag_1",
+            "label": "yesterday's balance",
+            "impact": 940086.03
+          },
+          {
+            "feature": "currency_USD",
+            "label": "currency_USD",
+            "impact": 514066.04
+          },
+          {
+            "feature": "balance_lag_3",
+            "label": "3-day lag",
+            "impact": 462491.45
+          }
+        ]
       }
     ],
     "fx-hedging": [
@@ -7961,98 +11741,476 @@
         "balance": 2682101.0,
         "p10": 2628629.04,
         "p90": 2735572.96,
-        "isHistorical": false
+        "isHistorical": false,
+        "shap": [
+          {
+            "feature": "rolling_mean_30",
+            "label": "monthly baseline",
+            "impact": 782981.86
+          },
+          {
+            "feature": "type_operational",
+            "label": "type_operational",
+            "impact": 393329.56
+          },
+          {
+            "feature": "rolling_mean_14",
+            "label": "recent 14-day average",
+            "impact": 268718.62
+          },
+          {
+            "feature": "currency_USD",
+            "label": "currency_USD",
+            "impact": -264453.55
+          },
+          {
+            "feature": "balance_lag_14",
+            "label": "two-week lag",
+            "impact": -125947.2
+          }
+        ]
       },
       {
         "date": "2026-05-21",
         "balance": 2644324.75,
         "p10": 2590852.79,
         "p90": 2697796.71,
-        "isHistorical": false
+        "isHistorical": false,
+        "shap": [
+          {
+            "feature": "rolling_mean_30",
+            "label": "monthly baseline",
+            "impact": 783423.49
+          },
+          {
+            "feature": "type_operational",
+            "label": "type_operational",
+            "impact": 393289.71
+          },
+          {
+            "feature": "rolling_mean_14",
+            "label": "recent 14-day average",
+            "impact": 268830.88
+          },
+          {
+            "feature": "currency_USD",
+            "label": "currency_USD",
+            "impact": -264464.31
+          },
+          {
+            "feature": "balance_lag_14",
+            "label": "two-week lag",
+            "impact": -126665.01
+          }
+        ]
       },
       {
         "date": "2026-05-22",
         "balance": 2615992.75,
         "p10": 2562520.79,
         "p90": 2669464.71,
-        "isHistorical": false
+        "isHistorical": false,
+        "shap": [
+          {
+            "feature": "rolling_mean_30",
+            "label": "monthly baseline",
+            "impact": 783996.96
+          },
+          {
+            "feature": "type_operational",
+            "label": "type_operational",
+            "impact": 393631.11
+          },
+          {
+            "feature": "rolling_mean_14",
+            "label": "recent 14-day average",
+            "impact": 268582.09
+          },
+          {
+            "feature": "currency_USD",
+            "label": "currency_USD",
+            "impact": -264464.31
+          },
+          {
+            "feature": "balance_lag_14",
+            "label": "two-week lag",
+            "impact": -126189.09
+          }
+        ]
       },
       {
         "date": "2026-05-23",
         "balance": 2587660.75,
         "p10": 2534188.79,
         "p90": 2641132.71,
-        "isHistorical": false
+        "isHistorical": false,
+        "shap": [
+          {
+            "feature": "rolling_mean_30",
+            "label": "monthly baseline",
+            "impact": 783812.01
+          },
+          {
+            "feature": "type_operational",
+            "label": "type_operational",
+            "impact": 394368.34
+          },
+          {
+            "feature": "rolling_mean_14",
+            "label": "recent 14-day average",
+            "impact": 268599.75
+          },
+          {
+            "feature": "currency_USD",
+            "label": "currency_USD",
+            "impact": -264449.17
+          },
+          {
+            "feature": "balance_lag_14",
+            "label": "two-week lag",
+            "impact": -126213.21
+          }
+        ]
       },
       {
         "date": "2026-05-24",
         "balance": 2559328.75,
         "p10": 2505856.79,
         "p90": 2612800.71,
-        "isHistorical": false
+        "isHistorical": false,
+        "shap": [
+          {
+            "feature": "rolling_mean_30",
+            "label": "monthly baseline",
+            "impact": 784527.21
+          },
+          {
+            "feature": "type_operational",
+            "label": "type_operational",
+            "impact": 394347.88
+          },
+          {
+            "feature": "rolling_mean_14",
+            "label": "recent 14-day average",
+            "impact": 267955.66
+          },
+          {
+            "feature": "currency_USD",
+            "label": "currency_USD",
+            "impact": -264437.22
+          },
+          {
+            "feature": "balance_lag_14",
+            "label": "two-week lag",
+            "impact": -125842.62
+          }
+        ]
       },
       {
         "date": "2026-05-25",
         "balance": 2587660.75,
         "p10": 2534188.79,
         "p90": 2641132.71,
-        "isHistorical": false
+        "isHistorical": false,
+        "shap": [
+          {
+            "feature": "rolling_mean_30",
+            "label": "monthly baseline",
+            "impact": 784026.36
+          },
+          {
+            "feature": "type_operational",
+            "label": "type_operational",
+            "impact": 394053.5
+          },
+          {
+            "feature": "rolling_mean_14",
+            "label": "recent 14-day average",
+            "impact": 268133.93
+          },
+          {
+            "feature": "currency_USD",
+            "label": "currency_USD",
+            "impact": -264568.9
+          },
+          {
+            "feature": "balance_lag_14",
+            "label": "two-week lag",
+            "impact": -124236.25
+          }
+        ]
       },
       {
         "date": "2026-05-26",
         "balance": 2606548.75,
         "p10": 2553076.79,
         "p90": 2660020.71,
-        "isHistorical": false
+        "isHistorical": false,
+        "shap": [
+          {
+            "feature": "rolling_mean_30",
+            "label": "monthly baseline",
+            "impact": 783294.25
+          },
+          {
+            "feature": "type_operational",
+            "label": "type_operational",
+            "impact": 393656.32
+          },
+          {
+            "feature": "rolling_mean_14",
+            "label": "recent 14-day average",
+            "impact": 268276.94
+          },
+          {
+            "feature": "currency_USD",
+            "label": "currency_USD",
+            "impact": -264601.5
+          },
+          {
+            "feature": "balance_lag_14",
+            "label": "two-week lag",
+            "impact": -124196.65
+          }
+        ]
       },
       {
         "date": "2026-05-27",
         "balance": 2625436.75,
         "p10": 2571964.79,
         "p90": 2678908.71,
-        "isHistorical": false
+        "isHistorical": false,
+        "shap": [
+          {
+            "feature": "rolling_mean_30",
+            "label": "monthly baseline",
+            "impact": 784078.24
+          },
+          {
+            "feature": "type_operational",
+            "label": "type_operational",
+            "impact": 393765.61
+          },
+          {
+            "feature": "rolling_mean_14",
+            "label": "recent 14-day average",
+            "impact": 268304.1
+          },
+          {
+            "feature": "currency_USD",
+            "label": "currency_USD",
+            "impact": -264567.02
+          },
+          {
+            "feature": "balance_lag_14",
+            "label": "two-week lag",
+            "impact": -123783.43
+          }
+        ]
       },
       {
         "date": "2026-05-28",
         "balance": 2587660.75,
         "p10": 2534188.79,
         "p90": 2641132.71,
-        "isHistorical": false
+        "isHistorical": false,
+        "shap": [
+          {
+            "feature": "rolling_mean_30",
+            "label": "monthly baseline",
+            "impact": 783385.98
+          },
+          {
+            "feature": "type_operational",
+            "label": "type_operational",
+            "impact": 393492.77
+          },
+          {
+            "feature": "rolling_mean_14",
+            "label": "recent 14-day average",
+            "impact": 268003.24
+          },
+          {
+            "feature": "currency_USD",
+            "label": "currency_USD",
+            "impact": -264907.38
+          },
+          {
+            "feature": "balance_lag_14",
+            "label": "two-week lag",
+            "impact": -124391.94
+          }
+        ]
       },
       {
         "date": "2026-05-29",
         "balance": 2549884.75,
         "p10": 2496412.79,
         "p90": 2603356.71,
-        "isHistorical": false
+        "isHistorical": false,
+        "shap": [
+          {
+            "feature": "rolling_mean_30",
+            "label": "monthly baseline",
+            "impact": 784346.76
+          },
+          {
+            "feature": "type_operational",
+            "label": "type_operational",
+            "impact": 393354.07
+          },
+          {
+            "feature": "rolling_mean_14",
+            "label": "recent 14-day average",
+            "impact": 267933.6
+          },
+          {
+            "feature": "currency_USD",
+            "label": "currency_USD",
+            "impact": -264614.53
+          },
+          {
+            "feature": "balance_lag_14",
+            "label": "two-week lag",
+            "impact": -124112.18
+          }
+        ]
       },
       {
         "date": "2026-05-30",
         "balance": 2530996.75,
         "p10": 2477524.79,
         "p90": 2584468.71,
-        "isHistorical": false
+        "isHistorical": false,
+        "shap": [
+          {
+            "feature": "rolling_mean_30",
+            "label": "monthly baseline",
+            "impact": 784329.0
+          },
+          {
+            "feature": "type_operational",
+            "label": "type_operational",
+            "impact": 395087.82
+          },
+          {
+            "feature": "rolling_mean_14",
+            "label": "recent 14-day average",
+            "impact": 267739.61
+          },
+          {
+            "feature": "currency_USD",
+            "label": "currency_USD",
+            "impact": -264622.64
+          },
+          {
+            "feature": "balance_lag_14",
+            "label": "two-week lag",
+            "impact": -123976.82
+          }
+        ]
       },
       {
         "date": "2026-05-31",
         "balance": 2512108.75,
         "p10": 2458636.79,
         "p90": 2565580.71,
-        "isHistorical": false
+        "isHistorical": false,
+        "shap": [
+          {
+            "feature": "rolling_mean_30",
+            "label": "monthly baseline",
+            "impact": 784021.89
+          },
+          {
+            "feature": "type_operational",
+            "label": "type_operational",
+            "impact": 394913.93
+          },
+          {
+            "feature": "rolling_mean_14",
+            "label": "recent 14-day average",
+            "impact": 267661.31
+          },
+          {
+            "feature": "currency_USD",
+            "label": "currency_USD",
+            "impact": -264041.43
+          },
+          {
+            "feature": "balance_lag_14",
+            "label": "two-week lag",
+            "impact": -123284.94
+          }
+        ]
       },
       {
         "date": "2026-06-01",
         "balance": 2559328.75,
         "p10": 2505856.79,
         "p90": 2612800.71,
-        "isHistorical": false
+        "isHistorical": false,
+        "shap": [
+          {
+            "feature": "rolling_mean_30",
+            "label": "monthly baseline",
+            "impact": 783277.65
+          },
+          {
+            "feature": "type_operational",
+            "label": "type_operational",
+            "impact": 391337.44
+          },
+          {
+            "feature": "rolling_mean_14",
+            "label": "recent 14-day average",
+            "impact": 267640.34
+          },
+          {
+            "feature": "currency_USD",
+            "label": "currency_USD",
+            "impact": -264017.83
+          },
+          {
+            "feature": "balance_lag_14",
+            "label": "two-week lag",
+            "impact": -120387.46
+          }
+        ]
       },
       {
         "date": "2026-06-02",
         "balance": 2587660.75,
         "p10": 2534188.79,
         "p90": 2641132.71,
-        "isHistorical": false
+        "isHistorical": false,
+        "shap": [
+          {
+            "feature": "rolling_mean_30",
+            "label": "monthly baseline",
+            "impact": 782878.04
+          },
+          {
+            "feature": "type_operational",
+            "label": "type_operational",
+            "impact": 390978.26
+          },
+          {
+            "feature": "rolling_mean_14",
+            "label": "recent 14-day average",
+            "impact": 267912.79
+          },
+          {
+            "feature": "currency_USD",
+            "label": "currency_USD",
+            "impact": -264030.3
+          },
+          {
+            "feature": "balance_lag_14",
+            "label": "two-week lag",
+            "impact": -120116.66
+          }
+        ]
       }
     ]
   },

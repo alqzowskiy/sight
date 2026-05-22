@@ -55,6 +55,10 @@ interface AccountsStore {
   customAccountIds: Record<string, true>;
   dismissedAccountIds: Record<string, true>;
   lastExecutedTransferId: string | null;
+  /** True after the first successful API hydration. UI can show a skeleton until then. */
+  hydrated: boolean;
+  /** Sync local state from the API. Call on mount and after server-side changes. */
+  fetchFromApi: () => Promise<void>;
   executeTransfer: (transfer: Transfer) => boolean;
   addAndExecuteTransfer: (spec: AdHocTransferSpec) => string | null;
   updateAccountMeta: (id: string, patch: AccountMetaPatch) => void;
@@ -119,6 +123,77 @@ function accountIdFromAlertId(alertId: string): string | null {
 
 const initialAccounts = buildAccountsFromMeta();
 
+interface ApiAccount {
+  id: string;
+  name: string;
+  bank: string;
+  currency: Currency;
+  country: string;
+  location: [number, number];
+  balance: number;
+  minBalance: number;
+  type: AccountType;
+  status: Account["status"];
+}
+
+interface ApiTransfer {
+  id: string;
+  fromAccountId: string;
+  toAccountId: string;
+  amount: number;
+  amountCurrency: Currency;
+  receivedAmount: number | null;
+  receivedCurrency: string | null;
+  channel: TransferChannel | "SEPA_INSTANT" | "SEPA_STANDARD" | "INTERNAL";
+  status: "RECOMMENDED" | "PENDING" | "COMPLETED" | "FAILED" | "CANCELLED";
+  origin: "ALERT" | "COMPASS" | "OPTIMIZER" | "MANUAL";
+  reason: string | null;
+  createdAt: string;
+  executedAt: string | null;
+}
+
+function apiToLocalAccount(a: ApiAccount): Account {
+  return {
+    id: a.id,
+    name: a.name,
+    bank: a.bank,
+    location: a.location,
+    currency: a.currency,
+    balance: a.balance,
+    minBalance: a.minBalance,
+    type: a.type,
+    status: a.status,
+  };
+}
+
+function apiToLocalTransfer(
+  t: ApiTransfer,
+  locationLookup: Record<string, [number, number]>,
+): Transfer {
+  // Normalize SEPA_INSTANT/SEPA_STANDARD to the legacy SEPA channel for
+  // backwards compatibility with components that only know the 4 channels.
+  const channel: TransferChannel =
+    t.channel === "INTERNAL"
+      ? "SWIFT"
+      : t.channel === "SEPA_INSTANT" || t.channel === "SEPA_STANDARD"
+        ? "SEPA"
+        : (t.channel as TransferChannel);
+  return {
+    id: t.id,
+    from: t.fromAccountId,
+    to: t.toAccountId,
+    fromLocation: locationLookup[t.fromAccountId] ?? [0, 0],
+    toLocation: locationLookup[t.toAccountId] ?? [0, 0],
+    channel,
+    amount: t.amount,
+    currency: t.amountCurrency,
+    status: t.status === "COMPLETED" ? "completed" : "pending",
+    timestamp: t.executedAt ?? t.createdAt,
+    receivedAmount: t.receivedAmount ?? undefined,
+    receivedCurrency: (t.receivedCurrency ?? undefined) as Currency | undefined,
+  };
+}
+
 function makeCustomId(name: string, currency: string): string {
   const slug = name
     .toLowerCase()
@@ -143,11 +218,46 @@ export const useAccountsStore = create<AccountsStore>((set) => ({
   customAccountIds: {},
   dismissedAccountIds: {},
   lastExecutedTransferId: null,
+  hydrated: false,
+  fetchFromApi: async () => {
+    if (typeof window === "undefined") return;
+    try {
+      const [accountsRes, transfersRes] = await Promise.all([
+        fetch("/api/v1/accounts", { cache: "no-store" }),
+        fetch("/api/v1/transfers", { cache: "no-store" }),
+      ]);
+      if (!accountsRes.ok || !transfersRes.ok) {
+        console.error("[accounts-store] hydrate failed");
+        return;
+      }
+      const { accounts: apiAccounts } = (await accountsRes.json()) as {
+        accounts: ApiAccount[];
+      };
+      const { transfers: apiTransfers } = (await transfersRes.json()) as {
+        transfers: ApiTransfer[];
+      };
+      const localAccounts = apiAccounts.map(apiToLocalAccount);
+      const locationLookup: Record<string, [number, number]> = {};
+      for (const a of localAccounts) locationLookup[a.id] = a.location;
+      const localTransfers = apiTransfers
+        .map((t) => apiToLocalTransfer(t, locationLookup))
+        // Server returns newest first; UI expects chronological order.
+        .reverse();
+      set({
+        accounts: localAccounts,
+        transfers: localTransfers,
+        hydrated: true,
+      });
+    } catch (err) {
+      console.error("[accounts-store] hydrate error:", err);
+    }
+  },
   executeTransfer: (transfer) => {
     const current = useAccountsStore.getState().accounts;
     if (!hasSufficientFunds(current, transfer.from, transfer.amount)) {
       return false;
     }
+    // Optimistic update — apply locally for instant UI feedback.
     set((state) => {
       const accounts = applyTransferToAccounts(
         state.accounts,
@@ -169,6 +279,24 @@ export const useAccountsStore = create<AccountsStore>((set) => ({
       };
     });
     invalidateInsights([transfer.from, transfer.to]);
+
+    // Persist to server in the background. On success, server is the source
+    // of truth — we'll resync the next time fetchFromApi runs.
+    if (typeof window !== "undefined") {
+      void fetch("/api/v1/transfers", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          fromAccountId: transfer.from,
+          toAccountId: transfer.to,
+          amount: transfer.amount,
+          channel: transfer.channel,
+          origin: "MANUAL",
+        }),
+      }).catch((err) =>
+        console.error("[accounts-store] transfer POST failed:", err),
+      );
+    }
     return true;
   },
   addAndExecuteTransfer: (spec) => {
