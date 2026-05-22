@@ -57,6 +57,10 @@ interface AccountsStore {
   lastExecutedTransferId: string | null;
   /** True after the first successful API hydration. UI can show a skeleton until then. */
   hydrated: boolean;
+  /** Unix ms of the last successful API sync, or null if never synced. */
+  lastSyncedAt: number | null;
+  /** True while a hydrate is in flight. */
+  syncing: boolean;
   /** Sync local state from the API. Call on mount and after server-side changes. */
   fetchFromApi: () => Promise<void>;
   executeTransfer: (transfer: Transfer) => boolean;
@@ -219,8 +223,11 @@ export const useAccountsStore = create<AccountsStore>((set) => ({
   dismissedAccountIds: {},
   lastExecutedTransferId: null,
   hydrated: false,
+  lastSyncedAt: null,
+  syncing: false,
   fetchFromApi: async () => {
     if (typeof window === "undefined") return;
+    set({ syncing: true });
     try {
       const [accountsRes, transfersRes] = await Promise.all([
         fetch("/api/v1/accounts", { cache: "no-store" }),
@@ -228,6 +235,7 @@ export const useAccountsStore = create<AccountsStore>((set) => ({
       ]);
       if (!accountsRes.ok || !transfersRes.ok) {
         console.error("[accounts-store] hydrate failed");
+        set({ syncing: false });
         return;
       }
       const { accounts: apiAccounts } = (await accountsRes.json()) as {
@@ -247,9 +255,12 @@ export const useAccountsStore = create<AccountsStore>((set) => ({
         accounts: localAccounts,
         transfers: localTransfers,
         hydrated: true,
+        lastSyncedAt: Date.now(),
+        syncing: false,
       });
     } catch (err) {
       console.error("[accounts-store] hydrate error:", err);
+      set({ syncing: false });
     }
   },
   executeTransfer: (transfer) => {

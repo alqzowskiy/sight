@@ -18,14 +18,16 @@ import { AccountDetailPanel } from "./account-detail-panel";
 import { AccountCard } from "./account-card";
 import { AlertsPanel } from "./alerts-panel";
 import { ConcentrationCard } from "./concentration-card";
+import { ActivityPanel } from "./activity-panel";
 import { LiquidityScore } from "./liquidity-score";
 import { TimeMachine } from "./time-machine";
 import { motion } from "motion/react";
-import { Search, RotateCcw, Send, Siren, Settings as SettingsIcon, Droplet, ShieldCheck, Sparkles } from "lucide-react";
+import { Search, RotateCcw, Send, Siren, Settings as SettingsIcon, Droplet, Sparkles } from "lucide-react";
 import { toast } from "sonner";
 import { CrisisPanel } from "./crisis-panel";
 import { CommandPalette } from "./command-palette";
-import { DemoMode } from "./demo-mode";
+import { AutoTourButton } from "./auto-tour";
+import { LiveIndicator } from "./live-indicator";
 import { NewTransferModal } from "./new-transfer-modal";
 import { OptimizerPanel } from "./optimizer-panel";
 import { CompassBanner } from "./compass-banner";
@@ -257,13 +259,7 @@ export function DashboardLayout() {
           <span className="hidden font-mono text-[10px] uppercase tracking-[0.12em] text-zinc-900 sm:inline">
             Dashboard
           </span>
-          <span
-            className="hidden items-center gap-1 rounded-full border border-emerald-200 bg-emerald-50/70 px-2 py-0.5 font-mono text-[9px] uppercase tracking-[0.12em] text-emerald-800 md:inline-flex"
-            title="AI Co-pilot, not Autopilot — all transfers require explicit Execute with audit log"
-          >
-            <ShieldCheck className="h-2.5 w-2.5" strokeWidth={2.2} />
-            Co-pilot mode
-          </span>
+          <LiveIndicator />
         </motion.div>
 
         <motion.div
@@ -317,17 +313,9 @@ export function DashboardLayout() {
           </button>
           <button
             type="button"
-            onClick={() => setNewTransferOpen(true)}
-            aria-label="New Transfer"
-            className="inline-flex items-center gap-1.5 rounded-md border border-zinc-200/80 bg-white px-2.5 py-1.5 font-mono text-[10px] uppercase tracking-[0.1em] text-zinc-700 transition-colors hover:border-zinc-300 hover:text-zinc-900"
-          >
-            <Send className="h-3 w-3" strokeWidth={1.7} />
-            <span className="hidden md:inline">New Transfer</span>
-          </button>
-          <button
-            type="button"
             onClick={() => setCrisisModeOpen(!crisisModeOpen)}
             aria-label="Crisis Mode"
+            title="Crisis Mode — stress scenarios"
             className="inline-flex items-center gap-1.5 rounded-md border border-zinc-200/80 bg-white px-2.5 py-1.5 font-mono text-[10px] uppercase tracking-[0.1em] text-zinc-700 transition-colors hover:border-zinc-300 hover:text-zinc-900"
           >
             <Siren className="h-3 w-3" strokeWidth={1.7} />
@@ -339,16 +327,26 @@ export function DashboardLayout() {
             )}
           </button>
           <div className="hidden lg:block">
-            <DemoMode />
+            <AutoTourButton />
           </div>
+          {/* Compact icon-only utilities — no text to reduce header noise. */}
+          <button
+            type="button"
+            onClick={() => setNewTransferOpen(true)}
+            aria-label="New Transfer"
+            title="New transfer"
+            className="hidden h-8 w-8 items-center justify-center rounded-md border border-zinc-200/80 bg-white text-zinc-500 transition-colors hover:border-zinc-300 hover:text-zinc-900 md:inline-flex"
+          >
+            <Send className="h-3.5 w-3.5" strokeWidth={1.7} />
+          </button>
           <button
             type="button"
             onClick={handleResetDemo}
             aria-label="Reset demo"
-            className="hidden items-center gap-1.5 rounded-md border border-zinc-200/80 bg-white px-2.5 py-1.5 font-mono text-[10px] uppercase tracking-[0.1em] text-zinc-500 transition-colors hover:border-zinc-300 hover:text-zinc-900 md:flex"
+            title="Reset to seed state"
+            className="hidden h-8 w-8 items-center justify-center rounded-md border border-zinc-200/80 bg-white text-zinc-500 transition-colors hover:border-zinc-300 hover:text-zinc-900 md:inline-flex"
           >
-            <RotateCcw className="h-3 w-3" strokeWidth={1.6} />
-            <span className="hidden lg:inline">Reset</span>
+            <RotateCcw className="h-3.5 w-3.5" strokeWidth={1.6} />
           </button>
           <button
             type="button"
@@ -433,10 +431,11 @@ export function DashboardLayout() {
 
           <motion.div
             {...panel(0.14)}
-            className="flex min-h-0 flex-col gap-3 lg:order-3"
+            className="flex min-h-0 flex-col gap-3 overflow-y-auto lg:order-3"
           >
             <ConcentrationCard />
-            <div className="min-h-0 flex-1 overflow-hidden rounded-xl border border-zinc-200/80 bg-white/60 p-3 lg:p-4">
+            <ActivityPanel />
+            <div className="min-h-[260px] flex-1 overflow-hidden rounded-xl border border-zinc-200/80 bg-white/60 p-3 lg:p-4">
               <AlertsPanel />
             </div>
           </motion.div>

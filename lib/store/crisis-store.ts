@@ -22,6 +22,8 @@ interface CrisisStore {
   setCounterpartyConfig: (config: CounterpartyConfig | null) => void;
   /** Atomic activation: set config + add scenario in one go (for cascade timing). */
   activateCounterparty: (config: CounterpartyConfig) => void;
+  /** Atomic deactivation: remove scenario + clear config. */
+  deactivateCounterparty: () => void;
   clearAll: () => void;
   setCrisisModeOpen: (open: boolean) => void;
 }
@@ -43,6 +45,13 @@ export const useCrisisStore = create<CrisisStore>((set) => ({
       activeScenarios: state.activeScenarios.includes("counterparty-default")
         ? state.activeScenarios
         : [...state.activeScenarios, "counterparty-default"],
+    })),
+  deactivateCounterparty: () =>
+    set((state) => ({
+      counterpartyConfig: null,
+      activeScenarios: state.activeScenarios.filter(
+        (s) => s !== "counterparty-default",
+      ),
     })),
   clearAll: () => set({ activeScenarios: [], counterpartyConfig: null }),
   setCrisisModeOpen: (open) => set({ crisisModeOpen: open }),

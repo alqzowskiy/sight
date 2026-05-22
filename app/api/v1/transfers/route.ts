@@ -135,15 +135,16 @@ export async function POST(req: Request) {
         },
         data: { balance: { decrement: input.amount } },
       });
-      // Cannot use `decrement`/`increment` on multiple fields — separate updates.
-      await tx.$executeRawUnsafe(
-        `UPDATE Forecast SET p10 = p10 - ?, p90 = p90 - ? WHERE tenantId = ? AND accountId = ? AND date >= ?`,
-        input.amount,
-        input.amount,
-        tenantId,
-        from.id,
-        cutoff.toISOString(),
-      );
+      // Two-column update — Prisma's `decrement` API only supports one field at
+      // a time, so we drop to a raw query. Postgres uses $1..$N placeholders.
+      await tx.$executeRaw`
+        UPDATE "Forecast"
+        SET "p10" = "p10" - ${input.amount},
+            "p90" = "p90" - ${input.amount}
+        WHERE "tenantId" = ${tenantId}
+          AND "accountId" = ${from.id}
+          AND "date" >= ${cutoff}
+      `;
 
       const receivedDelta = receivedAmount ?? input.amount;
       await tx.forecast.updateMany({
@@ -154,14 +155,14 @@ export async function POST(req: Request) {
         },
         data: { balance: { increment: receivedDelta } },
       });
-      await tx.$executeRawUnsafe(
-        `UPDATE Forecast SET p10 = p10 + ?, p90 = p90 + ? WHERE tenantId = ? AND accountId = ? AND date >= ?`,
-        receivedDelta,
-        receivedDelta,
-        tenantId,
-        to.id,
-        cutoff.toISOString(),
-      );
+      await tx.$executeRaw`
+        UPDATE "Forecast"
+        SET "p10" = "p10" + ${receivedDelta},
+            "p90" = "p90" + ${receivedDelta}
+        WHERE "tenantId" = ${tenantId}
+          AND "accountId" = ${to.id}
+          AND "date" >= ${cutoff}
+      `;
 
       // 3. Audit event.
       await tx.auditEvent.create({

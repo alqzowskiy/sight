@@ -5,6 +5,8 @@ import { AnimatePresence, motion } from "motion/react";
 import { useChat } from "@ai-sdk/react";
 import { DefaultChatTransport, type UIMessage } from "ai";
 import { Send, Sparkles, X, Wrench } from "lucide-react";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 import { useUiStore } from "@/lib/store/ui-store";
 import { formatCompact } from "@/lib/utils/format";
 
@@ -120,8 +122,11 @@ export function AiChatPanel() {
               {messages.map((m) => (
                 <MessageView key={m.id} message={m} />
               ))}
-              {status === "streaming" && (
-                <div className="text-[11px] text-zinc-400">…</div>
+              {status === "submitted" && (
+                <ThinkingSkeleton
+                  lastUserMessage={lastUserText(messages)}
+                  focusedAccountId={focusedAccountId}
+                />
               )}
               {error && (
                 <div className="rounded-md border border-red-200 bg-red-50 px-3 py-2 text-[12px] text-red-700">
@@ -232,7 +237,7 @@ function MessageView({ message }: { message: UIMessage }) {
               key={i}
               className="max-w-[90%] rounded-2xl rounded-bl-sm border border-zinc-200 bg-white px-3.5 py-2 text-[13px] leading-relaxed text-zinc-800"
             >
-              {text}
+              <Markdown>{text}</Markdown>
             </div>
           );
         }
@@ -241,6 +246,57 @@ function MessageView({ message }: { message: UIMessage }) {
         }
         return null;
       })}
+    </div>
+  );
+}
+
+// Minimal Markdown wrapper that styles bold/italic/code/lists/links to match
+// the rest of the panel. Tables and complex blocks are deliberately skipped —
+// the model is instructed to keep answers short.
+function Markdown({ children }: { children: string }) {
+  return (
+    <div className="prose-sight">
+      <ReactMarkdown
+        remarkPlugins={[remarkGfm]}
+        components={{
+          p: ({ children }) => (
+            <p className="my-1 first:mt-0 last:mb-0">{children}</p>
+          ),
+          ul: ({ children }) => (
+            <ul className="my-1.5 list-disc space-y-0.5 pl-4">{children}</ul>
+          ),
+          ol: ({ children }) => (
+            <ol className="my-1.5 list-decimal space-y-0.5 pl-4">{children}</ol>
+          ),
+          li: ({ children }) => <li className="leading-snug">{children}</li>,
+          strong: ({ children }) => (
+            <strong className="font-medium text-zinc-950">{children}</strong>
+          ),
+          em: ({ children }) => <em className="italic">{children}</em>,
+          code: ({ children }) => (
+            <code className="rounded bg-zinc-100 px-1 py-0.5 font-mono text-[11px] text-zinc-900">
+              {children}
+            </code>
+          ),
+          pre: ({ children }) => (
+            <pre className="my-1.5 overflow-x-auto rounded-md bg-zinc-100 px-2.5 py-2 font-mono text-[11px] leading-snug text-zinc-900">
+              {children}
+            </pre>
+          ),
+          a: ({ children, href }) => (
+            <a
+              href={href}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-purple-700 underline underline-offset-2"
+            >
+              {children}
+            </a>
+          ),
+        }}
+      >
+        {children}
+      </ReactMarkdown>
     </div>
   );
 }
@@ -260,17 +316,237 @@ function ToolCallCard({ part }: { part: ToolPart }) {
   const input = part.input ?? part.args;
 
   return (
-    <div className="rounded-xl border border-zinc-200 bg-zinc-50/60 px-3 py-2">
+    <div
+      className={`rounded-xl border px-3 py-2 transition-colors ${
+        isExecuting
+          ? "border-purple-200 bg-purple-50/40"
+          : "border-zinc-200 bg-zinc-50/60"
+      }`}
+    >
       <div className="flex items-center gap-1.5 font-mono text-[10px] uppercase tracking-[0.12em] text-zinc-600">
-        <Wrench className="h-3 w-3" strokeWidth={2} />
-        Sight {isExecuting ? "is calling" : "called"} <span className="font-medium text-zinc-900">{name}</span>
+        {isExecuting ? (
+          <RunningDots />
+        ) : (
+          <Wrench className="h-3 w-3" strokeWidth={2} />
+        )}
+        Sight {isExecuting ? "is calling" : "called"}{" "}
+        <span className="font-medium text-zinc-900">{name}</span>
       </div>
-      {input != null && (
-        <div className="mt-1.5 text-[11px] leading-snug text-zinc-500">
-          {summarizeArgs(name, input)}
+      {isExecuting ? (
+        <div className="mt-1.5 text-[11px] leading-snug text-purple-700">
+          {executionMessage(name, input)}
         </div>
+      ) : (
+        input != null && (
+          <div className="mt-1.5 text-[11px] leading-snug text-zinc-500">
+            {summarizeArgs(name, input)}
+          </div>
+        )
       )}
       {output != null && <ToolOutputSummary name={name} output={output} />}
+    </div>
+  );
+}
+
+/**
+ * Tool-specific "we're working on it" message — shown while the model is
+ * dispatching the call and the executor is running. Keeps the UI talkative
+ * during the 100-2000ms gap when an LLM tool round-trip is in flight.
+ */
+function executionMessage(name: string, input: unknown): string {
+  const args = (input ?? {}) as Record<string, unknown>;
+  if (name === "simulateTransfer") {
+    const from = String(args.fromAccountId ?? "source");
+    const to = String(args.toAccountId ?? "destination");
+    const amount = Number(args.amount ?? 0);
+    if (amount > 0) {
+      return `Simulating ${formatCompact(amount, "USD")} from ${from} → ${to}…`;
+    }
+    return `Simulating transfer from ${from} → ${to}…`;
+  }
+  if (name === "getConcentration") {
+    const dim = String(args.dimension ?? "bank");
+    return `Computing HHI snapshot by ${dim}…`;
+  }
+  if (name === "triggerCounterpartyTest") {
+    const bank = String(args.bank ?? "bank");
+    const days = Number(args.recoveryDays ?? 0);
+    return days > 0
+      ? `Running counterparty default for ${bank} · ${days}d freeze…`
+      : `Running counterparty default for ${bank}…`;
+  }
+  return "Reading live data from the portfolio…";
+}
+
+/** Three dots that fade in and out in sequence — used for in-flight indicators. */
+function RunningDots() {
+  return (
+    <span className="inline-flex items-center gap-0.5">
+      {[0, 1, 2].map((i) => (
+        <span
+          key={i}
+          className="inline-block h-1 w-1 rounded-full bg-purple-500"
+          style={{
+            animation: "sight-pulse 1.2s ease-in-out infinite",
+            animationDelay: `${i * 0.18}s`,
+          }}
+        />
+      ))}
+      <style jsx>{`
+        @keyframes sight-pulse {
+          0%, 80%, 100% { opacity: 0.2; transform: translateY(0); }
+          40% { opacity: 1; transform: translateY(-1px); }
+        }
+      `}</style>
+    </span>
+  );
+}
+
+/**
+ * Pre-stream "thinking" indicator — shown between user send and the first
+ * chunk landing. The displayed message is derived from the user's actual
+ * question and the focused account, not from a cycling fake script.
+ *
+ * The thought process is honest: we genuinely don't know yet whether the
+ * model will call a tool or answer directly, but we know what the user asked
+ * about, so we surface that.
+ */
+function ThinkingSkeleton({
+  lastUserMessage,
+  focusedAccountId,
+}: {
+  lastUserMessage: string;
+  focusedAccountId: string | null;
+}) {
+  const thought = deriveThought(lastUserMessage, focusedAccountId);
+  return (
+    <div className="max-w-[90%] rounded-2xl rounded-bl-sm border border-zinc-200 bg-white px-3.5 py-2.5">
+      <div className="flex items-center gap-1.5 text-[11px] text-purple-700">
+        <RunningDots />
+        <span className="font-mono">{thought}</span>
+      </div>
+      <div className="mt-2 space-y-1.5">
+        <SkeletonLine width="92%" />
+        <SkeletonLine width="84%" />
+        <SkeletonLine width="60%" />
+      </div>
+    </div>
+  );
+}
+
+/**
+ * Derive a one-line "what we're doing right now" string from the user's
+ * actual last message and the currently focused account. Pattern matching is
+ * intentionally loose — we err on the side of generic when nothing fits, so
+ * the user never sees a misleading thought.
+ */
+function deriveThought(message: string, focusedAccountId: string | null): string {
+  const m = message.toLowerCase();
+  const accountHint = focusedAccountId ? ` · ${focusedAccountId}` : "";
+
+  // Counterparty / default scenarios.
+  if (
+    /\b(what if|counterparty|default|svb|cascade|fail|fails|failing)\b/.test(m)
+  ) {
+    const bank = extractBankMention(m);
+    return bank
+      ? `Running counterparty default scenario · ${bank}…`
+      : `Running counterparty default scenario…`;
+  }
+
+  // Concentration / HHI.
+  if (/\b(concentration|hhi|exposure|exposed|risk|risky)\b/.test(m)) {
+    return `Computing concentration snapshot${accountHint}…`;
+  }
+
+  // Transfer simulation.
+  if (
+    /\b(transfer|move|send|simulate|simulation|rebalance|redistribute)\b/.test(m)
+  ) {
+    return `Simulating transfer impact${accountHint}…`;
+  }
+
+  // Forecast / balance / future-looking.
+  if (
+    /\b(forecast|predict|balance|tomorrow|next week|future|dip|critical|warning)\b/.test(
+      m,
+    )
+  ) {
+    return `Reading forecast horizon${accountHint}…`;
+  }
+
+  // Audit / history.
+  if (/\b(history|audit|log|recent|past|when|happened)\b/.test(m)) {
+    return `Reading audit log${accountHint}…`;
+  }
+
+  // Specific account id mentioned but no other keywords.
+  if (focusedAccountId) {
+    return `Looking at ${focusedAccountId}…`;
+  }
+
+  // Pure default.
+  return "Thinking…";
+}
+
+/** Extract a known bank mention from a message, or null. */
+function extractBankMention(message: string): string | null {
+  const banks = [
+    "JPMorgan",
+    "BNY Mellon",
+    "BNY",
+    "HSBC",
+    "Deutsche Bank",
+    "Deutsche",
+    "UBS",
+    "Barclays",
+    "DBS",
+    "Halyk",
+    "Kaspi",
+    "Visa",
+    "Mastercard",
+    "Bank of America",
+    "BNP Paribas",
+    "BNP",
+  ];
+  for (const bank of banks) {
+    if (message.toLowerCase().includes(bank.toLowerCase())) return bank;
+  }
+  return null;
+}
+
+function lastUserText(messages: UIMessage[]): string {
+  for (let i = messages.length - 1; i >= 0; i--) {
+    const m = messages[i];
+    if (m.role !== "user") continue;
+    return m.parts
+      .filter((p) => (p as ToolPart).type === "text")
+      .map((p) => (p as unknown as { text?: string }).text ?? "")
+      .join(" ");
+  }
+  return "";
+}
+
+function SkeletonLine({ width }: { width: string }) {
+  return (
+    <div
+      className="relative h-2 overflow-hidden rounded bg-zinc-100"
+      style={{ width }}
+    >
+      <div
+        className="absolute inset-0"
+        style={{
+          background:
+            "linear-gradient(90deg, rgba(244,244,245,0) 0%, rgba(0,0,0,0.06) 50%, rgba(244,244,245,0) 100%)",
+          animation: "sight-shimmer 1.4s linear infinite",
+        }}
+      />
+      <style jsx>{`
+        @keyframes sight-shimmer {
+          0% { transform: translateX(-100%); }
+          100% { transform: translateX(100%); }
+        }
+      `}</style>
     </div>
   );
 }

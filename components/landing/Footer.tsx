@@ -32,6 +32,7 @@ export function Footer() {
               { label: "Live demo", href: "/dashboard" },
               { label: "Sight Lab", href: "/dashboard/lab" },
               { label: "Crisis Mode", href: "/dashboard/crisis" },
+              { label: "Attestation", href: "/attestation" },
             ]}
           />
 

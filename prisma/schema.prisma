@@ -1,23 +1,24 @@
 // Sight — production data model
 //
-// Development uses SQLite for zero-config local dev. The same schema runs on
-// Postgres in production by changing the provider and DATABASE_URL — the
-// fields below avoid Postgres-specific types (Decimal, Json, enums) so the
-// schema stays portable.
+// Runs on Postgres in both local dev and production via Neon.
+// Neon's free tier gives us a dev branch + production branch.
 //
-// Postgres mapping notes:
-//   - "Float" → use Postgres Decimal(20, 2) for money. SQLite stores as REAL.
-//   - "String" enums → upgrade to native Postgres enums for type safety.
-//   - "String" JSON payload columns → Postgres jsonb.
+// Local dev:  pnpm vercel env pull → DATABASE_URL set in .env.local
+// Production: Vercel auto-injects DATABASE_URL from Neon Marketplace integration
 //
-// To validate: npx prisma validate --schema=prisma/schema.prisma
+// To validate the schema:
+//   npx prisma validate --schema=prisma/schema.prisma
+//
+// To apply migrations:
+//   npx prisma migrate dev    (creates new migration during development)
+//   npx prisma migrate deploy (applies pending migrations in production)
 
 generator client {
   provider = "prisma-client-js"
 }
 
 datasource db {
-  provider = "sqlite"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
